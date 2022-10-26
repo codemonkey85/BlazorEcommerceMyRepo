@@ -16,7 +16,7 @@
 	</ItemGroup>
 
 	<ItemGroup>
-	  <Folder Include="wwwroot\" />
+	  <ProjectReference Include="..\Shared\BlazorECommerce.Shared.csproj" />
 	</ItemGroup>
 
 </Project>
