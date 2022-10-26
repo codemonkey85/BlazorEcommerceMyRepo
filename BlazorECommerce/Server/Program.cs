@@ -26,4 +26,8 @@ app.MapRazorPages();
 app.MapControllers();
 app.MapFallbackToFile("index.html");
 
+var apiGroup = app.MapGroup("api");
+
+apiGroup.MapProductApi();
+
 app.Run();
