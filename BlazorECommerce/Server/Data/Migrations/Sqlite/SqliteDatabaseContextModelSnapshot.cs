@@ -31,7 +31,7 @@ namespace BlazorECommerce.Server.Data.Migrations.Sqlite
                         .HasColumnType("TEXT");
 
                     b.Property<decimal>("Price")
-                        .HasColumnType("decimal(18,4)");
+                        .HasColumnType("decimal(18,2)");
 
                     b.Property<string>("Title")
                         .IsRequired()
