@@ -2,8 +2,6 @@
 
 public static class ProductApi
 {
-    private static readonly List<Product> Products = new();
-
     public static IEndpointRouteBuilder MapProductApi(this IEndpointRouteBuilder apiGroup)
     {
         var productGroup = apiGroup.MapGroup(nameof(Product));
@@ -21,5 +19,9 @@ public static class ProductApi
         return apiGroup;
     }
 
-    private static Task<Ok<List<Product>>> GetProducts() => Task.FromResult(TypedResults.Ok(Products));
+    private static async Task<Ok<List<Product>>> GetProducts(DatabaseContext databaseContext)
+    {
+        var results = await databaseContext.Products.ToListAsync();
+        return TypedResults.Ok(results);
+    }
 }
