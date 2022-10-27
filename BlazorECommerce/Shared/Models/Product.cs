@@ -1,6 +1,4 @@
-﻿using System.ComponentModel.DataAnnotations.Schema;
-
-namespace BlazorECommerce.Shared.Models;
+﻿namespace BlazorECommerce.Shared.Models;
 
 public class Product
 {
