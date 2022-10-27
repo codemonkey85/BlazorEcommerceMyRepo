@@ -22,7 +22,8 @@ _ = appSettings.DbProvider switch
 };
 
 services
-    .AddScoped(_ => appSettings);
+    .AddScoped(_ => appSettings)
+    .AddScoped<IProductService, ProductService>();
 
 services.Configure<JsonOptions>(options => options.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles);
 

@@ -2,6 +2,7 @@
 global using System.Text.Json.Serialization;
 global using BlazorECommerce.Server.Data;
 global using BlazorECommerce.Server.Endpoints;
+global using BlazorECommerce.Server.Services;
 global using BlazorECommerce.Shared;
 global using BlazorECommerce.Shared.Models;
 global using BlazorECommerce.Shared.Services;

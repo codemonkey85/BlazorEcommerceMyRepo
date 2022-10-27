@@ -19,13 +19,9 @@ public static class ProductApi
         return apiGroup;
     }
 
-    private static async Task<Ok<ServiceResponse<List<Product>>>> GetProducts(DatabaseContext databaseContext)
+    private static async Task<Ok<ServiceResponse<List<Product>>>> GetProducts(IProductService productService)
     {
-        var products = await databaseContext.Products.ToListAsync();
-        var response = new ServiceResponse<List<Product>>()
-        {
-            Data = products
-        };
+        var response = await productService.GetProductListAsync();
         return TypedResults.Ok(response);
     }
 }
