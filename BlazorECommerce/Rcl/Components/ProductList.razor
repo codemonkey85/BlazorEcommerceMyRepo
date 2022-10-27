@@ -1,7 +1,7 @@
-﻿@if (_products is { Count: > 0 })
+﻿@if (ProductService.Products is { Count: > 0 })
 {
     <ul class="list-unstyled">
-        @foreach (var product in _products)
+        @foreach (var product in ProductService.Products)
         {
             <li class="media my-3">
                 <div class="media-img-wrapper m-2">
@@ -19,4 +19,8 @@
             </li>
         }
     </ul>
+}
+else
+{
+    <span>Loading Products...</span>
 }
