@@ -51,6 +51,21 @@ app.MapRazorPages();
 app.MapControllers();
 app.MapFallbackToFile("index.html");
 
+if (appSettings.DbProvider is not null)
+{
+    var databaseContext = app.Services.CreateScope().ServiceProvider.GetRequiredService<DatabaseContext>();
+    switch (appSettings.DbProvider)
+    {
+        case DbProvider.InMemory:
+            databaseContext.Database.EnsureCreated();
+            break;
+        case DbProvider.SqlServer:
+        case DbProvider.Sqlite:
+            databaseContext.Database.Migrate();
+            break;
+    }
+}
+
 var apiGroup = app.MapGroup("api");
 
 apiGroup.MapProductApi();
