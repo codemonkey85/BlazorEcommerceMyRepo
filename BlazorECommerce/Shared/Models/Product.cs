@@ -1,4 +1,6 @@
-﻿namespace BlazorECommerce.Shared.Models;
+﻿using System.ComponentModel.DataAnnotations.Schema;
+
+namespace BlazorECommerce.Shared.Models;
 
 public class Product
 {
@@ -10,5 +12,6 @@ public class Product
 
     public string ImageUrl { get; set; } = string.Empty;
 
+    [Column(TypeName = "decimal(18,4)")]
     public decimal Price { get; set; }
 }

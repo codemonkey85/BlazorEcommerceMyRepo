@@ -26,4 +26,9 @@
 		<ProjectReference Include="..\Shared\BlazorECommerce.Shared.csproj" />
 	</ItemGroup>
 
+	<ItemGroup>
+	  <Folder Include="Data\Migrations\SqlServer\" />
+	  <Folder Include="Data\Migrations\Sqlite\" />
+	</ItemGroup>
+
 </Project>

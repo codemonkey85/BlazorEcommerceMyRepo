@@ -21,6 +21,11 @@ _ = appSettings.DbProvider switch
     _ => throw new Exception($"Unsupported provider: {appSettings.DbProvider}")
 };
 
+services
+    .AddScoped(_ => appSettings);
+
+services.Configure<JsonOptions>(options => options.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles);
+
 var app = builder.Build();
 
 if (app.Environment.IsDevelopment())
