@@ -4,6 +4,7 @@ global using BlazorECommerce.Server.Data;
 global using BlazorECommerce.Server.Endpoints;
 global using BlazorECommerce.Shared;
 global using BlazorECommerce.Shared.Models;
+global using BlazorECommerce.Shared.Services;
 global using Microsoft.AspNetCore.Http.HttpResults;
 global using Microsoft.AspNetCore.Mvc;
 global using Microsoft.AspNetCore.Mvc.RazorPages;
