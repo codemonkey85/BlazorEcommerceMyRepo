@@ -12,14 +12,14 @@ services
     .AddEndpointsApiExplorer()
 .AddSwaggerGen();
 
-//_ = appSettings.DbProvider switch
-//{
-//    null => throw new Exception("No provider found"),
-//    //DbProvider.Sqlite => services.AddDbContext<DatabaseContext, SqliteDatabaseContext>(options => options.UseSqlite(config.GetConnectionString(nameof(DbProvider.Sqlite)) ?? string.Empty)),
-//    //DbProvider.SqlServer => services.AddDbContext<DatabaseContext, SqlServerDatabaseContext>(options => options.UseSqlServer(config.GetConnectionString(nameof(DbProvider.SqlServer)) ?? string.Empty)),
-//    //DbProvider.InMemory => services.AddDbContext<DatabaseContext, InMemoryDatabaseContext>(options => options.UseInMemoryDatabase(nameof(InMemoryDatabaseContext))),
-//    _ => throw new Exception($"Unsupported provider: {appSettings.DbProvider}")
-//};
+_ = appSettings.DbProvider switch
+{
+    null => throw new Exception("No provider found"),
+    DbProvider.Sqlite => services.AddDbContext<DatabaseContext, SqliteDatabaseContext>(options => options.UseSqlite(config.GetConnectionString(nameof(DbProvider.Sqlite)) ?? string.Empty)),
+    DbProvider.SqlServer => services.AddDbContext<DatabaseContext, SqlServerDatabaseContext>(options => options.UseSqlServer(config.GetConnectionString(nameof(DbProvider.SqlServer)) ?? string.Empty)),
+    DbProvider.InMemory => services.AddDbContext<DatabaseContext, InMemoryDatabaseContext>(options => options.UseInMemoryDatabase(nameof(InMemoryDatabaseContext))),
+    _ => throw new Exception($"Unsupported provider: {appSettings.DbProvider}")
+};
 
 var app = builder.Build();
 

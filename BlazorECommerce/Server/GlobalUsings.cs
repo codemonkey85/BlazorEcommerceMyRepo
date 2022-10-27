@@ -1,4 +1,5 @@
 ﻿global using System.Diagnostics;
+global using BlazorECommerce.Server.Data;
 global using BlazorECommerce.Server.Endpoints;
 global using BlazorECommerce.Shared;
 global using BlazorECommerce.Shared.Models;
