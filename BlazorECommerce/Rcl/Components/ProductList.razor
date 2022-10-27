@@ -1,4 +1,4 @@
-﻿@if (ProductService.Products is { Count: > 0 })
+﻿@if (ProductService is { Products.Count: > 0 })
 {
     <ul class="list-unstyled">
         @foreach (var product in ProductService.Products)
