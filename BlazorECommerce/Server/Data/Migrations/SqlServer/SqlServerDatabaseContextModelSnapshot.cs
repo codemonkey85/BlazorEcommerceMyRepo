@@ -47,6 +47,32 @@ namespace BlazorECommerce.Server.Data.Migrations.SqlServer
                     b.HasKey("Id");
 
                     b.ToTable("Products");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Description = "Product 1 Description",
+                            ImageUrl = "https://img.freepik.com/free-psd/cosmetic-product-packaging-mockup_1150-40284.jpg?w=2000",
+                            Price = 9.99m,
+                            Title = "Product 1 Title"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Description = "Product 2 Description",
+                            ImageUrl = "https://img.freepik.com/free-psd/cosmetic-product-packaging-mockup_1150-40282.jpg?w=2000",
+                            Price = 9.99m,
+                            Title = "Product 2 Title"
+                        },
+                        new
+                        {
+                            Id = 3,
+                            Description = "Product 3 Description",
+                            ImageUrl = "https://img.freepik.com/free-photo/pedestal-display-blank-podium-product_1048-16154.jpg?w=996",
+                            Price = 9.99m,
+                            Title = "Product 3 Title"
+                        });
                 });
 #pragma warning restore 612, 618
         }
