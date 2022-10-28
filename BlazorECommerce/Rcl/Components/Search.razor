@@ -1,0 +1,21 @@
+﻿<div class="input-group">
+    <input @ref="SearchInput"
+           @bind-value="_searchText"
+           @bind-value:event="oninput"
+           @onkeyup="HandleSearch"
+           type="search"
+           class="form-control"
+           placeholder="Search..."
+           list="products" />
+    <datalist id="products">
+        @foreach (var suggestion in _suggestions)
+        {
+            <option>@suggestion</option>
+        }
+    </datalist>
+    <div class="input-group-append">
+        <button class="btn btn-primary" @onclick="SearchProducts">
+            <span class="oi oi-magnifying-glass"></span>
+        </button>
+    </div>
+</div>

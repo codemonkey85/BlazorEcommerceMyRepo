@@ -1,17 +1,7 @@
 ﻿@page "/"
-@page "/{categoryUrl}"
+@page "/search/{SearchText}"
+@page "/{CategoryUrl}"
 
 <PageTitle>My Shop</PageTitle>
 
 <ProductList />
-
-@code {
-
-    [Parameter]
-    public string? CategoryUrl { get; set; }
-
-    protected override async Task OnParametersSetAsync()
-    {
-        await ProductService.GetProductsAsync(CategoryUrl);
-    }
-}

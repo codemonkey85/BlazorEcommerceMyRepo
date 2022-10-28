@@ -6,7 +6,7 @@ public partial class ProductList : IDisposable
 
     public void Dispose() => ProductService.ProductsChanged -= StateHasChanged;
 
-    private string GetPriceText(Product product) => product.Variants switch
+    private static string GetPriceText(Product product) => product.Variants switch
     {
         null or { Count: 0 } => string.Empty,
         { Count: 1 } => $"{product.Variants.FirstOrDefault()?.Price:C}",

@@ -25,11 +25,11 @@
                 @if (SelectedVariant.OriginalPrice > SelectedVariant.Price)
                 {
                     <h6 class="text-muted original-price">
-                        $@SelectedVariant?.OriginalPrice
+                        @SelectedVariant?.OriginalPrice.ToString("C")
                     </h6>
                 }
                 <h4 class="price">
-                    $@SelectedVariant?.Price
+                    @SelectedVariant?.Price.ToString("C")
                 </h4>
             }
         </div>

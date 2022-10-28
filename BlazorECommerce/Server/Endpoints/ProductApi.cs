@@ -9,6 +9,8 @@ public static class ProductApi
         productGroup.MapGet("/", GetProducts);
         productGroup.MapGet("/{productId:int}", GetProduct);
         productGroup.MapGet($"/{nameof(Category)}/{{categoryUrl}}", GetProductsByCategory);
+        productGroup.MapGet("/search/{searchText}", SearchProducts);
+        productGroup.MapGet("/searchsuggestions/{searchText}", GetProductSearchSuggestions);
         /*
             productGroup.MapPost("/", PostProduct);
             productGroup.MapPut("/{id:int}", PutProduct);
@@ -35,5 +37,20 @@ public static class ProductApi
     {
         var result = await productService.GetProductsByCategoryAsync(categoryUrl);
         return TypedResults.Ok(result);
+    }
+
+    private static async Task<Ok<ServiceResponse<List<Product>>>> SearchProducts(IProductService productService,
+        string searchText)
+    {
+        var response = await productService.SearchProductsAsync(searchText);
+        return TypedResults.Ok(response);
+    }
+
+    private static async Task<Ok<ServiceResponse<List<string>>>> GetProductSearchSuggestions(
+        IProductService productService,
+        string searchText)
+    {
+        var response = await productService.GetProductSearchSuggestions(searchText);
+        return TypedResults.Ok(response);
     }
 }
