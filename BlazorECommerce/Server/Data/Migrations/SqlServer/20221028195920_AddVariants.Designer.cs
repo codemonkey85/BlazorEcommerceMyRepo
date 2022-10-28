@@ -4,6 +4,7 @@ using BlazorECommerce.Server.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace BlazorECommerce.Server.Data.Migrations.SqlServer
 {
     [DbContext(typeof(SqlServerDatabaseContext))]
-    partial class SqlServerDatabaseContextModelSnapshot : ModelSnapshot
+    [Migration("20221028195920_AddVariants")]
+    partial class AddVariants
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -218,24 +221,10 @@ namespace BlazorECommerce.Server.Data.Migrations.SqlServer
                         },
                         new
                         {
-                            ProductId = 1,
-                            ProductTypeId = 3,
-                            OriginalPrice = 29.99m,
-                            Price = 19.99m
-                        },
-                        new
-                        {
-                            ProductId = 2,
-                            ProductTypeId = 5,
-                            OriginalPrice = 19.99m,
-                            Price = 9.99m
-                        },
-                        new
-                        {
                             ProductId = 2,
                             ProductTypeId = 6,
-                            OriginalPrice = 29.99m,
-                            Price = 19.99m
+                            OriginalPrice = 19.99m,
+                            Price = 9.99m
                         },
                         new
                         {
@@ -243,13 +232,6 @@ namespace BlazorECommerce.Server.Data.Migrations.SqlServer
                             ProductTypeId = 8,
                             OriginalPrice = 19.99m,
                             Price = 9.99m
-                        },
-                        new
-                        {
-                            ProductId = 3,
-                            ProductTypeId = 10,
-                            OriginalPrice = 29.99m,
-                            Price = 19.99m
                         });
                 });
 

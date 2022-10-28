@@ -7,7 +7,31 @@
         <div class="media-body">
             <h2 class="mb-0">@_product.Title</h2>
             <p>@_product.Description</p>
-            <h4 class="price">$@_product.Price</h4>
+            @if (_product.Variants is { Count: > 1 })
+            {
+                <div class="mb-3">
+                    <select class="form-select" @bind="_currentTypeId">
+                        @foreach (var variant in _product.Variants)
+                        {
+                            <option value="@variant.ProductTypeId">
+                                @variant.ProductType.Name
+                            </option>
+                        }
+                    </select>
+                </div>
+            }
+            @if (SelectedVariant is not null)
+            {
+                @if (SelectedVariant.OriginalPrice > SelectedVariant.Price)
+                {
+                    <h6 class="text-muted original-price">
+                        $@SelectedVariant?.OriginalPrice
+                    </h6>
+                }
+                <h4 class="price">
+                    $@SelectedVariant?.Price
+                </h4>
+            }
         </div>
     </div>
 }
