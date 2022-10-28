@@ -20,7 +20,7 @@ public class DatabaseContext : DbContext
             new()
             {
                 Id = 1,
-                Title = "Product 1 Title",
+                Title = "Product 1 Title (Book)",
                 Description = "Product 1 Description",
                 ImageUrl =
                     "https://img.freepik.com/free-psd/cosmetic-product-packaging-mockup_1150-40284.jpg?w=2000",
@@ -30,22 +30,22 @@ public class DatabaseContext : DbContext
             new()
             {
                 Id = 2,
-                Title = "Product 2 Title",
+                Title = "Product 2 Title (Movie)",
                 Description = "Product 2 Description",
                 ImageUrl =
                     "https://img.freepik.com/free-psd/cosmetic-product-packaging-mockup_1150-40282.jpg?w=2000",
                 Price = 9.99M,
-                CategoryId = 1,
+                CategoryId = 2,
             },
             new()
             {
                 Id = 3,
-                Title = "Product 3 Title",
+                Title = "Product 3 Title (Video Game)",
                 Description = "Product 3 Description",
                 ImageUrl =
                     "https://img.freepik.com/free-photo/pedestal-display-blank-podium-product_1048-16154.jpg?w=996",
                 Price = 9.99M,
-                CategoryId = 1,
+                CategoryId = 3,
             },
         });
     }
