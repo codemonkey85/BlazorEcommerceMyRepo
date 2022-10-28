@@ -5,10 +5,7 @@ public record ProductService(DatabaseContext DatabaseContext) : IProductService
     public async Task<ServiceResponse<List<Product>>> GetProductsAsync()
     {
         var data = await DatabaseContext.Products.ToListAsync();
-        return new ServiceResponse<List<Product>>
-        {
-            Data = data
-        };
+        return new ServiceResponse<List<Product>> { Data = data };
     }
 
     public async Task<ServiceResponse<Product>> GetProductAsync(int productId) =>

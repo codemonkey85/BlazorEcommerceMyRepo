@@ -2,7 +2,7 @@
 
 public record ProductService(HttpClient HttpClient) : IProductService
 {
-    public List<Product> Products { get; set; } = new List<Product>();
+    public List<Product> Products { get; set; } = new();
 
     public async Task GetProductsAsync()
     {
