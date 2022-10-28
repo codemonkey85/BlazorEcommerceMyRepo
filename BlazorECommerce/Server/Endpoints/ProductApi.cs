@@ -7,13 +7,11 @@ public static class ProductApi
         var productGroup = apiGroup.MapGroup(nameof(Product));
 
         productGroup.MapGet("/", GetProducts);
-
+        productGroup.MapGet("/{productId:int}", GetProduct);
         /*
-            productGroup.MapGet("/", GetProducts);
-            productGroup.MapGet("/{id:guid}", GetEntity);
-            productGroup.MapPost("/", PostEntity);
-            productGroup.MapPut("/{id:guid}", PutEntity);
-            productGroup.MapDelete("/{id:guid}", DeleteEntity);
+            productGroup.MapPost("/", PostProduct);
+            productGroup.MapPut("/{id:int}", PutProduct);
+            productGroup.MapDelete("/{id:int}", DeleteProduct);
          */
 
         return apiGroup;
@@ -21,7 +19,13 @@ public static class ProductApi
 
     private static async Task<Ok<ServiceResponse<List<Product>>>> GetProducts(IProductService productService)
     {
-        var response = await productService.GetProductListAsync();
+        var response = await productService.GetProductsAsync();
         return TypedResults.Ok(response);
+    }
+
+    private static async Task<Ok<ServiceResponse<Product>>> GetProduct(IProductService productService, int productId)
+    {
+        var result = await productService.GetProductAsync(productId);
+        return TypedResults.Ok(result);
     }
 }

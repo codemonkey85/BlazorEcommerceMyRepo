@@ -2,7 +2,7 @@
 
 public record ProductService(DatabaseContext DatabaseContext) : IProductService
 {
-    public async Task<ServiceResponse<List<Product>>> GetProductListAsync()
+    public async Task<ServiceResponse<List<Product>>> GetProductsAsync()
     {
         var data = await DatabaseContext.Products.ToListAsync();
         return new ServiceResponse<List<Product>>
@@ -10,4 +10,11 @@ public record ProductService(DatabaseContext DatabaseContext) : IProductService
             Data = data
         };
     }
+
+    public async Task<ServiceResponse<Product>> GetProductAsync(int productId) =>
+        await DatabaseContext.Products.FindAsync(productId) switch
+        {
+            null => new ServiceResponse<Product> { Success = false, Message = "Product not found." },
+            var product => new ServiceResponse<Product> { Data = product }
+        };
 }

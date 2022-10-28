@@ -12,4 +12,10 @@ public record ProductService(HttpClient HttpClient) : IProductService
             Products = result.Data;
         }
     }
+
+    public async Task<ServiceResponse<Product>> GetProductAsync(int productId)
+    {
+        var result = await HttpClient.GetFromJsonAsync<ServiceResponse<Product>>($"api/{nameof(Product)}/{productId}");
+        return result!;
+    }
 }
