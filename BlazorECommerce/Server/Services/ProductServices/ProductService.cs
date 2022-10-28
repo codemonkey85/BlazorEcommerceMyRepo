@@ -1,4 +1,4 @@
-﻿namespace BlazorECommerce.Server.Services;
+﻿namespace BlazorECommerce.Server.Services.ProductServices;
 
 public record ProductService(DatabaseContext DatabaseContext) : IProductService
 {

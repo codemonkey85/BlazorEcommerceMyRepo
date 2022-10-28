@@ -1,4 +1,4 @@
-﻿namespace BlazorECommerce.Rcl.Services;
+﻿namespace BlazorECommerce.Rcl.Services.ProductServices;
 
 public interface IProductService
 {
