@@ -11,7 +11,7 @@ public record ProductService(DatabaseContext DatabaseContext) : IProductService
     public async Task<ServiceResponse<Product>> GetProductAsync(int productId) =>
         await DatabaseContext.Products.FindAsync(productId) switch
         {
-            null => new ServiceResponse<Product> { Success = false, Message = "Product not found." },
+            null => new ServiceResponse<Product> { Success = false, Message = $"{nameof(Product)} not found." },
             var product => new ServiceResponse<Product> { Data = product }
         };
 }
