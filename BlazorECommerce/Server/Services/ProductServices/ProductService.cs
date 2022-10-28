@@ -14,4 +14,15 @@ public record ProductService(DatabaseContext DatabaseContext) : IProductService
             null => new ServiceResponse<Product> { Success = false, Message = $"{nameof(Product)} not found." },
             var product => new ServiceResponse<Product> { Data = product }
         };
+
+    public async Task<ServiceResponse<List<Product>>> GetProductsByCategoryAsync(string categoryUrl)
+    {
+        var response = new ServiceResponse<List<Product>>
+        {
+            Data = await DatabaseContext.Products
+                .Where(product => product.Category != null && product.Category.Url == categoryUrl)
+                .ToListAsync()
+        };
+        return response;
+    }
 }

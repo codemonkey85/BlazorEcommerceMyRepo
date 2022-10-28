@@ -1,6 +1,8 @@
 ﻿namespace BlazorECommerce.Rcl.Components;
 
-public partial class ProductList
+public partial class ProductList : IDisposable
 {
-    protected override async Task OnInitializedAsync() => await ProductService.GetProductsAsync();
+    protected override void OnInitialized() => ProductService.ProductsChanged += StateHasChanged;
+
+    public void Dispose() => ProductService.ProductsChanged -= StateHasChanged;
 }

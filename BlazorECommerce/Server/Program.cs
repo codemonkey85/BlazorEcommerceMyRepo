@@ -30,7 +30,8 @@ _ = appSettings.DbProvider switch
 
 services
     .AddScoped(_ => appSettings)
-    .AddScoped<IProductService, ProductService>();
+    .AddScoped<IProductService, ProductService>()
+    .AddScoped<ICategoryService, CategoryService>();
 
 services.Configure<JsonOptions>(options =>
     options.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles);
@@ -79,6 +80,8 @@ if (appSettings.DbProvider is not null)
 
 var apiGroup = app.MapGroup("api");
 
-apiGroup.MapProductApi();
+apiGroup
+    .MapProductApi()
+    .MapCategoryApi();
 
 app.Run();
