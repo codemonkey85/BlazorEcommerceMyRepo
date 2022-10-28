@@ -8,37 +8,49 @@ public class DatabaseContext : DbContext
     {
         base.OnModelCreating(modelBuilder);
 
-        modelBuilder.Entity<Product>().HasData(new List<Product>()
+        modelBuilder.Entity<Category>().HasData(new List<Category>
         {
-            new Product
+            new() { Id = 1, Name = "Books", Url = "books", },
+            new() { Id = 2, Name = "Movies", Url = "movies", },
+            new() { Id = 3, Name = "Video Games", Url = "video-games", },
+        });
+
+        modelBuilder.Entity<Product>().HasData(new List<Product>
+        {
+            new()
             {
                 Id = 1,
                 Title = "Product 1 Title",
                 Description = "Product 1 Description",
                 ImageUrl =
                     "https://img.freepik.com/free-psd/cosmetic-product-packaging-mockup_1150-40284.jpg?w=2000",
-                Price = 9.99M
+                Price = 9.99M,
+                CategoryId = 1,
             },
-            new Product
+            new()
             {
                 Id = 2,
                 Title = "Product 2 Title",
                 Description = "Product 2 Description",
                 ImageUrl =
                     "https://img.freepik.com/free-psd/cosmetic-product-packaging-mockup_1150-40282.jpg?w=2000",
-                Price = 9.99M
+                Price = 9.99M,
+                CategoryId = 1,
             },
-            new Product
+            new()
             {
                 Id = 3,
                 Title = "Product 3 Title",
                 Description = "Product 3 Description",
                 ImageUrl =
                     "https://img.freepik.com/free-photo/pedestal-display-blank-podium-product_1048-16154.jpg?w=996",
-                Price = 9.99M
+                Price = 9.99M,
+                CategoryId = 1,
             },
         });
     }
 
     public virtual DbSet<Product> Products { get; set; } = default!;
+
+    public virtual DbSet<Category> Categories { get; set; } = default!;
 }
