@@ -15,10 +15,10 @@ public record ProductService(DatabaseContext DatabaseContext) : IProductService
                 .Include(product => product.Variants)
                 .ThenInclude(variant => variant.ProductType)
                 .FirstOrDefaultAsync(product => product.Id == productId) switch
-            {
-                null => new ServiceResponse<Product> { Success = false, Message = $"{nameof(Product)} not found." },
-                var product => new ServiceResponse<Product> { Data = product }
-            };
+        {
+            null => new ServiceResponse<Product> { Success = false, Message = $"{nameof(Product)} not found." },
+            var product => new ServiceResponse<Product> { Data = product }
+        };
 
     public async Task<ServiceResponse<List<Product>>> GetProductsByCategoryAsync(string categoryUrl) => new()
     {
@@ -28,22 +28,19 @@ public record ProductService(DatabaseContext DatabaseContext) : IProductService
             .ToListAsync()
     };
 
+    private IQueryable<Product> FindProductsBySearchStringAsync(string searchText) =>
+        DatabaseContext.Products
+                .Include(product => product.Variants)
+                .Where(product => product.Title.ToLower().Contains(searchText.ToLower()) ||
+                                  product.Description.ToLower().Contains(searchText.ToLower()));
     public async Task<ServiceResponse<List<Product>>> SearchProductsAsync(string searchText) => new()
     {
-        Data = await FindProductsBySearchStringAsync(searchText)
+        Data = await FindProductsBySearchStringAsync(searchText).ToListAsync()
     };
 
-    private async Task<List<Product>> FindProductsBySearchStringAsync(string searchText) =>
-        await DatabaseContext.Products
-            .Include(product => product.Variants)
-            .Where(product =>
-                product.Title.ToLower().Contains(searchText.ToLower()) ||
-                product.Description.ToLower().Contains(searchText.ToLower()))
-            .ToListAsync();
 
-    public async Task<ServiceResponse<List<string>>> GetProductSearchSuggestions(string searchText)
+    public async Task<ServiceResponse<List<string>>> GetProductSearchSuggestions(string searchText) => new()
     {
-        var products = await FindProductsBySearchStringAsync(searchText);
-        return new ServiceResponse<List<string>> { Data = products.Select(product => product.Title).ToList() };
-    }
+        Data = await FindProductsBySearchStringAsync(searchText).Select(product => product.Title).ToListAsync()
+    };
 }
