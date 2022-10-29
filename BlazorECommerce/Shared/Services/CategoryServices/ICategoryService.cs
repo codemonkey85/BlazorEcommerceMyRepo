@@ -1,4 +1,4 @@
-﻿namespace BlazorECommerce.Rcl.Services.CategoryServices;
+﻿namespace BlazorECommerce.Shared.Services.CategoryServices;
 
 public interface ICategoryService
 {
