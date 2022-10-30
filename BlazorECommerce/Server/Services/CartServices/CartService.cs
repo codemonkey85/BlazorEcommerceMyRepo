@@ -11,37 +11,27 @@ public record CartService(DatabaseContext DatabaseContext) : ICartService
 
         foreach (var cartItem in cartItems)
         {
-            var product = await DatabaseContext.Products
-                .Where(product => product.Id == cartItem.ProductId)
-                .FirstOrDefaultAsync();
+            var cartProduct = await (
+                from products in DatabaseContext.Products
+                join productVariants in DatabaseContext.ProductVariants.Include(v => v.ProductType) on new
+                { ProductId = products.Id, cartItem.ProductTypeId } equals new
+                { productVariants.ProductId, productVariants.ProductTypeId }
+                where products.Id == cartItem.ProductId
+                select new CartProductResponse
+                {
+                    ProductId = products.Id,
+                    Title = products.Title,
+                    ImageUrl = products.ImageUrl,
+                    Price = productVariants.Price,
+                    ProductType = productVariants.ProductType.Name,
+                    ProductTypeId = productVariants.ProductTypeId,
+                    Quantity = cartItem.Quantity,
+                }).FirstOrDefaultAsync();
 
-            if (product is null)
+            if (cartProduct is not null)
             {
-                continue;
+                result.Data.Add(cartProduct);
             }
-
-            var productVariant = await DatabaseContext.ProductVariants
-                .Include(variant => variant.ProductType)
-                .Where(variant => variant.ProductId == cartItem.ProductId && variant.ProductTypeId == cartItem.ProductTypeId)
-                .FirstOrDefaultAsync();
-
-            if (productVariant is null)
-            {
-                continue;
-            }
-
-            var cartProduct = new CartProductResponse
-            {
-                ProductId = product.Id,
-                Title = product.Title,
-                ImageUrl = product.ImageUrl,
-                Price = productVariant.Price,
-                ProductType = productVariant.ProductType.Name,
-                ProductTypeId = productVariant.ProductTypeId,
-                Quantity = cartItem.Quantity,
-            };
-
-            result.Data.Add(cartProduct);
         }
 
         return result;
