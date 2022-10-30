@@ -78,6 +78,9 @@ namespace BlazorECommerce.Server.Data.Migrations.SqlServer
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<bool>("Featured")
+                        .HasColumnType("bit");
+
                     b.Property<string>("ImageUrl")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -98,6 +101,7 @@ namespace BlazorECommerce.Server.Data.Migrations.SqlServer
                             Id = 1,
                             CategoryId = 1,
                             Description = "Product 1 Description",
+                            Featured = false,
                             ImageUrl = "https://img.freepik.com/free-psd/cosmetic-product-packaging-mockup_1150-40284.jpg?w=2000",
                             Title = "Product 1 Title (Book)"
                         },
@@ -106,6 +110,7 @@ namespace BlazorECommerce.Server.Data.Migrations.SqlServer
                             Id = 2,
                             CategoryId = 2,
                             Description = "Product 2 Description",
+                            Featured = true,
                             ImageUrl = "https://img.freepik.com/free-psd/cosmetic-product-packaging-mockup_1150-40282.jpg?w=2000",
                             Title = "Product 2 Title (Movie)"
                         },
@@ -114,6 +119,7 @@ namespace BlazorECommerce.Server.Data.Migrations.SqlServer
                             Id = 3,
                             CategoryId = 3,
                             Description = "Product 3 Description",
+                            Featured = false,
                             ImageUrl = "https://img.freepik.com/free-photo/pedestal-display-blank-podium-product_1048-16154.jpg?w=996",
                             Title = "Product 3 Title (Video Game)"
                         });

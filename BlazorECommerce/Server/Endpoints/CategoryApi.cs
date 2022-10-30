@@ -6,24 +6,19 @@ public static class CategoryApi
     {
         var categoryGroup = apiGroup.MapGroup(nameof(Category));
 
-        categoryGroup.MapGet("/", GetCategories);
-        categoryGroup.MapGet("/{categoryId:int}", GetCategory);
-        /*
-            categoryGroup.MapPost("/", PostCategory);
-            categoryGroup.MapPut("/{id:int}", PutCategory);
-            categoryGroup.MapDelete("/{id:int}", DeleteCategory);
-         */
+        categoryGroup.MapGet("/", GetCategoriesAsync);
+        categoryGroup.MapGet("/{categoryId:int}", GetCategoryAsync);
 
         return apiGroup;
     }
 
-    private static async Task<Ok<ServiceResponse<List<Category>>>> GetCategories(ICategoryService categoryService)
+    private static async Task<Ok<ServiceResponse<List<Category>>>> GetCategoriesAsync(ICategoryService categoryService)
     {
         var response = await categoryService.GetCategoriesAsync();
         return TypedResults.Ok(response);
     }
 
-    private static async Task<Ok<ServiceResponse<Category>>> GetCategory(ICategoryService categoryService,
+    private static async Task<Ok<ServiceResponse<Category>>> GetCategoryAsync(ICategoryService categoryService,
         int categoryId)
     {
         var result = await categoryService.GetCategoryAsync(categoryId);

@@ -32,6 +32,12 @@
                     @SelectedVariant?.Price.ToString("C")
                 </h4>
             }
+            @if (SelectedVariant is not null)
+            {
+                <button class="btn btn-primary" @onclick="@(async () => await AddToCartAsync())">
+                    <i class="oi oi-cart"></i>&nbsp;&nbsp;&nbsp;Add to cart
+                </button>
+            }
         </div>
     </div>
 }

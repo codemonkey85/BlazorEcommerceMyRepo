@@ -6,51 +6,53 @@ public static class ProductApi
     {
         var productGroup = apiGroup.MapGroup(nameof(Product));
 
-        productGroup.MapGet("/", GetProducts);
-        productGroup.MapGet("/{productId:int}", GetProduct);
-        productGroup.MapGet($"/{nameof(Category)}/{{categoryUrl}}", GetProductsByCategory);
-        productGroup.MapGet("/search/{searchText}", SearchProducts);
-        productGroup.MapGet("/searchsuggestions/{searchText}", GetProductSearchSuggestions);
-        /*
-            productGroup.MapPost("/", PostProduct);
-            productGroup.MapPut("/{id:int}", PutProduct);
-            productGroup.MapDelete("/{id:int}", DeleteProduct);
-         */
+        productGroup.MapGet("/", GetProductsAsync);
+        productGroup.MapGet("/{productId:int}", GetProductAsync);
+        productGroup.MapGet($"/{nameof(Category)}/{{categoryUrl}}", GetProductsByCategoryAsync);
+        productGroup.MapGet("/search/{searchText}/{page:int}", SearchProductsAsync);
+        productGroup.MapGet("/searchsuggestions/{searchText}", GetProductSearchSuggestionsAsync);
+        productGroup.MapGet("/featured", GetFeaturedProductsAsync);
 
         return apiGroup;
     }
 
-    private static async Task<Ok<ServiceResponse<List<Product>>>> GetProducts(IProductService productService)
+    private static async Task<Ok<ServiceResponse<List<Product>>>> GetProductsAsync(IProductService productService)
     {
         var response = await productService.GetProductsAsync();
         return TypedResults.Ok(response);
     }
 
-    private static async Task<Ok<ServiceResponse<Product>>> GetProduct(IProductService productService, int productId)
+    private static async Task<Ok<ServiceResponse<Product>>> GetProductAsync(IProductService productService, int productId)
     {
         var result = await productService.GetProductAsync(productId);
         return TypedResults.Ok(result);
     }
 
-    private static async Task<Ok<ServiceResponse<List<Product>>>> GetProductsByCategory(IProductService productService,
+    private static async Task<Ok<ServiceResponse<List<Product>>>> GetProductsByCategoryAsync(IProductService productService,
         string categoryUrl)
     {
         var result = await productService.GetProductsByCategoryAsync(categoryUrl);
         return TypedResults.Ok(result);
     }
 
-    private static async Task<Ok<ServiceResponse<List<Product>>>> SearchProducts(IProductService productService,
-        string searchText)
+    private static async Task<Ok<ServiceResponse<ProductSearchResult>>> SearchProductsAsync(IProductService productService,
+        string searchText, int page)
     {
-        var response = await productService.SearchProductsAsync(searchText);
+        var response = await productService.SearchProductsAsync(searchText, page);
         return TypedResults.Ok(response);
     }
 
-    private static async Task<Ok<ServiceResponse<List<string>>>> GetProductSearchSuggestions(
+    private static async Task<Ok<ServiceResponse<List<string>>>> GetProductSearchSuggestionsAsync(
         IProductService productService,
         string searchText)
     {
         var response = await productService.GetProductSearchSuggestions(searchText);
+        return TypedResults.Ok(response);
+    }
+
+    private static async Task<Ok<ServiceResponse<List<Product>>>> GetFeaturedProductsAsync(IProductService productService)
+    {
+        var response = await productService.GetFeaturedProductsAsync();
         return TypedResults.Ok(response);
     }
 }

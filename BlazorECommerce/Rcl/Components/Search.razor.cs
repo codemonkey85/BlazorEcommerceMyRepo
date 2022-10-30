@@ -16,7 +16,7 @@ public partial class Search
         await SearchInput.FocusAsync();
     }
 
-    public void SearchProducts() => NavigationManager.NavigateTo($"search/{_searchText}");
+    public void SearchProducts() => NavigationManager.NavigateTo($"search/{_searchText}/1");
 
     public async Task HandleSearch(KeyboardEventArgs args)
     {

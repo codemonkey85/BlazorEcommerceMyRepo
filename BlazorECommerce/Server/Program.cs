@@ -30,6 +30,7 @@ _ = appSettings.DbProvider switch
 
 services
     .AddScoped(_ => appSettings)
+    .AddScoped<ICartService, CartService>()
     .AddScoped<IProductService, ProductService>()
     .AddScoped<ICategoryService, CategoryService>();
 
@@ -81,6 +82,7 @@ if (appSettings.DbProvider is not null)
 var apiGroup = app.MapGroup("api");
 
 apiGroup
+    .MapCartApi()
     .MapProductApi()
     .MapCategoryApi();
 

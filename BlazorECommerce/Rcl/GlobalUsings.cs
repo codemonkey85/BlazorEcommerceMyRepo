@@ -1,5 +1,9 @@
-﻿global using BlazorECommerce.Shared.Models;
+﻿global using BlazorECommerce.Rcl.Shared;
+global using BlazorECommerce.Shared.DTOs;
+global using BlazorECommerce.Shared.Models;
+global using BlazorECommerce.Shared.Services.CartService;
 global using BlazorECommerce.Shared.Services.CategoryServices;
 global using BlazorECommerce.Shared.Services.ProductServices;
+global using Blazored.LocalStorage;
 global using Microsoft.AspNetCore.Components;
 global using Microsoft.AspNetCore.Components.Web;

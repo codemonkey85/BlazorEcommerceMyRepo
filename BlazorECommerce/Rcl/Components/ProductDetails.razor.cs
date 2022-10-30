@@ -28,4 +28,21 @@ public partial class ProductDetails
 
     private ProductVariant? SelectedVariant =>
         _product?.Variants.FirstOrDefault(v => v.ProductTypeId == _currentTypeId);
+
+    private async Task AddToCartAsync(int quantity = 1)
+    {
+        if (SelectedVariant is null)
+        {
+            return;
+        }
+
+        var cartItem = new CartItem
+        {
+            ProductId = SelectedVariant.ProductId,
+            ProductTypeId = SelectedVariant.ProductTypeId,
+            Quantity = quantity < 1 ? 1 : quantity,
+        };
+
+        await CartService.AddToCartAsync(cartItem);
+    }
 }

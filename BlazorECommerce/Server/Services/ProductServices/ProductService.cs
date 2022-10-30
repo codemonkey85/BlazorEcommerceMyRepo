@@ -5,8 +5,8 @@ public record ProductService(DatabaseContext DatabaseContext) : IProductService
     public async Task<ServiceResponse<List<Product>>> GetProductsAsync()
     {
         var data = await DatabaseContext.Products
-            .Include(product => product.Variants)
-            .ToListAsync();
+                .Include(product => product.Variants)
+                .ToListAsync();
         return new ServiceResponse<List<Product>> { Data = data };
     }
 
@@ -23,9 +23,9 @@ public record ProductService(DatabaseContext DatabaseContext) : IProductService
     public async Task<ServiceResponse<List<Product>>> GetProductsByCategoryAsync(string categoryUrl) => new()
     {
         Data = await DatabaseContext.Products
-            .Include(product => product.Variants)
-            .Where(product => product.Category != null && product.Category.Url == categoryUrl)
-            .ToListAsync()
+                .Include(product => product.Variants)
+                .Where(product => product.Category != null && product.Category.Url == categoryUrl)
+                .ToListAsync()
     };
 
     private IQueryable<Product> FindProductsBySearchStringAsync(string searchText) =>
@@ -33,14 +33,41 @@ public record ProductService(DatabaseContext DatabaseContext) : IProductService
                 .Include(product => product.Variants)
                 .Where(product => product.Title.ToLower().Contains(searchText.ToLower()) ||
                                   product.Description.ToLower().Contains(searchText.ToLower()));
-    public async Task<ServiceResponse<List<Product>>> SearchProductsAsync(string searchText) => new()
+    public async Task<ServiceResponse<ProductSearchResult>> SearchProductsAsync(string searchText, int page)
     {
-        Data = await FindProductsBySearchStringAsync(searchText).ToListAsync()
-    };
+        const int pageSize = 2;
+        var productsFound = await FindProductsBySearchStringAsync(searchText).ToListAsync();
+        var pageCount = (int)Math.Ceiling(productsFound.Count / (float)pageSize);
 
+        var products = productsFound
+                .OrderBy(product => product.Id)
+                .Skip((page - 1) * pageSize)
+                .Take(pageSize)
+                .ToList();
+
+        return new ServiceResponse<ProductSearchResult>
+        {
+            Data = new ProductSearchResult
+            {
+                Products = products,
+                CurrentPage = page,
+                Pages = pageCount,
+            }
+        };
+    }
 
     public async Task<ServiceResponse<List<string>>> GetProductSearchSuggestions(string searchText) => new()
     {
-        Data = await FindProductsBySearchStringAsync(searchText).Select(product => product.Title).ToListAsync()
+        Data = await FindProductsBySearchStringAsync(searchText)
+                .Select(product => product.Title)
+                .ToListAsync()
+    };
+
+    public async Task<ServiceResponse<List<Product>>> GetFeaturedProductsAsync() => new()
+    {
+        Data = await DatabaseContext.Products
+                .Include(product => product.Variants)
+                .Where(product => product.Featured)
+                .ToListAsync()
     };
 }

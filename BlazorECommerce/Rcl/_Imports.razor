@@ -1,8 +1,9 @@
 ﻿@using BlazorECommerce.Rcl.Components
-@using BlazorECommerce.Rcl.Shared
 @using Microsoft.AspNetCore.Components.Routing
 @using Microsoft.AspNetCore.Components.Web
 
 @inject NavigationManager NavigationManager
-@inject IProductService ProductService
+@inject ICartService CartService
 @inject ICategoryService CategoryService
+@inject IProductService ProductService
+@inject ISyncLocalStorageService SyncLocalStorageService

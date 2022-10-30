@@ -53,6 +53,7 @@ public class DatabaseContext : DbContext
                     ImageUrl =
                         "https://img.freepik.com/free-psd/cosmetic-product-packaging-mockup_1150-40282.jpg?w=2000",
                     CategoryId = 2,
+                    Featured = true,
                 },
                 new()
                 {
