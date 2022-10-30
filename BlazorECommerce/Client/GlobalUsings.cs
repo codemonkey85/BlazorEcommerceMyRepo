@@ -1,6 +1,9 @@
-﻿global using BlazorECommerce.Rcl;
-global using BlazorECommerce.Rcl.Services.CategoryServices;
-global using BlazorECommerce.Rcl.Services.ProductServices;
+﻿global using System.Net.Http.Json;
+global using BlazorECommerce.Client.Services.CategoryServices;
+global using BlazorECommerce.Client.Services.ProductServices;
+global using BlazorECommerce.Rcl;
+global using BlazorECommerce.Shared.Models;
+global using BlazorECommerce.Shared.Services;
 global using BlazorECommerce.Shared.Services.CategoryServices;
 global using BlazorECommerce.Shared.Services.ProductServices;
 global using Microsoft.AspNetCore.Components.Web;

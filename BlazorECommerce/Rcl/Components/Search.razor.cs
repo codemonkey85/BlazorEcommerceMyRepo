@@ -1,6 +1,4 @@
-﻿using Microsoft.AspNetCore.Components.Web;
-
-namespace BlazorECommerce.Rcl.Components;
+﻿namespace BlazorECommerce.Rcl.Components;
 
 public partial class Search
 {

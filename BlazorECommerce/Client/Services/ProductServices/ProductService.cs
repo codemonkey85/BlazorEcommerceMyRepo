@@ -1,4 +1,4 @@
-﻿namespace BlazorECommerce.Rcl.Services.ProductServices;
+﻿namespace BlazorECommerce.Client.Services.ProductServices;
 
 public record ProductService(HttpClient HttpClient) : IProductService
 {

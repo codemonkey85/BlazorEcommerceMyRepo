@@ -1,4 +1,4 @@
-﻿namespace BlazorECommerce.Rcl.Services.CategoryServices;
+﻿namespace BlazorECommerce.Client.Services.CategoryServices;
 
 public record CategoryService(HttpClient HttpClient) : ICategoryService
 {
