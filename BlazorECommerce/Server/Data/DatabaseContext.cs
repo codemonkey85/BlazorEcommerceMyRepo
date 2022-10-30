@@ -4,6 +4,11 @@ public class DatabaseContext : DbContext
 {
     protected DatabaseContext(DbContextOptions dbContextOptions) : base(dbContextOptions) { }
 
+#if DEBUG
+    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder) =>
+        optionsBuilder.LogTo(Console.WriteLine);
+#endif
+
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         base.OnModelCreating(modelBuilder);
