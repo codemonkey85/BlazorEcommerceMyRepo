@@ -16,7 +16,7 @@ public record CartService(DatabaseContext DatabaseContext) : ICartService
                 join productVariants in DatabaseContext.ProductVariants.Include(v => v.ProductType) on new
                 { ProductId = products.Id, cartItem.ProductTypeId } equals new
                 { productVariants.ProductId, productVariants.ProductTypeId }
-                where products.Id == cartItem.ProductId
+                where products.Id == cartItem.ProductId && productVariants.ProductTypeId == cartItem.ProductTypeId
                 select new CartProductResponse
                 {
                     ProductId = products.Id,
