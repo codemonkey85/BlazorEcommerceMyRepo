@@ -42,6 +42,23 @@ public record AuthService(DatabaseContext DatabaseContext, AppSettings AppSettin
         return response;
     }
 
+    public async Task<ServiceResponse<bool>> ChangePasswordAsync(int userId, string newPassword)
+    {
+        var user = await DatabaseContext.Users.FindAsync(userId);
+        if (user is null)
+        {
+            return new ServiceResponse<bool> { Success = false, Message = "User not found.", Data = false, };
+        }
+
+        CreatePasswordHash(newPassword, out var passwordHash, out var passwordSalt);
+
+        user.PasswordHash = passwordHash;
+        user.PasswordSalt = passwordSalt;
+        await DatabaseContext.SaveChangesAsync();
+
+        return new ServiceResponse<bool> { Success = true, Message = "Password has been changed.", Data = true, };
+    }
+
     private async Task<bool> UserExistsAsync(string email) =>
         await DatabaseContext.Users.AnyAsync(user => user.Email.ToLower() == email.ToLower());
 

@@ -35,6 +35,19 @@ services
     .AddScoped<IProductService, ProductService>()
     .AddScoped<ICategoryService, CategoryService>();
 
+services
+    .AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+    .AddJwtBearer(options =>
+    {
+        options.TokenValidationParameters = new TokenValidationParameters
+        {
+            ValidateIssuerSigningKey = true,
+            IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(appSettings.AuthSettings.AuthToken)),
+            ValidateIssuer = false,
+            ValidateAudience = false,
+        };
+    });
+
 services.Configure<JsonOptions>(options =>
     options.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles);
 
@@ -58,6 +71,9 @@ app.UseBlazorFrameworkFiles();
 app.UseStaticFiles();
 
 app.UseRouting();
+
+app.UseAuthentication();
+app.UseAuthorization();
 
 app.MapRazorPages();
 app.MapControllers();

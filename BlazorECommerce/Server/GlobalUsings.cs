@@ -14,6 +14,7 @@ global using BlazorECommerce.Shared;
 global using BlazorECommerce.Shared.DTOs;
 global using BlazorECommerce.Shared.Models;
 global using BlazorECommerce.Shared.Services;
+global using Microsoft.AspNetCore.Authentication.JwtBearer;
 global using Microsoft.AspNetCore.Http.HttpResults;
 global using Microsoft.AspNetCore.Mvc;
 global using Microsoft.AspNetCore.Mvc.RazorPages;
