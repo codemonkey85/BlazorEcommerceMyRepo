@@ -2,8 +2,8 @@
 
 public partial class Search
 {
-    private string _searchText = string.Empty;
-    private List<string> _suggestions = new();
+    private string searchText = string.Empty;
+    private List<string> suggestions = new();
     protected ElementReference SearchInput;
 
     protected override async Task OnAfterRenderAsync(bool firstRender)
@@ -16,7 +16,7 @@ public partial class Search
         await SearchInput.FocusAsync();
     }
 
-    public void SearchProducts() => NavigationManager.NavigateTo($"search/{_searchText}/1");
+    public void SearchProducts() => NavigationManager.NavigateTo($"search/{searchText}/1");
 
     public async Task HandleSearch(KeyboardEventArgs args)
     {
@@ -24,9 +24,9 @@ public partial class Search
         {
             SearchProducts();
         }
-        else if (_searchText is { Length: > 1 })
+        else if (searchText is { Length: > 1 })
         {
-            _suggestions = await ProductService.GetProductSearchSuggestionsAsync(_searchText);
+            suggestions = await ProductService.GetProductSearchSuggestionsAsync(searchText);
         }
     }
 }

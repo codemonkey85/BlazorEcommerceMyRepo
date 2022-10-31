@@ -1,17 +1,17 @@
-﻿@if (_product is not null)
+﻿@if (product is not null)
 {
     <div class="media">
         <div class="media-img-wrapper m-3">
-            <img class="media-img" src="@_product.ImageUrl" alt="@_product.Title" />
+            <img class="media-img" src="@product.ImageUrl" alt="@product.Title" />
         </div>
         <div class="media-body">
-            <h2 class="mb-0">@_product.Title</h2>
-            <p>@_product.Description</p>
-            @if (_product.Variants is { Count: > 1 })
+            <h2 class="mb-0">@product.Title</h2>
+            <p>@product.Description</p>
+            @if (product.Variants is { Count: > 1 })
             {
                 <div class="mb-3">
-                    <select class="form-select" @bind="_currentTypeId">
-                        @foreach (var variant in _product.Variants)
+                    <select class="form-select" @bind="currentTypeId">
+                        @foreach (var variant in product.Variants)
                         {
                             <option value="@variant.ProductTypeId">
                                 @variant.ProductType.Name
@@ -43,5 +43,5 @@
 }
 else
 {
-    <span>@_message</span>
+    <span>@message</span>
 }

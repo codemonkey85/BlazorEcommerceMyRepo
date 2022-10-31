@@ -2,32 +2,32 @@
 
 public partial class ProductDetails
 {
-    private Product? _product = null;
-    private string _message = string.Empty;
-    private int _currentTypeId = 1;
+    private Product? product = null;
+    private string message = string.Empty;
+    private int currentTypeId = 1;
 
     [Parameter] public int Id { get; set; }
 
     protected override async Task OnParametersSetAsync()
     {
-        _message = "Loading Product...";
+        message = "Loading Product...";
         var result = await ProductService.GetProductAsync(Id);
         if (result.Success)
         {
-            _product = result.Data;
-            if (_product is { Variants.Count: > 0 })
+            product = result.Data;
+            if (product is { Variants.Count: > 0 })
             {
-                _currentTypeId = _product.Variants[0].ProductTypeId;
+                currentTypeId = product.Variants[0].ProductTypeId;
             }
         }
         else
         {
-            _message = result.Message;
+            message = result.Message;
         }
     }
 
     private ProductVariant? SelectedVariant =>
-        _product?.Variants.FirstOrDefault(v => v.ProductTypeId == _currentTypeId);
+        product?.Variants.FirstOrDefault(v => v.ProductTypeId == currentTypeId);
 
     private async Task AddToCartAsync(int quantity = 1)
     {

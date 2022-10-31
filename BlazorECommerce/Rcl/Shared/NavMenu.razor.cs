@@ -2,11 +2,11 @@
 
 public partial class NavMenu
 {
-    private bool _collapseNavMenu = true;
+    private bool collapseNavMenu = true;
 
-    private string? NavMenuCssClass => _collapseNavMenu ? "collapse" : null;
+    private string? NavMenuCssClass => collapseNavMenu ? "collapse" : null;
 
-    private void ToggleNavMenu() => _collapseNavMenu = !_collapseNavMenu;
+    private void ToggleNavMenu() => collapseNavMenu = !collapseNavMenu;
 
     protected override async Task OnInitializedAsync() => await CategoryService.GetCategoriesAsync();
 }
