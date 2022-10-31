@@ -1,9 +1,16 @@
 ﻿@using BlazorECommerce.Rcl.Components
+@using BlazorECommerce.Shared.Services.AuthServices
+@using Microsoft.AspNetCore.Authorization
+@using Microsoft.AspNetCore.Components.Authorization
 @using Microsoft.AspNetCore.Components.Routing
+@using Microsoft.AspNetCore.Components.Forms
 @using Microsoft.AspNetCore.Components.Web
 
+@inject AuthenticationStateProvider AuthenticationStateProvider
 @inject NavigationManager NavigationManager
+@inject IAuthService AuthService
 @inject ICartService CartService
 @inject ICategoryService CategoryService
 @inject IProductService ProductService
+@inject ILocalStorageService LocalStorageService
 @inject ISyncLocalStorageService SyncLocalStorageService

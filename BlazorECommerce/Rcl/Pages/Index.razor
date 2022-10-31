@@ -2,7 +2,7 @@
 @page "/search/{SearchText}/{Page:int}"
 @page "/category/{CategoryUrl}"
 
-<PageTitle>My Shop</PageTitle>
+<PageTitle>@pageTitle</PageTitle>
 
 @if (SearchText is not { Length: > 0 } && CategoryUrl is not { Length: > 0 })
 {

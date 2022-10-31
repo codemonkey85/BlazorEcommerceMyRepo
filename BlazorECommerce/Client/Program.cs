@@ -7,8 +7,12 @@ var services = builder.Services;
 services
     .AddBlazoredLocalStorage()
     .AddScoped(_ => new HttpClient { BaseAddress = new Uri(builder.HostEnvironment.BaseAddress) })
+    .AddScoped<IAuthService, AuthService>()
     .AddScoped<ICartService, CartService>()
     .AddScoped<IProductService, ProductService>()
-    .AddScoped<ICategoryService, CategoryService>();
+    .AddScoped<ICategoryService, CategoryService>()
+    .AddOptions()
+    .AddAuthorizationCore()
+    .AddScoped<AuthenticationStateProvider, CustomAuthStateProvider>();
 
 await builder.Build().RunAsync();

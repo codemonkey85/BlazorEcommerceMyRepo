@@ -248,6 +248,32 @@ namespace BlazorECommerce.Server.Data.Migrations.Sqlite
                         });
                 });
 
+            modelBuilder.Entity("BlazorECommerce.Shared.Models.User", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER");
+
+                    b.Property<DateTime>("DateCreated")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("Email")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.Property<byte[]>("PasswordHash")
+                        .IsRequired()
+                        .HasColumnType("BLOB");
+
+                    b.Property<byte[]>("PasswordSalt")
+                        .IsRequired()
+                        .HasColumnType("BLOB");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Users");
+                });
+
             modelBuilder.Entity("BlazorECommerce.Shared.Models.Product", b =>
                 {
                     b.HasOne("BlazorECommerce.Shared.Models.Category", "Category")

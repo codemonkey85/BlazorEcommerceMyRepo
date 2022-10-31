@@ -89,4 +89,6 @@ public class DatabaseContext : DbContext
     public virtual DbSet<ProductType> ProductTypes { get; set; } = default!;
 
     public virtual DbSet<ProductVariant> ProductVariants { get; set; } = default!;
+
+    public virtual DbSet<User> Users { get; set; } = default!;
 }
