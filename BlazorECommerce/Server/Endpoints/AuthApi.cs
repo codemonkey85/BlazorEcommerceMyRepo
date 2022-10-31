@@ -6,13 +6,14 @@ public static class AuthApi
     {
         var authGroup = apiGroup.MapGroup("auth");
 
-        authGroup.MapPost("register", RegisterUser);
+        authGroup.MapPost("register", RegisterUserAsync);
         authGroup.MapPost("login", LogInAsync);
+        authGroup.MapPost("changepassword", ChangePasswordAsync);
 
         return apiGroup;
     }
 
-    private static async Task<Results<Ok<ServiceResponse<int>>, BadRequest<ServiceResponse<int>>>> RegisterUser(
+    private static async Task<Results<Ok<ServiceResponse<int>>, BadRequest<ServiceResponse<int>>>> RegisterUserAsync(
         IAuthService authService, UserRegister request)
     {
         var response = await authService.RegisterAsync(new User { Email = request.Email }, request.Password);
@@ -24,5 +25,19 @@ public static class AuthApi
     {
         var response = await authService.LogInAsync(request.Email, request.Password);
         return !response.Success ? TypedResults.BadRequest(response) : TypedResults.Ok(response);
+    }
+
+    [Authorize]
+    private static async Task<Results<Ok<ServiceResponse<bool>>, BadRequest<ServiceResponse<bool>>>>
+        ChangePasswordAsync(ClaimsPrincipal user, [FromBody] string newPassword)
+    {
+        var principalUserId = user.FindFirstValue(ClaimTypes.NameIdentifier);
+        if (!int.TryParse(principalUserId, out var userId))
+        {
+            return TypedResults.BadRequest(new ServiceResponse<bool>());
+        }
+
+        // TODO: finish it
+        return null;
     }
 }
