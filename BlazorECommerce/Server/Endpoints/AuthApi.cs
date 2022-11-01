@@ -29,15 +29,16 @@ public static class AuthApi
 
     [Authorize]
     private static async Task<Results<Ok<ServiceResponse<bool>>, BadRequest<ServiceResponse<bool>>>>
-        ChangePasswordAsync(ClaimsPrincipal user, [FromBody] string newPassword)
+        ChangePasswordAsync(IAuthService authService, ClaimsPrincipal user, [FromBody] string newPassword)
     {
         var principalUserId = user.FindFirstValue(ClaimTypes.NameIdentifier);
         if (!int.TryParse(principalUserId, out var userId))
         {
             return TypedResults.BadRequest(new ServiceResponse<bool>());
         }
-
-        // TODO: finish it
-        return null;
+        var response = await authService.ChangePasswordAsync(userId, newPassword);
+        return !response.Success
+            ? (Results<Ok<ServiceResponse<bool>>, BadRequest<ServiceResponse<bool>>>)TypedResults.BadRequest(response)
+            : (Results<Ok<ServiceResponse<bool>>, BadRequest<ServiceResponse<bool>>>)TypedResults.Ok(response);
     }
 }

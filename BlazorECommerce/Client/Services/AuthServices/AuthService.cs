@@ -13,4 +13,10 @@ public record AuthService(HttpClient HttpClient) : IAuthService
         var results = await HttpClient.PostAsJsonAsync("api/auth/login", request);
         return await results.Content.ReadFromJsonAsync<ServiceResponse<string>>() ?? new ServiceResponse<string>();
     }
+
+    public async Task<ServiceResponse<bool>> ChangePasswordAsync(UserChangePassword request)
+    {
+        var results = await HttpClient.PostAsJsonAsync("api/auth/changepassword", request.Password);
+        return await results.Content.ReadFromJsonAsync<ServiceResponse<bool>>() ?? new ServiceResponse<bool>();
+    }
 }
