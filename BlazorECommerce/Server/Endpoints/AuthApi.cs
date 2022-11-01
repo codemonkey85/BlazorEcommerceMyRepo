@@ -36,9 +36,8 @@ public static class AuthApi
         {
             return TypedResults.BadRequest(new ServiceResponse<bool>());
         }
+
         var response = await authService.ChangePasswordAsync(userId, newPassword);
-        return !response.Success
-            ? (Results<Ok<ServiceResponse<bool>>, BadRequest<ServiceResponse<bool>>>)TypedResults.BadRequest(response)
-            : (Results<Ok<ServiceResponse<bool>>, BadRequest<ServiceResponse<bool>>>)TypedResults.Ok(response);
+        return !response.Success ? TypedResults.BadRequest(response) : TypedResults.Ok(response);
     }
 }
