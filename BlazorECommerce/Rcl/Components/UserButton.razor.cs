@@ -17,6 +17,7 @@ public partial class UserButton
     private async Task LogOutAsync()
     {
         await LocalStorageService.RemoveItemAsync("authToken");
+        await CartService.GetCartItemsCountAsync();
         await AuthenticationStateProvider.GetAuthenticationStateAsync();
         NavigationManager.NavigateTo(string.Empty);
     }

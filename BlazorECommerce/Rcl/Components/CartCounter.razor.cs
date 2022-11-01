@@ -8,7 +8,7 @@ public partial class CartCounter : IDisposable
 
     private int GetCartItemsCount()
     {
-        var cart = SyncLocalStorageService.GetItem<List<CartItem>>("cart") ?? new List<CartItem>();
-        return cart.Count;
+        var count = SyncLocalStorageService.GetItem<int>("cartItemsCount");
+        return count;
     }
 }

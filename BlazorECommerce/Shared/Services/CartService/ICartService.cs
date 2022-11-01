@@ -13,4 +13,8 @@ public interface ICartService
     Task UpdateQuantity(CartProductResponse product);
 
     Task<int> ItemCount();
+
+    Task StoreCartItemsAsync(bool emptyLocalCart);
+
+    Task GetCartItemsCountAsync();
 }

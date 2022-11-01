@@ -31,8 +31,8 @@ public static class AuthApi
     private static async Task<Results<Ok<ServiceResponse<bool>>, BadRequest<ServiceResponse<bool>>>>
         ChangePasswordAsync(IAuthService authService, ClaimsPrincipal user, [FromBody] string newPassword)
     {
-        var principalUserId = user.FindFirstValue(ClaimTypes.NameIdentifier);
-        if (!int.TryParse(principalUserId, out var userId))
+        var (userIdFound, userId) = SharedMethods.GetUserIdFromClaimsPrincipal(user);
+        if (!userIdFound)
         {
             return TypedResults.BadRequest(new ServiceResponse<bool>());
         }

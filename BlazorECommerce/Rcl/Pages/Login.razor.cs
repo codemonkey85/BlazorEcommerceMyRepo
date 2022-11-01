@@ -25,6 +25,8 @@ public partial class Login
             errorMessage = string.Empty;
             await LocalStorageService.SetItemAsync("authToken", result.Data);
             await AuthenticationStateProvider.GetAuthenticationStateAsync();
+            await CartService.StoreCartItemsAsync(true);
+            await CartService.GetCartItemsCountAsync();
             NavigationManager.NavigateTo(returnUrl);
         }
         else

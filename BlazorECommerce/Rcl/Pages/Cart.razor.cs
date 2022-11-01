@@ -10,14 +10,11 @@ public partial class Cart
 
     private async Task LoadCart()
     {
-        if (await CartService.ItemCount() <= 0)
+        await CartService.GetCartItemsCountAsync();
+        CartProducts = await CartService.GetCartProductsAsync();
+        if (CartProducts is not { Count: > 0 })
         {
             Message = "Your cart is empty.";
-            CartProducts = new List<CartProductResponse>();
-        }
-        else
-        {
-            CartProducts = await CartService.GetCartProductsAsync();
         }
     }
 

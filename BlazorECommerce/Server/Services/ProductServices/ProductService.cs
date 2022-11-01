@@ -7,7 +7,7 @@ public record ProductService(DatabaseContext DatabaseContext) : IProductService
         var data = await DatabaseContext.Products
                 .Include(product => product.Variants)
                 .ToListAsync();
-        return new ServiceResponse<List<Product>> { Data = data };
+        return new ServiceResponse<List<Product>>(data);
     }
 
     public async Task<ServiceResponse<Product>> GetProductAsync(int productId) =>
@@ -15,18 +15,18 @@ public record ProductService(DatabaseContext DatabaseContext) : IProductService
                 .Include(product => product.Variants)
                 .ThenInclude(variant => variant.ProductType)
                 .FirstOrDefaultAsync(product => product.Id == productId) switch
-        {
-            null => new ServiceResponse<Product> { Success = false, Message = $"{nameof(Product)} not found." },
-            var product => new ServiceResponse<Product> { Data = product }
-        };
+            {
+                null => new ServiceResponse<Product> { Success = false, Message = $"{nameof(Product)} not found." },
+                var product => new ServiceResponse<Product>(product)
+            };
 
-    public async Task<ServiceResponse<List<Product>>> GetProductsByCategoryAsync(string categoryUrl) => new()
-    {
-        Data = await DatabaseContext.Products
-                .Include(product => product.Variants)
-                .Where(product => product.Category != null && product.Category.Url == categoryUrl)
-                .ToListAsync()
-    };
+    public async Task<ServiceResponse<List<Product>>> GetProductsByCategoryAsync(string categoryUrl) => new
+    (
+        await DatabaseContext.Products
+            .Include(product => product.Variants)
+            .Where(product => product.Category != null && product.Category.Url == categoryUrl)
+            .ToListAsync()
+    );
 
     private IQueryable<Product> FindProductsBySearchStringAsync(string searchText) =>
         DatabaseContext.Products
@@ -46,28 +46,23 @@ public record ProductService(DatabaseContext DatabaseContext) : IProductService
                 .ToList();
 
         return new ServiceResponse<ProductSearchResult>
-        {
-            Data = new ProductSearchResult
-            {
-                Products = products,
-                CurrentPage = page,
-                Pages = pageCount,
-            }
-        };
+        (
+            new ProductSearchResult { Products = products, CurrentPage = page, Pages = pageCount, }
+        );
     }
 
-    public async Task<ServiceResponse<List<string>>> GetProductSearchSuggestions(string searchText) => new()
-    {
-        Data = await FindProductsBySearchStringAsync(searchText)
-                .Select(product => product.Title)
-                .ToListAsync()
-    };
+    public async Task<ServiceResponse<List<string>>> GetProductSearchSuggestions(string searchText) => new
+    (
+        await FindProductsBySearchStringAsync(searchText)
+            .Select(product => product.Title)
+            .ToListAsync()
+    );
 
-    public async Task<ServiceResponse<List<Product>>> GetFeaturedProductsAsync() => new()
-    {
-        Data = await DatabaseContext.Products
-                .Include(product => product.Variants)
-                .Where(product => product.Featured)
-                .ToListAsync()
-    };
+    public async Task<ServiceResponse<List<Product>>> GetFeaturedProductsAsync() => new
+    (
+        await DatabaseContext.Products
+            .Include(product => product.Variants)
+            .Where(product => product.Featured)
+            .ToListAsync()
+    );
 }

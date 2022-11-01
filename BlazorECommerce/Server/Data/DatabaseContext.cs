@@ -16,6 +16,9 @@ public class DatabaseContext : DbContext
         modelBuilder.Entity<ProductVariant>()
             .HasKey(variant => new { variant.ProductId, variant.ProductTypeId });
 
+        modelBuilder.Entity<CartItem>()
+            .HasKey(cartItem => new { cartItem.UserId, cartItem.ProductId, cartItem.ProductTypeId });
+
         modelBuilder.Entity<ProductType>().HasData(new List<ProductType>
         {
             new() { Id = 1, Name = "Default" },
@@ -91,4 +94,6 @@ public class DatabaseContext : DbContext
     public virtual DbSet<ProductVariant> ProductVariants { get; set; } = default!;
 
     public virtual DbSet<User> Users { get; set; } = default!;
+
+    public virtual DbSet<CartItem> CartItems { get; set; } = default!;
 }
