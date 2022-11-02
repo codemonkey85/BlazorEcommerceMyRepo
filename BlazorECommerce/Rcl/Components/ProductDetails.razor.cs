@@ -11,10 +11,10 @@ public partial class ProductDetails
     protected override async Task OnParametersSetAsync()
     {
         message = "Loading Product...";
-        var result = await ProductService.GetProductAsync(Id);
-        if (result.Success)
+        var results = await ProductService.GetProductAsync(Id);
+        if (results.Success)
         {
-            product = result.Data;
+            product = results.Data;
             if (product is { Variants.Count: > 0 })
             {
                 currentTypeId = product.Variants[0].ProductTypeId;
@@ -22,7 +22,7 @@ public partial class ProductDetails
         }
         else
         {
-            message = result.Message;
+            message = results.Message;
         }
     }
 

@@ -8,7 +8,7 @@ public partial class UserProfile
 
     private async Task ChangePasswordAsync()
     {
-        var result = await AuthService.ChangePasswordAsync(request);
-        message = result.Message;
+        var results = await AuthService.ChangePasswordAsync(request);
+        message = results.Message;
     }
 }

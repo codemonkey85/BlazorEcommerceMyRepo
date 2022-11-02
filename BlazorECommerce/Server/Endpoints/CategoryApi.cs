@@ -21,7 +21,7 @@ public static class CategoryApi
     private static async Task<Ok<ServiceResponse<Category>>> GetCategoryAsync(ICategoryService categoryService,
         int categoryId)
     {
-        var result = await categoryService.GetCategoryAsync(categoryId);
-        return TypedResults.Ok(result);
+        var results = await categoryService.GetCategoryAsync(categoryId);
+        return TypedResults.Ok(results);
     }
 }

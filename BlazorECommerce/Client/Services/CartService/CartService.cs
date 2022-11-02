@@ -12,31 +12,29 @@ public record CartService(ILocalStorageService LocalStorageService, HttpClient H
     {
         if (await IsUserAuthenticatedAsync())
         {
-            Console.WriteLine("User is authenticated.");
+            await HttpClient.PostAsJsonAsync("api/cart/add", cartItem);
         }
         else
         {
-            Console.WriteLine("User is not authenticated.");
-        }
+            await GetCartItemsFromLocalStorageAsync();
 
-        await GetCartItemsFromLocalStorageAsync();
+            var sameItem = await FindCartItemAsync(cartItem.ProductId, cartItem.ProductTypeId);
 
-        var sameItem = await FindCartItemAsync(cartItem.ProductId, cartItem.ProductTypeId);
-
-        if (sameItem is null)
-        {
-            Cart.Add(cartItem);
-        }
-        else
-        {
-            sameItem.Quantity += cartItem.Quantity;
+            if (sameItem is null)
+            {
+                Cart.Add(cartItem);
+            }
+            else
+            {
+                sameItem.Quantity += cartItem.Quantity;
+            }
         }
 
         await SaveCart(Cart);
     }
 
     private async Task<bool> IsUserAuthenticatedAsync() => await AuthStateProvider.GetAuthenticationStateAsync() is
-        { User.Identity.IsAuthenticated: true };
+    { User.Identity.IsAuthenticated: true };
 
     private async Task<CartItem?> FindCartItemAsync(int productId, int productTypeId)
     {
@@ -79,37 +77,58 @@ public record CartService(ILocalStorageService LocalStorageService, HttpClient H
 
     public async Task RemoveProductAsync(int productId, int productTypeId)
     {
-        await GetCartItemsFromLocalStorageAsync();
-        if (Cart is not { Count: > 0 })
+        if (await IsUserAuthenticatedAsync())
         {
-            return;
+            await HttpClient.DeleteAsync($"api/cart/{productId}/{productTypeId}");
         }
-
-        var cartItem = await FindCartItemAsync(productId, productTypeId);
-        if (cartItem is null)
+        else
         {
-            return;
-        }
+            await GetCartItemsFromLocalStorageAsync();
+            if (Cart is not { Count: > 0 })
+            {
+                return;
+            }
 
-        Cart.Remove(cartItem);
-        await SaveCart(Cart);
+            var cartItem = await FindCartItemAsync(productId, productTypeId);
+            if (cartItem is null)
+            {
+                return;
+            }
+
+            Cart.Remove(cartItem);
+            await SaveCart(Cart);
+        }
     }
 
     public async Task UpdateQuantity(CartProductResponse product)
     {
-        await GetCartItemsFromLocalStorageAsync();
-        if (Cart is not { Count: > 0 })
+        if (await IsUserAuthenticatedAsync())
         {
-            return;
+            var request = new CartItem
+            {
+                ProductId = product.ProductId,
+                Quantity = product.Quantity,
+                ProductTypeId = product.ProductTypeId,
+            };
+            await HttpClient.PutAsJsonAsync("api/cart/updatequantity", request);
+        }
+        else
+        {
+            await GetCartItemsFromLocalStorageAsync();
+            if (Cart is not { Count: > 0 })
+            {
+                return;
+            }
+
+            var cartItem = await FindCartItemAsync(product.ProductId, product.ProductTypeId);
+            if (cartItem is null)
+            {
+                return;
+            }
+
+            cartItem.Quantity = product.Quantity;
         }
 
-        var cartItem = await FindCartItemAsync(product.ProductId, product.ProductTypeId);
-        if (cartItem is null)
-        {
-            return;
-        }
-
-        cartItem.Quantity = product.Quantity;
         await SaveCart(Cart);
     }
 
@@ -140,8 +159,8 @@ public record CartService(ILocalStorageService LocalStorageService, HttpClient H
         int count;
         if (await IsUserAuthenticatedAsync())
         {
-            var result = await HttpClient.GetFromJsonAsync<ServiceResponse<int>>("api/cart/count");
-            count = result?.Data ?? 0;
+            var results = await HttpClient.GetFromJsonAsync<ServiceResponse<int>>("api/cart/count");
+            count = results?.Data ?? 0;
         }
         else
         {

@@ -24,15 +24,15 @@ public static class ProductApi
 
     private static async Task<Ok<ServiceResponse<Product>>> GetProductAsync(IProductService productService, int productId)
     {
-        var result = await productService.GetProductAsync(productId);
-        return TypedResults.Ok(result);
+        var results = await productService.GetProductAsync(productId);
+        return TypedResults.Ok(results);
     }
 
     private static async Task<Ok<ServiceResponse<List<Product>>>> GetProductsByCategoryAsync(IProductService productService,
         string categoryUrl)
     {
-        var result = await productService.GetProductsByCategoryAsync(categoryUrl);
-        return TypedResults.Ok(result);
+        var results = await productService.GetProductsByCategoryAsync(categoryUrl);
+        return TypedResults.Ok(results);
     }
 
     private static async Task<Ok<ServiceResponse<ProductSearchResult>>> SearchProductsAsync(IProductService productService,

@@ -6,17 +6,17 @@ public record CategoryService(HttpClient HttpClient) : ICategoryService
 
     public async Task GetCategoriesAsync()
     {
-        var result = await HttpClient.GetFromJsonAsync<ServiceResponse<List<Category>>>($"api/{nameof(Category)}");
-        if (result is { Data: not null })
+        var results = await HttpClient.GetFromJsonAsync<ServiceResponse<List<Category>>>($"api/{nameof(Category)}");
+        if (results is { Data: not null })
         {
-            Categories = result.Data;
+            Categories = results.Data;
         }
     }
 
     public async Task<ServiceResponse<Category>> GetCategoryAsync(int categoryId)
     {
-        var result =
+        var results =
             await HttpClient.GetFromJsonAsync<ServiceResponse<Category>>($"api/{nameof(Category)}/{categoryId}");
-        return result!;
+        return results!;
     }
 }

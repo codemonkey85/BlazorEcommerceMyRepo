@@ -19,11 +19,11 @@ public partial class Login
 
     private async Task HandleLoginAsync()
     {
-        var result = await AuthService.LoginAsync(user);
-        if (result is { Success: true })
+        var results = await AuthService.LoginAsync(user);
+        if (results is { Success: true })
         {
             errorMessage = string.Empty;
-            await LocalStorageService.SetItemAsync("authToken", result.Data);
+            await LocalStorageService.SetItemAsync("authToken", results.Data);
             await AuthenticationStateProvider.GetAuthenticationStateAsync();
             await CartService.StoreCartItemsAsync(true);
             await CartService.GetCartItemsCountAsync();
@@ -31,7 +31,7 @@ public partial class Login
         }
         else
         {
-            errorMessage = result.Message;
+            errorMessage = results.Message;
         }
     }
 }

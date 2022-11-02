@@ -1,6 +1,4 @@
-﻿using BlazorECommerce.Shared.Models;
-
-namespace BlazorECommerce.Server.Services.CartServices;
+﻿namespace BlazorECommerce.Server.Services.CartServices;
 
 public record CartService(DatabaseContext DatabaseContext, IHttpContextAccessor HttpContextAccessor) : ICartService
 {
@@ -55,6 +53,53 @@ public record CartService(DatabaseContext DatabaseContext, IHttpContextAccessor 
             .ToListAsync());
     }
 
+    public async Task<ServiceResponse<bool>> AddToCartAsync(CartItem cartItem)
+    {
+        cartItem.UserId = GetUserId();
+        var sameItem = await FindCartItemAsync(cartItem.UserId, cartItem.ProductId, cartItem.ProductTypeId);
+        if (sameItem is null)
+        {
+            DatabaseContext.CartItems.Add(cartItem);
+        }
+        else
+        {
+            sameItem.Quantity += cartItem.Quantity;
+        }
+
+        await DatabaseContext.SaveChangesAsync();
+        return new ServiceResponse<bool>(true);
+    }
+
+    public async Task<ServiceResponse<bool>> UpdateQuantityAsync(CartItem cartItem)
+    {
+        var userId = GetUserId();
+        var sameItem = await FindCartItemAsync(userId, cartItem.ProductId, cartItem.ProductTypeId);
+        if (sameItem is null)
+        {
+            return new ServiceResponse<bool>(false) { Message = "Cart item does not exist.", Success = false };
+        }
+
+        sameItem.Quantity = cartItem.Quantity;
+
+        await DatabaseContext.SaveChangesAsync();
+        return new ServiceResponse<bool>(true);
+    }
+
+    public async Task<ServiceResponse<bool>> RemoveItemFromCartAsync(int productId, int productTypeId)
+    {
+        var userId = GetUserId();
+        var sameItem = await FindCartItemAsync(userId, productId, productTypeId);
+        if (sameItem is null)
+        {
+            return new ServiceResponse<bool>(false) { Message = "Cart item does not exist.", Success = false };
+        }
+
+        DatabaseContext.CartItems.Remove(sameItem);
+
+        await DatabaseContext.SaveChangesAsync();
+        return new ServiceResponse<bool>(true);
+    }
+
     private int GetUserId()
     {
         if (HttpContextAccessor is not { HttpContext.User: not null })
@@ -65,4 +110,7 @@ public record CartService(DatabaseContext DatabaseContext, IHttpContextAccessor 
         var (userIdFound, userId) = SharedMethods.GetUserIdFromClaimsPrincipal(HttpContextAccessor.HttpContext.User);
         return !userIdFound ? 0 : userId;
     }
+
+    private async Task<CartItem?> FindCartItemAsync(int userId, int productId, int productTypeId) =>
+        await DatabaseContext.CartItems.FirstOrDefaultAsync(item => item.UserId == userId && item.ProductId == productId && item.ProductTypeId == productTypeId);
 }

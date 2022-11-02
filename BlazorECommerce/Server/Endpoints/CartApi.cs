@@ -10,6 +10,9 @@ public static class CartApi
         cartGroup.MapPost(string.Empty, StoreCartItemsAsync);
         cartGroup.MapGet("count", GetCartItemsCountAsync);
         cartGroup.MapGet(string.Empty, GetCartItemsAsync);
+        cartGroup.MapPost("add", AddToCartAsync);
+        cartGroup.MapPut("updatequantity", UpdateQuantityAsync);
+        cartGroup.MapDelete(string.Empty, RemoveItemFromCartAsync);
 
         return apiGroup;
     }
@@ -17,8 +20,8 @@ public static class CartApi
     private static async Task<Ok<ServiceResponse<List<CartProductResponse>>>> GetCartProductsAsync(
         ICartService cartService, List<CartItem> cartItems)
     {
-        var result = await cartService.GetCartProductsAsync(cartItems);
-        return TypedResults.Ok(result);
+        var results = await cartService.GetCartProductsAsync(cartItems);
+        return TypedResults.Ok(results);
     }
 
     [Authorize]
@@ -26,8 +29,8 @@ public static class CartApi
         Task<Ok<ServiceResponse<List<CartProductResponse>>>> StoreCartItemsAsync(ICartService cartService,
             List<CartItem> cartItems)
     {
-        var result = await cartService.StoreCartItemsAsync(cartItems);
-        return TypedResults.Ok(result);
+        var results = await cartService.StoreCartItemsAsync(cartItems);
+        return TypedResults.Ok(results);
     }
 
     [Authorize]
@@ -38,7 +41,28 @@ public static class CartApi
     private static async Task<Ok<ServiceResponse<List<CartProductResponse>>>> GetCartItemsAsync(
         ICartService cartService)
     {
-        var result = await cartService.GetDbCartProductsAsync();
-        return TypedResults.Ok(result);
+        var results = await cartService.GetDbCartProductsAsync();
+        return TypedResults.Ok(results);
+    }
+
+    [Authorize]
+    private static async Task<ServiceResponse<bool>> AddToCartAsync(ICartService cartService, CartItem cartItem)
+    {
+        var results = await cartService.AddToCartAsync(cartItem);
+        return results;
+    }
+
+    [Authorize]
+    private static async Task<ServiceResponse<bool>> UpdateQuantityAsync(ICartService cartService, CartItem cartItem)
+    {
+        var results = await cartService.UpdateQuantityAsync(cartItem);
+        return results;
+    }
+
+    [Authorize]
+    private static async Task<ServiceResponse<bool>> RemoveItemFromCartAsync(ICartService cartService, int productId, int productTypeId)
+    {
+        var results = await cartService.RemoveItemFromCartAsync(productId, productTypeId);
+        return results;
     }
 }

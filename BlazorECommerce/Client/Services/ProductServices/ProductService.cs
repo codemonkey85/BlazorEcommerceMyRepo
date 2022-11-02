@@ -20,11 +20,11 @@ public record ProductService(HttpClient HttpClient) : IProductService
             ? $"api/{nameof(Product)}/{nameof(Category)}/{categoryUrl}"
             : $"api/{nameof(Product)}/featured";
 
-        var result = await HttpClient.GetFromJsonAsync<ServiceResponse<List<Product>>>(requestUrl);
+        var results = await HttpClient.GetFromJsonAsync<ServiceResponse<List<Product>>>(requestUrl);
 
-        if (result is { Data: not null })
+        if (results is { Data: not null })
         {
-            Products = result.Data;
+            Products = results.Data;
         }
 
         CurrentPage = 1;
@@ -40,23 +40,23 @@ public record ProductService(HttpClient HttpClient) : IProductService
 
     public async Task<ServiceResponse<Product>> GetProductAsync(int productId)
     {
-        var result = await HttpClient.GetFromJsonAsync<ServiceResponse<Product>>($"api/{nameof(Product)}/{productId}");
-        return result!;
+        var results = await HttpClient.GetFromJsonAsync<ServiceResponse<Product>>($"api/{nameof(Product)}/{productId}");
+        return results!;
     }
 
     public async Task SearchProductsAsync(string searchText, int page)
     {
         LastSearchText = searchText;
 
-        var result =
+        var results =
             await HttpClient.GetFromJsonAsync<ServiceResponse<ProductSearchResult>>(
                 $"api/{nameof(Product)}/search/{searchText}/{page}");
 
-        if (result is { Data: not null })
+        if (results is { Data: not null })
         {
-            Products = result.Data.Products;
-            CurrentPage = result.Data.CurrentPage;
-            PageCount = result.Data.Pages;
+            Products = results.Data.Products;
+            CurrentPage = results.Data.CurrentPage;
+            PageCount = results.Data.Pages;
         }
 
         if (Products is { Count: 0 })
@@ -69,10 +69,10 @@ public record ProductService(HttpClient HttpClient) : IProductService
 
     public async Task<List<string>> GetProductSearchSuggestionsAsync(string searchText)
     {
-        var result =
+        var results =
             await HttpClient.GetFromJsonAsync<ServiceResponse<List<string>>>(
                 $"api/{nameof(Product)}/searchsuggestions/{searchText}");
 
-        return result?.Data ?? new List<string>();
+        return results?.Data ?? new List<string>();
     }
 }

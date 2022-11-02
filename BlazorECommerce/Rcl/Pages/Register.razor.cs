@@ -9,10 +9,10 @@ public partial class Register
 
     private async Task HandleRegistration()
     {
-        var result = await AuthService.RegisterAsync(user);
-        message = result.Message;
-        messageCssClass = result.Success ? "text-success" : "text-danger";
-        if (result.Success)
+        var results = await AuthService.RegisterAsync(user);
+        message = results.Message;
+        messageCssClass = results.Success ? "text-success" : "text-danger";
+        if (results.Success)
         {
             NavigationManager.NavigateTo("login");
         }
