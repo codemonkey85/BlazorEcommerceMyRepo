@@ -12,7 +12,7 @@ public static class CartApi
         cartGroup.MapGet(string.Empty, GetCartItemsAsync);
         cartGroup.MapPost("add", AddToCartAsync);
         cartGroup.MapPut("updatequantity", UpdateQuantityAsync);
-        cartGroup.MapDelete(string.Empty, RemoveItemFromCartAsync);
+        cartGroup.MapDelete("{productId:int}/{productTypeId:int}", RemoveItemFromCartAsync);
 
         return apiGroup;
     }
