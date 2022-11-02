@@ -12,21 +12,21 @@ namespace BlazorECommerce.Server.Data.Migrations.Sqlite
         {
             migrationBuilder.UpdateData(
                 table: "Products",
-                keyColumn: "Id",
+                keyColumn: "ProductId",
                 keyValue: 1,
                 column: "Title",
                 value: "Product 1 Title (Book)");
 
             migrationBuilder.UpdateData(
                 table: "Products",
-                keyColumn: "Id",
+                keyColumn: "ProductId",
                 keyValue: 2,
                 columns: new[] { "CategoryId", "Title" },
                 values: new object[] { 2, "Product 2 Title (Movie)" });
 
             migrationBuilder.UpdateData(
                 table: "Products",
-                keyColumn: "Id",
+                keyColumn: "ProductId",
                 keyValue: 3,
                 columns: new[] { "CategoryId", "Title" },
                 values: new object[] { 3, "Product 3 Title (Video Game)" });
@@ -37,21 +37,21 @@ namespace BlazorECommerce.Server.Data.Migrations.Sqlite
         {
             migrationBuilder.UpdateData(
                 table: "Products",
-                keyColumn: "Id",
+                keyColumn: "ProductId",
                 keyValue: 1,
                 column: "Title",
                 value: "Product 1 Title");
 
             migrationBuilder.UpdateData(
                 table: "Products",
-                keyColumn: "Id",
+                keyColumn: "ProductId",
                 keyValue: 2,
                 columns: new[] { "CategoryId", "Title" },
                 values: new object[] { 1, "Product 2 Title" });
 
             migrationBuilder.UpdateData(
                 table: "Products",
-                keyColumn: "Id",
+                keyColumn: "ProductId",
                 keyValue: 3,
                 columns: new[] { "CategoryId", "Title" },
                 values: new object[] { 1, "Product 3 Title" });

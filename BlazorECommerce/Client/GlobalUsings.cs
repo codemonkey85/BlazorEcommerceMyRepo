@@ -2,6 +2,7 @@
 global using BlazorECommerce.Client.Services.AuthServices;
 global using BlazorECommerce.Client.Services.CartService;
 global using BlazorECommerce.Client.Services.CategoryServices;
+global using BlazorECommerce.Client.Services.OrderServices;
 global using BlazorECommerce.Client.Services.ProductServices;
 global using BlazorECommerce.Rcl;
 global using BlazorECommerce.Rcl.Auth;
@@ -11,8 +12,10 @@ global using BlazorECommerce.Shared.Services;
 global using BlazorECommerce.Shared.Services.AuthServices;
 global using BlazorECommerce.Shared.Services.CartService;
 global using BlazorECommerce.Shared.Services.CategoryServices;
+global using BlazorECommerce.Shared.Services.OrderServices;
 global using BlazorECommerce.Shared.Services.ProductServices;
 global using Blazored.LocalStorage;
+global using Microsoft.AspNetCore.Components;
 global using Microsoft.AspNetCore.Components.Authorization;
 global using Microsoft.AspNetCore.Components.Web;
 global using Microsoft.AspNetCore.Components.WebAssembly.Hosting;

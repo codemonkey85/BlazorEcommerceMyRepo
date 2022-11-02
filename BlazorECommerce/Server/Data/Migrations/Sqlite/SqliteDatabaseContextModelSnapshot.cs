@@ -38,7 +38,7 @@ namespace BlazorECommerce.Server.Data.Migrations.Sqlite
 
             modelBuilder.Entity("BlazorECommerce.Shared.Models.Category", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<int>("ProductId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
@@ -50,7 +50,7 @@ namespace BlazorECommerce.Server.Data.Migrations.Sqlite
                         .IsRequired()
                         .HasColumnType("TEXT");
 
-                    b.HasKey("Id");
+                    b.HasKey("ProductId");
 
                     b.ToTable("Categories");
 
@@ -75,9 +75,55 @@ namespace BlazorECommerce.Server.Data.Migrations.Sqlite
                         });
                 });
 
+            modelBuilder.Entity("BlazorECommerce.Shared.Models.Order", b =>
+                {
+                    b.Property<int>("ProductId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER");
+
+                    b.Property<DateTime>("OrderDate")
+                        .HasColumnType("TEXT");
+
+                    b.Property<decimal>("TotalPrice")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<int>("UserId")
+                        .HasColumnType("INTEGER");
+
+                    b.HasKey("ProductId");
+
+                    b.ToTable("Orders");
+                });
+
+            modelBuilder.Entity("BlazorECommerce.Shared.Models.OrderItem", b =>
+                {
+                    b.Property<int>("OrderId")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int>("ProductId")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int>("ProductTypeId")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int>("Quantity")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<decimal>("TotalPrice")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.HasKey("OrderId", "ProductId", "ProductTypeId");
+
+                    b.HasIndex("ProductId");
+
+                    b.HasIndex("ProductTypeId");
+
+                    b.ToTable("OrderItems");
+                });
+
             modelBuilder.Entity("BlazorECommerce.Shared.Models.Product", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<int>("ProductId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
@@ -99,7 +145,7 @@ namespace BlazorECommerce.Server.Data.Migrations.Sqlite
                         .IsRequired()
                         .HasColumnType("TEXT");
 
-                    b.HasKey("Id");
+                    b.HasKey("ProductId");
 
                     b.HasIndex("CategoryId");
 
@@ -137,7 +183,7 @@ namespace BlazorECommerce.Server.Data.Migrations.Sqlite
 
             modelBuilder.Entity("BlazorECommerce.Shared.Models.ProductType", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<int>("ProductId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
@@ -145,7 +191,7 @@ namespace BlazorECommerce.Server.Data.Migrations.Sqlite
                         .IsRequired()
                         .HasColumnType("TEXT");
 
-                    b.HasKey("Id");
+                    b.HasKey("ProductId");
 
                     b.ToTable("ProductTypes");
 
@@ -269,7 +315,7 @@ namespace BlazorECommerce.Server.Data.Migrations.Sqlite
 
             modelBuilder.Entity("BlazorECommerce.Shared.Models.User", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<int>("ProductId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
@@ -288,9 +334,36 @@ namespace BlazorECommerce.Server.Data.Migrations.Sqlite
                         .IsRequired()
                         .HasColumnType("BLOB");
 
-                    b.HasKey("Id");
+                    b.HasKey("ProductId");
 
                     b.ToTable("Users");
+                });
+
+            modelBuilder.Entity("BlazorECommerce.Shared.Models.OrderItem", b =>
+                {
+                    b.HasOne("BlazorECommerce.Shared.Models.Order", "Order")
+                        .WithMany("OrderItems")
+                        .HasForeignKey("OrderId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("BlazorECommerce.Shared.Models.Product", "Product")
+                        .WithMany()
+                        .HasForeignKey("ProductId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("BlazorECommerce.Shared.Models.ProductType", "ProductType")
+                        .WithMany()
+                        .HasForeignKey("ProductTypeId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Order");
+
+                    b.Navigation("Product");
+
+                    b.Navigation("ProductType");
                 });
 
             modelBuilder.Entity("BlazorECommerce.Shared.Models.Product", b =>
@@ -319,6 +392,11 @@ namespace BlazorECommerce.Server.Data.Migrations.Sqlite
                     b.Navigation("Product");
 
                     b.Navigation("ProductType");
+                });
+
+            modelBuilder.Entity("BlazorECommerce.Shared.Models.Order", b =>
+                {
+                    b.Navigation("OrderItems");
                 });
 
             modelBuilder.Entity("BlazorECommerce.Shared.Models.Product", b =>

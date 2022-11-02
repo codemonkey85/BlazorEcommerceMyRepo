@@ -9,6 +9,7 @@ services
     .AddScoped(_ => new HttpClient { BaseAddress = new Uri(builder.HostEnvironment.BaseAddress) })
     .AddScoped<IAuthService, AuthService>()
     .AddScoped<ICartService, CartService>()
+    .AddScoped<IOrderService, OrderService>()
     .AddScoped<IProductService, ProductService>()
     .AddScoped<ICategoryService, CategoryService>()
     .AddOptions()

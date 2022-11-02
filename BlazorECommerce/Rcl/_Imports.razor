@@ -1,5 +1,6 @@
 ﻿@using BlazorECommerce.Rcl.Components
 @using BlazorECommerce.Shared.Services.AuthServices
+@using BlazorECommerce.Shared.Services.OrderServices
 @using Microsoft.AspNetCore.Authorization
 @using Microsoft.AspNetCore.Components.Authorization
 @using Microsoft.AspNetCore.Components.Routing
@@ -10,6 +11,7 @@
 @inject NavigationManager NavigationManager
 @inject IAuthService AuthService
 @inject ICartService CartService
+@inject IOrderService OrderService
 @inject ICategoryService CategoryService
 @inject IProductService ProductService
 @inject ILocalStorageService LocalStorageService

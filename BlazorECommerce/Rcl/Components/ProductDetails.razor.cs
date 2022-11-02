@@ -6,12 +6,14 @@ public partial class ProductDetails
     private string message = string.Empty;
     private int currentTypeId = 1;
 
-    [Parameter] public int Id { get; set; }
+    [Parameter] public int ProductId { get; set; }
+
+    [Parameter] public int? ProductTypeId { get; set; }
 
     protected override async Task OnParametersSetAsync()
     {
         message = "Loading Product...";
-        var results = await ProductService.GetProductAsync(Id);
+        var results = await ProductService.GetProductAsync(ProductId);
         if (results.Success)
         {
             product = results.Data;
@@ -23,6 +25,11 @@ public partial class ProductDetails
         else
         {
             message = results.Message;
+        }
+
+        if (ProductTypeId is not null)
+        {
+            currentTypeId = ProductTypeId ?? 0;
         }
     }
 

@@ -1,6 +1,6 @@
 ﻿namespace BlazorECommerce.Client.Services.AuthServices;
 
-public record AuthService(HttpClient HttpClient) : IAuthService
+public record AuthService(HttpClient HttpClient, AuthenticationStateProvider AuthStateProvider) : IAuthService
 {
     public async Task<ServiceResponse<int>> RegisterAsync(UserRegister request)
     {
@@ -19,4 +19,7 @@ public record AuthService(HttpClient HttpClient) : IAuthService
         var results = await HttpClient.PostAsJsonAsync("api/auth/changepassword", request.Password);
         return await results.Content.ReadFromJsonAsync<ServiceResponse<bool>>() ?? new ServiceResponse<bool>();
     }
+
+    public async Task<bool> IsUserAuthenticatedAsync() => await AuthStateProvider.GetAuthenticationStateAsync() is
+    { User.Identity.IsAuthenticated: true };
 }

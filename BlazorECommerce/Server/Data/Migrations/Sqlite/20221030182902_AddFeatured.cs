@@ -19,21 +19,21 @@ namespace BlazorECommerce.Server.Data.Migrations.Sqlite
 
             migrationBuilder.UpdateData(
                 table: "Products",
-                keyColumn: "Id",
+                keyColumn: "ProductId",
                 keyValue: 1,
                 column: "Featured",
                 value: false);
 
             migrationBuilder.UpdateData(
                 table: "Products",
-                keyColumn: "Id",
+                keyColumn: "ProductId",
                 keyValue: 2,
                 column: "Featured",
                 value: true);
 
             migrationBuilder.UpdateData(
                 table: "Products",
-                keyColumn: "Id",
+                keyColumn: "ProductId",
                 keyValue: 3,
                 column: "Featured",
                 value: false);

@@ -14,7 +14,7 @@ namespace BlazorECommerce.Server.Data.Migrations.Sqlite
         {
             migrationBuilder.InsertData(
                 table: "Products",
-                columns: new[] { "Id", "Description", "ImageUrl", "Price", "Title" },
+                columns: new[] { "ProductId", "Description", "ImageUrl", "Price", "Title" },
                 values: new object[,]
                 {
                     { 1, "Product 1 Description", "https://img.freepik.com/free-psd/cosmetic-product-packaging-mockup_1150-40284.jpg?w=2000", 9.99m, "Product 1 Title" },
@@ -28,17 +28,17 @@ namespace BlazorECommerce.Server.Data.Migrations.Sqlite
         {
             migrationBuilder.DeleteData(
                 table: "Products",
-                keyColumn: "Id",
+                keyColumn: "ProductId",
                 keyValue: 1);
 
             migrationBuilder.DeleteData(
                 table: "Products",
-                keyColumn: "Id",
+                keyColumn: "ProductId",
                 keyValue: 2);
 
             migrationBuilder.DeleteData(
                 table: "Products",
-                keyColumn: "Id",
+                keyColumn: "ProductId",
                 keyValue: 3);
         }
     }

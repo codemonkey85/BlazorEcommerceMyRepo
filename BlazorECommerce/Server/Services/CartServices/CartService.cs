@@ -1,6 +1,6 @@
 ﻿namespace BlazorECommerce.Server.Services.CartServices;
 
-public record CartService(DatabaseContext DatabaseContext, IHttpContextAccessor HttpContextAccessor) : ICartService
+public record CartService(DatabaseContext DatabaseContext, IAuthService AuthService) : ICartService
 {
     public Task<ServiceResponse<List<CartProductResponse>>> GetCartProductsAsync(List<CartItem> cartItems) =>
         Task.FromResult(new ServiceResponse<List<CartProductResponse>>
@@ -31,7 +31,7 @@ public record CartService(DatabaseContext DatabaseContext, IHttpContextAccessor 
 
     public async Task<ServiceResponse<List<CartProductResponse>>> StoreCartItemsAsync(List<CartItem> cartItems)
     {
-        var userId = GetUserId();
+        var userId = AuthService.GetUserId();
         cartItems.ForEach(cartItem => cartItem.UserId = userId);
         DatabaseContext.CartItems.AddRange(cartItems);
         await DatabaseContext.SaveChangesAsync();
@@ -41,21 +41,21 @@ public record CartService(DatabaseContext DatabaseContext, IHttpContextAccessor 
 
     public async Task<ServiceResponse<int>> GetCartItemsCountAsync()
     {
-        var userId = GetUserId();
+        var userId = AuthService.GetUserId();
         var count = await DatabaseContext.CartItems.CountAsync(cartItem => cartItem.UserId == userId);
         return new ServiceResponse<int>(count);
     }
 
     public async Task<ServiceResponse<List<CartProductResponse>>> GetDbCartProductsAsync()
     {
-        var userId = GetUserId();
+        var userId = AuthService.GetUserId();
         return await GetCartProductsAsync(await DatabaseContext.CartItems.Where(cartItem => cartItem.UserId == userId)
             .ToListAsync());
     }
 
     public async Task<ServiceResponse<bool>> AddToCartAsync(CartItem cartItem)
     {
-        cartItem.UserId = GetUserId();
+        cartItem.UserId = AuthService.GetUserId();
         var sameItem = await FindCartItemAsync(cartItem.UserId, cartItem.ProductId, cartItem.ProductTypeId);
         if (sameItem is null)
         {
@@ -72,7 +72,7 @@ public record CartService(DatabaseContext DatabaseContext, IHttpContextAccessor 
 
     public async Task<ServiceResponse<bool>> UpdateQuantityAsync(CartItem cartItem)
     {
-        var userId = GetUserId();
+        var userId = AuthService.GetUserId();
         var sameItem = await FindCartItemAsync(userId, cartItem.ProductId, cartItem.ProductTypeId);
         if (sameItem is null)
         {
@@ -87,7 +87,7 @@ public record CartService(DatabaseContext DatabaseContext, IHttpContextAccessor 
 
     public async Task<ServiceResponse<bool>> RemoveItemFromCartAsync(int productId, int productTypeId)
     {
-        var userId = GetUserId();
+        var userId = AuthService.GetUserId();
         var sameItem = await FindCartItemAsync(userId, productId, productTypeId);
         if (sameItem is null)
         {
@@ -98,17 +98,6 @@ public record CartService(DatabaseContext DatabaseContext, IHttpContextAccessor 
 
         await DatabaseContext.SaveChangesAsync();
         return new ServiceResponse<bool>(true);
-    }
-
-    private int GetUserId()
-    {
-        if (HttpContextAccessor is not { HttpContext.User: not null })
-        {
-            return 0;
-        }
-
-        var (userIdFound, userId) = SharedMethods.GetUserIdFromClaimsPrincipal(HttpContextAccessor.HttpContext.User);
-        return !userIdFound ? 0 : userId;
     }
 
     private async Task<CartItem?> FindCartItemAsync(int userId, int productId, int productTypeId) =>

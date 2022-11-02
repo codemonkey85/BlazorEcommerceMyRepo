@@ -24,7 +24,6 @@ public static class CartApi
         return TypedResults.Ok(results);
     }
 
-    [Authorize]
     private static async
         Task<Ok<ServiceResponse<List<CartProductResponse>>>> StoreCartItemsAsync(ICartService cartService,
             List<CartItem> cartItems)
@@ -33,11 +32,9 @@ public static class CartApi
         return TypedResults.Ok(results);
     }
 
-    [Authorize]
     private static async Task<ServiceResponse<int>> GetCartItemsCountAsync(ICartService cartService) =>
         await cartService.GetCartItemsCountAsync();
 
-    [Authorize]
     private static async Task<Ok<ServiceResponse<List<CartProductResponse>>>> GetCartItemsAsync(
         ICartService cartService)
     {
@@ -45,24 +42,21 @@ public static class CartApi
         return TypedResults.Ok(results);
     }
 
-    [Authorize]
-    private static async Task<ServiceResponse<bool>> AddToCartAsync(ICartService cartService, CartItem cartItem)
+    private static async Task<Ok<ServiceResponse<bool>>> AddToCartAsync(ICartService cartService, CartItem cartItem)
     {
         var results = await cartService.AddToCartAsync(cartItem);
-        return results;
+        return TypedResults.Ok(results);
     }
 
-    [Authorize]
-    private static async Task<ServiceResponse<bool>> UpdateQuantityAsync(ICartService cartService, CartItem cartItem)
+    private static async Task<Ok<ServiceResponse<bool>>> UpdateQuantityAsync(ICartService cartService, CartItem cartItem)
     {
         var results = await cartService.UpdateQuantityAsync(cartItem);
-        return results;
+        return TypedResults.Ok(results);
     }
 
-    [Authorize]
-    private static async Task<ServiceResponse<bool>> RemoveItemFromCartAsync(ICartService cartService, int productId, int productTypeId)
+    private static async Task<Ok<ServiceResponse<bool>>> RemoveItemFromCartAsync(ICartService cartService, int productId, int productTypeId)
     {
         var results = await cartService.RemoveItemFromCartAsync(productId, productTypeId);
-        return results;
+        return TypedResults.Ok(results);
     }
 }

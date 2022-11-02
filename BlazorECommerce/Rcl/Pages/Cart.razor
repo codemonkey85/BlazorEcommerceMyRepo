@@ -14,7 +14,7 @@
                 </div>
                 <div class="name">
                     <h5>
-                        <a href="/product/@product.ProductId">
+                        <a href="/product/@product.ProductId/@product.ProductTypeId")>
                             @product.Title
                         </a>
                     </h5>
@@ -23,10 +23,10 @@
                     </span>
                     <br />
                     <input type="number"
-                           class="form-control input-quantity"
-                           min="1"
-                           @bind="product.Quantity"
-                           @bind:after="@(async () => await UpdateQuantityAsync(product))" />
+                   class="form-control input-quantity"
+                   min="1"
+                   @bind="product.Quantity"
+                   @bind:after="@(async () => await UpdateQuantityAsync(product))" />
                     <button class="btn btn-delete"
                     @onclick="@(async () => await RemoveProductFromCartAsync(product.ProductId, product.ProductTypeId))">
                         Delete
@@ -41,6 +41,11 @@
             Total (@CartProducts.Count): @CartProducts.Sum(product => product.Price * product.Quantity).ToString("C")
         </div>
     </div>
+    <button @onclick="PlaceOrderAsync" class="btn btn-success float-end mt-1">Place Order</button>
+}
+else if (orderPlaced)
+{
+    <span>Thank you for your order! You can check your orders <a href="orders">here</a>!</span>
 }
 else
 {

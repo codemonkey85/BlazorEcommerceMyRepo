@@ -45,19 +45,19 @@ namespace BlazorECommerce.Server.Data.Migrations.SqlServer
                         name: "FK_ProductVariants_ProductTypes_ProductTypeId",
                         column: x => x.ProductTypeId,
                         principalTable: "ProductTypes",
-                        principalColumn: "Id",
+                        principalColumn: "ProductId",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_ProductVariants_Products_ProductId",
                         column: x => x.ProductId,
                         principalTable: "Products",
-                        principalColumn: "Id",
+                        principalColumn: "ProductId",
                         onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.InsertData(
                 table: "ProductTypes",
-                columns: new[] { "Id", "Name" },
+                columns: new[] { "ProductId", "Name" },
                 values: new object[,]
                 {
                     { 1, "Default" },
@@ -106,21 +106,21 @@ namespace BlazorECommerce.Server.Data.Migrations.SqlServer
 
             migrationBuilder.UpdateData(
                 table: "Products",
-                keyColumn: "Id",
+                keyColumn: "ProductId",
                 keyValue: 1,
                 column: "Price",
                 value: 9.99m);
 
             migrationBuilder.UpdateData(
                 table: "Products",
-                keyColumn: "Id",
+                keyColumn: "ProductId",
                 keyValue: 2,
                 column: "Price",
                 value: 9.99m);
 
             migrationBuilder.UpdateData(
                 table: "Products",
-                keyColumn: "Id",
+                keyColumn: "ProductId",
                 keyValue: 3,
                 column: "Price",
                 value: 9.99m);

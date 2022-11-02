@@ -1,6 +1,8 @@
 ﻿namespace BlazorECommerce.Server.Services.AuthServices;
 
-public record AuthService(DatabaseContext DatabaseContext, AppSettings AppSettings) : IAuthService
+public record AuthService(IHttpContextAccessor HttpContextAccessor,
+    DatabaseContext DatabaseContext,
+    AppSettings AppSettings) : IAuthService
 {
     public async Task<ServiceResponse<int>> RegisterAsync(User user, string password)
     {
@@ -90,4 +92,18 @@ public record AuthService(DatabaseContext DatabaseContext, AppSettings AppSettin
         var jwt = new JwtSecurityTokenHandler().WriteToken(token);
         return jwt;
     }
+
+    public int GetUserId()
+    {
+        if (HttpContextAccessor is not { HttpContext.User: not null })
+        {
+            return 0;
+        }
+
+        var (userIdFound, userId) = GetUserIdFromClaimsPrincipal(HttpContextAccessor.HttpContext.User);
+        return !userIdFound ? 0 : userId;
+    }
+
+    private static (bool UserIdFound, int UserId) GetUserIdFromClaimsPrincipal(ClaimsPrincipal user) =>
+        (int.TryParse(user.FindFirstValue(ClaimTypes.NameIdentifier), out var userId), userId);
 }

@@ -32,20 +32,18 @@ services
     .AddScoped(_ => appSettings)
     .AddScoped<IAuthService, AuthService>()
     .AddScoped<ICartService, CartService>()
+    .AddScoped<IOrderService, OrderService>()
     .AddScoped<IProductService, ProductService>()
     .AddScoped<ICategoryService, CategoryService>();
 
 services
     .AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
-    .AddJwtBearer(options =>
+    .AddJwtBearer(options => options.TokenValidationParameters = new TokenValidationParameters
     {
-        options.TokenValidationParameters = new TokenValidationParameters
-        {
-            ValidateIssuerSigningKey = true,
-            IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(appSettings.AuthSettings.AuthToken)),
-            ValidateIssuer = false,
-            ValidateAudience = false,
-        };
+        ValidateIssuerSigningKey = true,
+        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(appSettings.AuthSettings.AuthToken)),
+        ValidateIssuer = false,
+        ValidateAudience = false,
     });
 
 services.Configure<JsonOptions>(options =>
@@ -103,6 +101,7 @@ var apiGroup = app.MapGroup("api");
 apiGroup
     .MapAuthApi()
     .MapCartApi()
+    .MapOrderApi()
     .MapProductApi()
     .MapCategoryApi();
 

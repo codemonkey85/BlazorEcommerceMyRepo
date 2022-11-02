@@ -2,5 +2,7 @@
 
 public partial class ProductDetailsPage
 {
-    [Parameter] public int Id { get; set; }
+    [Parameter] public int ProductId { get; set; }
+
+    [Parameter] public int ProductTypeId { get; set; }
 }

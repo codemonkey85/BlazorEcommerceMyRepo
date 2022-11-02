@@ -9,6 +9,7 @@ global using BlazorECommerce.Server.Endpoints;
 global using BlazorECommerce.Server.Services.AuthServices;
 global using BlazorECommerce.Server.Services.CartServices;
 global using BlazorECommerce.Server.Services.CategoryServices;
+global using BlazorECommerce.Server.Services.OrderServices;
 global using BlazorECommerce.Server.Services.ProductServices;
 global using BlazorECommerce.Shared;
 global using BlazorECommerce.Shared.DTOs;
