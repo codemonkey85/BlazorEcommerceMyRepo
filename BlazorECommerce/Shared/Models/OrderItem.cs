@@ -2,15 +2,15 @@
 
 public class OrderItem
 {
-    public Order Order { get; set; } = new();
+    public Order Order { get; set; } = default!;
 
     public int OrderId { get; set; }
 
-    public Product Product { get; set; } = new();
+    public Product Product { get; set; } = default!;
 
     public int ProductId { get; set; }
 
-    public ProductType ProductType { get; set; } = new();
+    public ProductType ProductType { get; set; } = default!;
 
     public int ProductTypeId { get; set; }
 

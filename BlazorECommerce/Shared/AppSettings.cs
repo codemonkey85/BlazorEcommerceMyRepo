@@ -2,9 +2,9 @@
 
 public class AppSettings
 {
-    public AuthSettings AuthSettings { get; set; } = new();
+    public AuthSettings AuthSettings { get; set; } = default!;
 
-    public StripeSettings StripeSettings { get; set; } = new();
+    public StripeSettings StripeSettings { get; set; } = default!;
 
     public DbProvider? DbProvider { get; set; }
 }
