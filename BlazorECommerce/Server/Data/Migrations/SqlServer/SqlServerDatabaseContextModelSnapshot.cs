@@ -96,6 +96,12 @@ namespace BlazorECommerce.Server.Data.Migrations.SqlServer
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("IsVisible")
+                        .HasColumnType("bit");
+
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -112,18 +118,24 @@ namespace BlazorECommerce.Server.Data.Migrations.SqlServer
                         new
                         {
                             Id = 1,
+                            IsDeleted = false,
+                            IsVisible = true,
                             Name = "Books",
                             Url = "books"
                         },
                         new
                         {
                             Id = 2,
+                            IsDeleted = false,
+                            IsVisible = true,
                             Name = "Movies",
                             Url = "movies"
                         },
                         new
                         {
                             Id = 3,
+                            IsDeleted = false,
+                            IsVisible = true,
                             Name = "Video Games",
                             Url = "video-games"
                         });
