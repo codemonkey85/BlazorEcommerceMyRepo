@@ -85,7 +85,8 @@ public record AuthService(IHttpContextAccessor HttpContextAccessor,
         {
             new(ClaimTypes.NameIdentifier, user.Id.ToString()),
             new(ClaimTypes.Name, user.Email),
-            new(ClaimTypes.Email, user.Email)
+            new(ClaimTypes.Email, user.Email),
+            new(ClaimTypes.Role, user.Role)
         };
         var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(AppSettings.AuthSettings.AuthToken));
         var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha512Signature);

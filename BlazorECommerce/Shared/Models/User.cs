@@ -14,4 +14,6 @@ public class User
     public DateTime DateCreated { get; set; } = DateTime.Now;
 
     public Address Address { get; set; } = default!;
+
+    public string Role { get; set; } = "Customer";
 }
