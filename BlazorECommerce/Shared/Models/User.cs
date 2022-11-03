@@ -12,4 +12,6 @@ public class User
     public byte[] PasswordSalt { get; set; } = Array.Empty<byte>();
 
     public DateTime DateCreated { get; set; } = DateTime.Now;
+
+    public Address Address { get; set; } = default!;
 }

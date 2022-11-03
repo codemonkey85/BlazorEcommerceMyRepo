@@ -22,20 +22,23 @@ public static class ProductApi
         return TypedResults.Ok(response);
     }
 
-    private static async Task<Ok<ServiceResponse<Product>>> GetProductAsync(IProductService productService, int productId)
+    private static async Task<Ok<ServiceResponse<Product>>> GetProductAsync(IProductService productService,
+        int productId)
     {
         var results = await productService.GetProductAsync(productId);
         return TypedResults.Ok(results);
     }
 
-    private static async Task<Ok<ServiceResponse<List<Product>>>> GetProductsByCategoryAsync(IProductService productService,
+    private static async Task<Ok<ServiceResponse<List<Product>>>> GetProductsByCategoryAsync(
+        IProductService productService,
         string categoryUrl)
     {
         var results = await productService.GetProductsByCategoryAsync(categoryUrl);
         return TypedResults.Ok(results);
     }
 
-    private static async Task<Ok<ServiceResponse<ProductSearchResult>>> SearchProductsAsync(IProductService productService,
+    private static async Task<Ok<ServiceResponse<ProductSearchResult>>> SearchProductsAsync(
+        IProductService productService,
         string searchText, int page)
     {
         var response = await productService.SearchProductsAsync(searchText, page);
@@ -50,7 +53,8 @@ public static class ProductApi
         return TypedResults.Ok(response);
     }
 
-    private static async Task<Ok<ServiceResponse<List<Product>>>> GetFeaturedProductsAsync(IProductService productService)
+    private static async Task<Ok<ServiceResponse<List<Product>>>> GetFeaturedProductsAsync(
+        IProductService productService)
     {
         var response = await productService.GetFeaturedProductsAsync();
         return TypedResults.Ok(response);

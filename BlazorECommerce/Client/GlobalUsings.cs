@@ -1,4 +1,5 @@
 ﻿global using System.Net.Http.Json;
+global using BlazorECommerce.Client.Services.AddressServices;
 global using BlazorECommerce.Client.Services.AuthServices;
 global using BlazorECommerce.Client.Services.CartService;
 global using BlazorECommerce.Client.Services.CategoryServices;
@@ -9,6 +10,7 @@ global using BlazorECommerce.Rcl.Auth;
 global using BlazorECommerce.Shared.DTOs;
 global using BlazorECommerce.Shared.Models;
 global using BlazorECommerce.Shared.Services;
+global using BlazorECommerce.Shared.Services.AddressServices;
 global using BlazorECommerce.Shared.Services.AuthServices;
 global using BlazorECommerce.Shared.Services.CartService;
 global using BlazorECommerce.Shared.Services.CategoryServices;

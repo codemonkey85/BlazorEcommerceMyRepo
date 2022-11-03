@@ -23,10 +23,10 @@
                     </span>
                     <br />
                     <input type="number"
-                   class="form-control input-quantity"
-                   min="1"
-                   @bind="product.Quantity"
-                   @bind:after="@(async () => await UpdateQuantityAsync(product))" />
+                           class="form-control input-quantity"
+                           min="1"
+                           @bind="product.Quantity"
+                           @bind:after="@(async () => await UpdateQuantityAsync(product))" />
                     <button class="btn btn-delete"
                     @onclick="@(async () => await RemoveProductFromCartAsync(product.ProductId, product.ProductTypeId))">
                         Delete
@@ -43,6 +43,9 @@
             </span>
         </div>
     </div>
+    <AuthorizeView>
+        <AddressForm />
+    </AuthorizeView>
     <button @onclick="PlaceOrderAsync" class="btn btn-success float-end mt-1">Check out</button>
 }
 else

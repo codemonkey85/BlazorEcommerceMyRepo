@@ -1,6 +1,7 @@
 ﻿namespace BlazorECommerce.Server.Services.OrderServices;
 
-public record OrderService(DatabaseContext DatabaseContext, IAuthService AuthService, ICartService CartService) : IOrderService
+public record OrderService
+    (DatabaseContext DatabaseContext, IAuthService AuthService, ICartService CartService) : IOrderService
 {
     public async Task<ServiceResponse<bool>> PlaceOrderAsync(int userId)
     {
@@ -28,10 +29,7 @@ public record OrderService(DatabaseContext DatabaseContext, IAuthService AuthSer
 
         var order = new Order
         {
-            UserId = userId,
-            OrderDate = DateTime.Now,
-            TotalPrice = totalPrice,
-            OrderItems = orderItems
+            UserId = userId, OrderDate = DateTime.Now, TotalPrice = totalPrice, OrderItems = orderItems
         };
 
         DatabaseContext.Orders.Add(order);
@@ -59,8 +57,8 @@ public record OrderService(DatabaseContext DatabaseContext, IAuthService AuthSer
             OrderDate = order.OrderDate,
             TotalPrice = order.TotalPrice,
             ProductName = order.OrderItems.Count > 1
-                    ? $"{order.OrderItems.First().Product.Title} and {order.OrderItems.Count - 1} more..."
-                    : order.OrderItems.First().Product.Title,
+                ? $"{order.OrderItems.First().Product.Title} and {order.OrderItems.Count - 1} more..."
+                : order.OrderItems.First().Product.Title,
             ProductImageUrl = order.OrderItems.First().Product.ImageUrl
         }));
 

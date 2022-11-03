@@ -17,13 +17,15 @@ public record OrderService(HttpClient HttpClient,
 
     public async Task<List<OrderOverviewResponse>> GetOrdersAsync()
     {
-        var result = await HttpClient.GetFromJsonAsync<ServiceResponse<List<OrderOverviewResponse>>>("api/order");
+        var result =
+            await HttpClient.GetFromJsonAsync<ServiceResponse<List<OrderOverviewResponse>>>($"api/{nameof(Order)}");
         return result?.Data ?? new List<OrderOverviewResponse>();
     }
 
     public async Task<OrderDetailsResponse> GetOrderDetailsAsync(int orderId)
     {
-        var result = await HttpClient.GetFromJsonAsync<ServiceResponse<OrderDetailsResponse>>($"api/order/{orderId}");
+        var result =
+            await HttpClient.GetFromJsonAsync<ServiceResponse<OrderDetailsResponse>>($"api/{nameof(Order)}/{orderId}");
         return result?.Data ?? new OrderDetailsResponse();
     }
 }

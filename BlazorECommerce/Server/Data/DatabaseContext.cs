@@ -98,6 +98,8 @@ public class DatabaseContext : DbContext
 
     public DbSet<User> Users { get; set; } = default!;
 
+    public DbSet<Address> Addresses { get; set; } = default!;
+
     public DbSet<CartItem> CartItems { get; set; } = default!;
 
     public DbSet<Order> Orders { get; set; } = default!;

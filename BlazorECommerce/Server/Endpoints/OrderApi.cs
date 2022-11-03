@@ -12,13 +12,15 @@ public static class OrderApi
         return apiGroup;
     }
 
-    private static async Task<Ok<ServiceResponse<List<OrderOverviewResponse>>>> GetOrdersAsync(IOrderService orderService)
+    private static async Task<Ok<ServiceResponse<List<OrderOverviewResponse>>>> GetOrdersAsync(
+        IOrderService orderService)
     {
         var response = await orderService.GetOrdersAsync();
         return TypedResults.Ok(response);
     }
 
-    private static async Task<Ok<ServiceResponse<OrderDetailsResponse>>> GetOrderDetailsAsync(IOrderService orderService, int orderId)
+    private static async Task<Ok<ServiceResponse<OrderDetailsResponse>>> GetOrderDetailsAsync(
+        IOrderService orderService, int orderId)
     {
         var response = await orderService.GetOrderDetailsAsync(orderId);
         return TypedResults.Ok(response);

@@ -24,8 +24,7 @@ public record PaymentService(
                 Currency = "usd",
                 ProductData = new SessionLineItemPriceDataProductDataOptions
                 {
-                    Name = product.Title,
-                    Images = new List<string> { product.ImageUrl }
+                    Name = product.Title, Images = new List<string> { product.ImageUrl }
                 }
             },
             Quantity = product.Quantity
@@ -34,14 +33,9 @@ public record PaymentService(
         var options = new SessionCreateOptions
         {
             CustomerEmail = AuthService.GetUserEmail(),
-            ShippingAddressCollection = new SessionShippingAddressCollectionOptions
-            {
-                AllowedCountries = new List<string> { "US" }
-            },
-            PaymentMethodTypes = new List<string>
-            {
-                "card"
-            },
+            ShippingAddressCollection =
+                new SessionShippingAddressCollectionOptions { AllowedCountries = new List<string> { "US" } },
+            PaymentMethodTypes = new List<string> { "card" },
             LineItems = lineItems,
             Mode = "payment",
             SuccessUrl = $"{Constants.ClientBaseUrl}/ordersuccess",

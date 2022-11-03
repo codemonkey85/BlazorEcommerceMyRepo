@@ -17,6 +17,51 @@ namespace BlazorECommerce.Server.Data.Migrations.Sqlite
 #pragma warning disable 612, 618
             modelBuilder.HasAnnotation("ProductVersion", "7.0.0-rc.2.22472.11");
 
+            modelBuilder.Entity("BlazorECommerce.Shared.Models.Address", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER");
+
+                    b.Property<string>("City")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("Country")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("FirstName")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("LastName")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("State")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("Street")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.Property<int>("UserId")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<string>("Zip")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("UserId")
+                        .IsUnique();
+
+                    b.ToTable("Addresses");
+                });
+
             modelBuilder.Entity("BlazorECommerce.Shared.Models.CartItem", b =>
                 {
                     b.Property<int>("UserId")
@@ -339,6 +384,15 @@ namespace BlazorECommerce.Server.Data.Migrations.Sqlite
                     b.ToTable("Users");
                 });
 
+            modelBuilder.Entity("BlazorECommerce.Shared.Models.Address", b =>
+                {
+                    b.HasOne("BlazorECommerce.Shared.Models.User", null)
+                        .WithOne("Address")
+                        .HasForeignKey("BlazorECommerce.Shared.Models.Address", "UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
             modelBuilder.Entity("BlazorECommerce.Shared.Models.OrderItem", b =>
                 {
                     b.HasOne("BlazorECommerce.Shared.Models.Order", "Order")
@@ -402,6 +456,12 @@ namespace BlazorECommerce.Server.Data.Migrations.Sqlite
             modelBuilder.Entity("BlazorECommerce.Shared.Models.Product", b =>
                 {
                     b.Navigation("Variants");
+                });
+
+            modelBuilder.Entity("BlazorECommerce.Shared.Models.User", b =>
+                {
+                    b.Navigation("Address")
+                        .IsRequired();
                 });
 #pragma warning restore 612, 618
         }

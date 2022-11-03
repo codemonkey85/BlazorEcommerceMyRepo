@@ -103,5 +103,6 @@ public record CartService(DatabaseContext DatabaseContext, IAuthService AuthServ
 
     private async Task<CartItem?> FindCartItemAsync(int userId, int productId, int productTypeId) =>
         await DatabaseContext.CartItems
-            .FirstOrDefaultAsync(item => item.UserId == userId && item.ProductId == productId && item.ProductTypeId == productTypeId);
+            .FirstOrDefaultAsync(item =>
+                item.UserId == userId && item.ProductId == productId && item.ProductTypeId == productTypeId);
 }

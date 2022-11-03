@@ -48,13 +48,15 @@ public static class CartApi
         return TypedResults.Ok(results);
     }
 
-    private static async Task<Ok<ServiceResponse<bool>>> UpdateQuantityAsync(ICartService cartService, CartItem cartItem)
+    private static async Task<Ok<ServiceResponse<bool>>> UpdateQuantityAsync(ICartService cartService,
+        CartItem cartItem)
     {
         var results = await cartService.UpdateQuantityAsync(cartItem);
         return TypedResults.Ok(results);
     }
 
-    private static async Task<Ok<ServiceResponse<bool>>> RemoveItemFromCartAsync(ICartService cartService, int productId, int productTypeId)
+    private static async Task<Ok<ServiceResponse<bool>>> RemoveItemFromCartAsync(ICartService cartService,
+        int productId, int productTypeId)
     {
         var results = await cartService.RemoveItemFromCartAsync(productId, productTypeId);
         return TypedResults.Ok(results);

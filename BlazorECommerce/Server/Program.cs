@@ -34,6 +34,7 @@ services
     .AddScoped<ICartService, CartService>()
     .AddScoped<IOrderService, OrderService>()
     .AddScoped<IPaymentService, PaymentService>()
+    .AddScoped<IAddressService, AddressService>()
     .AddScoped<IProductService, ProductService>()
     .AddScoped<ICategoryService, CategoryService>();
 
@@ -104,6 +105,7 @@ apiGroup
     .MapCartApi()
     .MapOrderApi()
     .MapPaymentApi()
+    .MapAddressApi()
     .MapProductApi()
     .MapCategoryApi();
 

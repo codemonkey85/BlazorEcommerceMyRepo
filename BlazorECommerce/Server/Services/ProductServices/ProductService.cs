@@ -5,8 +5,8 @@ public record ProductService(DatabaseContext DatabaseContext) : IProductService
     public async Task<ServiceResponse<List<Product>>> GetProductsAsync()
     {
         var data = await DatabaseContext.Products
-                .Include(product => product.Variants)
-                .ToListAsync();
+            .Include(product => product.Variants)
+            .ToListAsync();
         return new ServiceResponse<List<Product>>(data);
     }
 
@@ -15,10 +15,10 @@ public record ProductService(DatabaseContext DatabaseContext) : IProductService
                 .Include(product => product.Variants)
                 .ThenInclude(variant => variant.ProductType)
                 .FirstOrDefaultAsync(product => product.Id == productId) switch
-        {
-            null => new ServiceResponse<Product> { Success = false, Message = $"{nameof(Product)} not found." },
-            var product => new ServiceResponse<Product>(product)
-        };
+            {
+                null => new ServiceResponse<Product> { Success = false, Message = $"{nameof(Product)} not found." },
+                var product => new ServiceResponse<Product>(product)
+            };
 
     public async Task<ServiceResponse<List<Product>>> GetProductsByCategoryAsync(string categoryUrl) => new
     (
@@ -30,9 +30,10 @@ public record ProductService(DatabaseContext DatabaseContext) : IProductService
 
     private IQueryable<Product> FindProductsBySearchStringAsync(string searchText) =>
         DatabaseContext.Products
-                .Include(product => product.Variants)
-                .Where(product => product.Title.ToLower().Contains(searchText.ToLower()) ||
-                                  product.Description.ToLower().Contains(searchText.ToLower()));
+            .Include(product => product.Variants)
+            .Where(product => product.Title.ToLower().Contains(searchText.ToLower()) ||
+                              product.Description.ToLower().Contains(searchText.ToLower()));
+
     public async Task<ServiceResponse<ProductSearchResult>> SearchProductsAsync(string searchText, int page)
     {
         const int pageSize = 2;
@@ -40,10 +41,10 @@ public record ProductService(DatabaseContext DatabaseContext) : IProductService
         var pageCount = (int)Math.Ceiling(productsFound.Count / (float)pageSize);
 
         var products = productsFound
-                .OrderBy(product => product.Id)
-                .Skip((page - 1) * pageSize)
-                .Take(pageSize)
-                .ToList();
+            .OrderBy(product => product.Id)
+            .Skip((page - 1) * pageSize)
+            .Take(pageSize)
+            .ToList();
 
         return new ServiceResponse<ProductSearchResult>
         (

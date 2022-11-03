@@ -103,9 +103,7 @@ public record CartService(ILocalStorageService LocalStorageService, HttpClient H
         {
             var request = new CartItem
             {
-                ProductId = product.ProductId,
-                Quantity = product.Quantity,
-                ProductTypeId = product.ProductTypeId
+                ProductId = product.ProductId, Quantity = product.Quantity, ProductTypeId = product.ProductTypeId
             };
             await HttpClient.PutAsJsonAsync("api/cart/updatequantity", request);
         }

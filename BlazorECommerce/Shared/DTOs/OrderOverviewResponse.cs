@@ -2,6 +2,7 @@
 
 public class OrderOverviewResponse
 {
+    [Key, DatabaseGenerated(DatabaseGeneratedOption.Identity)]
     public int Id { get; init; }
 
     public DateTime OrderDate { get; init; }

@@ -10,6 +10,7 @@ services
     .AddScoped<IAuthService, AuthService>()
     .AddScoped<ICartService, CartService>()
     .AddScoped<IOrderService, OrderService>()
+    .AddScoped<IAddressService, AddressService>()
     .AddScoped<IProductService, ProductService>()
     .AddScoped<ICategoryService, CategoryService>()
     .AddOptions()
