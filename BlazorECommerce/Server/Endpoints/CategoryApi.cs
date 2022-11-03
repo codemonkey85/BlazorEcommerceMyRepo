@@ -7,7 +7,6 @@ public static class CategoryApi
         var categoryGroup = apiGroup.MapGroup(nameof(Category));
 
         categoryGroup.MapGet("/", GetCategoriesAsync);
-        categoryGroup.MapGet("/{categoryId:int}", GetCategoryAsync);
 
         return apiGroup;
     }
@@ -16,12 +15,5 @@ public static class CategoryApi
     {
         var response = await categoryService.GetCategoriesAsync();
         return TypedResults.Ok(response);
-    }
-
-    private static async Task<Ok<ServiceResponse<Category>>> GetCategoryAsync(ICategoryService categoryService,
-        int categoryId)
-    {
-        var results = await categoryService.GetCategoryAsync(categoryId);
-        return TypedResults.Ok(results);
     }
 }
