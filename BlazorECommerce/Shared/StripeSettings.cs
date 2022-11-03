@@ -1,4 +1,5 @@
-﻿namespace BlazorECommerce.Shared;
+﻿// ReSharper disable AutoPropertyCanBeMadeGetOnly.Global
+namespace BlazorECommerce.Shared;
 
 public class StripeSettings
 {
