@@ -2,17 +2,17 @@
 
 public class OrderDetailsProductResponse
 {
-    public int ProductId { get; set; }
+    public int ProductId { get; init; }
 
-    public string Title { get; set; }
+    public string Title { get; init; } = string.Empty;
 
-    public int ProductTypeId { get; set; }
+    public int ProductTypeId { get; init; }
 
-    public string ProductType { get; set; }
+    public string ProductType { get; init; } = string.Empty;
 
-    public string ImageUrl { get; set; }
+    public string ImageUrl { get; init; } = string.Empty;
 
-    public int Quantity { get; set; }
+    public int Quantity { get; init; }
 
-    public decimal TotalPrice { get; set; }
+    public decimal TotalPrice { get; init; }
 }

@@ -2,9 +2,9 @@
 
 public class ProductSearchResult
 {
-    public List<Product> Products { get; set; } = new();
+    public List<Product> Products { get; init; } = new();
 
-    public int Pages { get; set; }
+    public int Pages { get; init; }
 
-    public int CurrentPage { get; set; }
+    public int CurrentPage { get; init; }
 }

@@ -6,5 +6,5 @@ public class AppSettings
 
     public StripeSettings StripeSettings { get; set; } = new();
 
-    public DbProvider? DbProvider { get; set; } = null;
+    public DbProvider? DbProvider { get; set; }
 }

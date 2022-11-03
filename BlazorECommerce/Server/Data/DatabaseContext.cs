@@ -88,19 +88,19 @@ public class DatabaseContext : DbContext
         });
     }
 
-    public virtual DbSet<Product> Products { get; set; } = default!;
+    public DbSet<Product> Products { get; set; } = default!;
 
-    public virtual DbSet<Category> Categories { get; set; } = default!;
+    public DbSet<Category> Categories { get; set; } = default!;
 
-    public virtual DbSet<ProductType> ProductTypes { get; set; } = default!;
+    public DbSet<ProductType> ProductTypes { get; set; } = default!;
 
-    public virtual DbSet<ProductVariant> ProductVariants { get; set; } = default!;
+    public DbSet<ProductVariant> ProductVariants { get; set; } = default!;
 
-    public virtual DbSet<User> Users { get; set; } = default!;
+    public DbSet<User> Users { get; set; } = default!;
 
-    public virtual DbSet<CartItem> CartItems { get; set; } = default!;
+    public DbSet<CartItem> CartItems { get; set; } = default!;
 
-    public virtual DbSet<Order> Orders { get; set; } = default!;
+    public DbSet<Order> Orders { get; set; } = default!;
 
-    public virtual DbSet<OrderItem> OrderItems { get; set; } = default!;
+    public DbSet<OrderItem> OrderItems { get; set; } = default!;
 }

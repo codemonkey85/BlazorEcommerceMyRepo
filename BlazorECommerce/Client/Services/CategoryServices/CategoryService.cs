@@ -12,11 +12,4 @@ public record CategoryService(HttpClient HttpClient) : ICategoryService
             Categories = results.Data;
         }
     }
-
-    public async Task<ServiceResponse<Category>> GetCategoryAsync(int categoryId)
-    {
-        var results =
-            await HttpClient.GetFromJsonAsync<ServiceResponse<Category>>($"api/{nameof(Category)}/{categoryId}");
-        return results!;
-    }
 }

@@ -129,12 +129,6 @@ public record CartService(ILocalStorageService LocalStorageService, HttpClient H
         await SaveCart(Cart);
     }
 
-    public async Task<int> ItemCount()
-    {
-        await GetCartItemsFromLocalStorageAsync();
-        return Cart.Count;
-    }
-
     public async Task StoreCartItemsAsync(bool emptyLocalCart = false)
     {
         await GetCartItemsFromLocalStorageAsync();

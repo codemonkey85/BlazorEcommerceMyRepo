@@ -1,8 +1,7 @@
 ﻿namespace BlazorECommerce.Client.Services.OrderServices;
 
 public record OrderService(HttpClient HttpClient,
-    IAuthService AuthService,
-    NavigationManager NavigationManager) : IOrderService
+    IAuthService AuthService) : IOrderService
 {
     public async Task<string> PlaceOrderAsync()
     {

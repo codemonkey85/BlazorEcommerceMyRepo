@@ -4,7 +4,7 @@ public partial class Search
 {
     private string searchText = string.Empty;
     private List<string> suggestions = new();
-    protected ElementReference SearchInput;
+    private ElementReference searchInput;
 
     protected override async Task OnAfterRenderAsync(bool firstRender)
     {
@@ -13,12 +13,12 @@ public partial class Search
             return;
         }
 
-        await SearchInput.FocusAsync();
+        await searchInput.FocusAsync();
     }
 
-    public void SearchProducts() => NavigationManager.NavigateTo($"search/{searchText}/1");
+    private void SearchProducts() => NavigationManager.NavigateTo($"search/{searchText}/1");
 
-    public async Task HandleSearch(KeyboardEventArgs args)
+    private async Task HandleSearch(KeyboardEventArgs args)
     {
         if (args.Key is null or "Enter")
         {

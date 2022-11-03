@@ -2,9 +2,9 @@
 
 public class OrderDetailsResponse
 {
-    public DateTime OrderDate { get; set; }
+    public DateTime OrderDate { get; init; }
 
-    public decimal TotalPrice { get; set; }
+    public decimal TotalPrice { get; init; }
 
-    public List<OrderDetailsProductResponse> Products { get; set; }
+    public List<OrderDetailsProductResponse> Products { get; init; } = new();
 }

@@ -1,5 +1,6 @@
 namespace BlazorECommerce.Rcl.Pages;
 
+// ReSharper disable once ClassNeverInstantiated.Global
 public partial class MyOrders
 {
     private List<OrderOverviewResponse>? orders;

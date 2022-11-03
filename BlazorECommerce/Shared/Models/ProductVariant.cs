@@ -2,11 +2,11 @@
 
 public class ProductVariant
 {
-    [JsonIgnore] public Product Product { get; set; }
+    [JsonIgnore] public Product Product { get; set; } = default!;
 
     public int ProductId { get; set; }
 
-    public ProductType ProductType { get; set; }
+    public ProductType ProductType { get; set; } = default!;
 
     public int ProductTypeId { get; set; }
 

@@ -1,5 +1,6 @@
 namespace BlazorECommerce.Rcl.Pages;
 
+// ReSharper disable once ClassNeverInstantiated.Global
 public partial class Cart
 {
     private List<CartProductResponse>? CartProducts { get; set; }

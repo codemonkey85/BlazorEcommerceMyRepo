@@ -1,5 +1,6 @@
 namespace BlazorECommerce.Rcl.Pages;
 
+// ReSharper disable once ClassNeverInstantiated.Global
 public partial class Register
 {
     private readonly UserRegister user = new();

@@ -1,6 +1,7 @@
 namespace BlazorECommerce.Rcl.Pages;
 
 [Authorize]
+// ReSharper disable once ClassNeverInstantiated.Global
 public partial class UserProfile
 {
     private readonly UserChangePassword request = new();

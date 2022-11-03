@@ -15,7 +15,7 @@ public class Product
 
     public int? CategoryId { get; set; }
 
-    public bool Featured { get; set; } = false;
+    public bool Featured { get; set; }
 
     public List<ProductVariant> Variants { get; set; } = new();
 }

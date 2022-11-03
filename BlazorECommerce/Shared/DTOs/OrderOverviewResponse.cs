@@ -2,13 +2,13 @@
 
 public class OrderOverviewResponse
 {
-    public int Id { get; set; }
+    public int Id { get; init; }
 
-    public DateTime OrderDate { get; set; }
+    public DateTime OrderDate { get; init; }
 
-    public decimal TotalPrice { get; set; }
+    public decimal TotalPrice { get; init; }
 
-    public string ProductName { get; set; }
+    public string ProductName { get; init; } = string.Empty;
 
-    public string ProductImageUrl { get; set; }
+    public string ProductImageUrl { get; init; } = string.Empty;
 }

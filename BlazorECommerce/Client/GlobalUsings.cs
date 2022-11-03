@@ -15,7 +15,6 @@ global using BlazorECommerce.Shared.Services.CategoryServices;
 global using BlazorECommerce.Shared.Services.OrderServices;
 global using BlazorECommerce.Shared.Services.ProductServices;
 global using Blazored.LocalStorage;
-global using Microsoft.AspNetCore.Components;
 global using Microsoft.AspNetCore.Components.Authorization;
 global using Microsoft.AspNetCore.Components.Web;
 global using Microsoft.AspNetCore.Components.WebAssembly.Hosting;

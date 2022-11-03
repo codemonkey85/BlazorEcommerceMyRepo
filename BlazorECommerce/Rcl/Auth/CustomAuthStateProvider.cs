@@ -8,9 +8,9 @@ public class CustomAuthStateProvider : AuthenticationStateProvider
         LocalStorageService = localStorageService;
     }
 
-    public HttpClient HttpClient { get; }
+    private HttpClient HttpClient { get; }
 
-    public ILocalStorageService LocalStorageService { get; }
+    private ILocalStorageService LocalStorageService { get; }
 
     public override async Task<AuthenticationState> GetAuthenticationStateAsync()
     {

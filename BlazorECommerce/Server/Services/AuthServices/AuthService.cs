@@ -72,7 +72,7 @@ public record AuthService(IHttpContextAccessor HttpContextAccessor,
         passwordHash = hmac.ComputeHash(Encoding.UTF8.GetBytes(password));
     }
 
-    private static bool VerifyPasswordHash(string password, byte[] passwordHash, byte[] passwordSalt)
+    private static bool VerifyPasswordHash(string password, IEnumerable<byte> passwordHash, byte[] passwordSalt)
     {
         using var hmac = new HMACSHA512(passwordSalt);
         var computedHash = hmac.ComputeHash(Encoding.UTF8.GetBytes(password));

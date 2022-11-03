@@ -4,15 +4,15 @@ public interface IProductService
 {
     event Action? ProductsChanged;
 
-    List<Product> Products { get; set; }
+    List<Product> Products { get; }
 
-    string Message { get; set; }
+    string Message { get; }
 
-    int CurrentPage { get; set; }
+    int CurrentPage { get; }
 
-    int PageCount { get; set; }
+    int PageCount { get; }
 
-    string LastSearchText { get; set; }
+    string LastSearchText { get; }
 
     Task GetProductsAsync(string? categoryUrl = null);
 
