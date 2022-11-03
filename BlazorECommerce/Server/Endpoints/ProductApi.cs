@@ -6,7 +6,7 @@ public static class ProductApi
     {
         var productGroup = apiGroup.MapGroup(nameof(Product));
 
-        productGroup.MapGet("/", GetProductsAsync);
+        productGroup.MapGet(string.Empty, GetProductsAsync);
         productGroup.MapGet("/{productId:int}", GetProductAsync);
         productGroup.MapGet($"/{nameof(Category)}/{{categoryUrl}}", GetProductsByCategoryAsync);
         productGroup.MapGet("/search/{searchText}/{page:int}", SearchProductsAsync);
