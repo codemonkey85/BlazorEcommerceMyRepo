@@ -1,4 +1,4 @@
-namespace BlazorECommerce.Rcl.Components;
+namespace BlazorECommerce.Rcl.Shared;
 
 public partial class UserButton
 {
