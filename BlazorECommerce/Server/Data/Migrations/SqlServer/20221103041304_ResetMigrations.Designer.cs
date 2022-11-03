@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace BlazorECommerce.Server.Data.Migrations.SqlServer
 {
     [DbContext(typeof(SqlServerDatabaseContext))]
-    [Migration("20221028195920_AddVariants")]
-    partial class AddVariants
+    [Migration("20221103041304_ResetMigrations")]
+    partial class ResetMigrations
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -25,13 +25,32 @@ namespace BlazorECommerce.Server.Data.Migrations.SqlServer
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
+            modelBuilder.Entity("BlazorECommerce.Shared.Models.CartItem", b =>
+                {
+                    b.Property<int>("UserId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("ProductId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("ProductTypeId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Quantity")
+                        .HasColumnType("int");
+
+                    b.HasKey("UserId", "ProductId", "ProductTypeId");
+
+                    b.ToTable("CartItems");
+                });
+
             modelBuilder.Entity("BlazorECommerce.Shared.Models.Category", b =>
                 {
-                    b.Property<int>("ProductId")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ProductId"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<string>("Name")
                         .IsRequired()
@@ -41,7 +60,7 @@ namespace BlazorECommerce.Server.Data.Migrations.SqlServer
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.HasKey("ProductId");
+                    b.HasKey("Id");
 
                     b.ToTable("Categories");
 
@@ -66,13 +85,61 @@ namespace BlazorECommerce.Server.Data.Migrations.SqlServer
                         });
                 });
 
-            modelBuilder.Entity("BlazorECommerce.Shared.Models.Product", b =>
+            modelBuilder.Entity("BlazorECommerce.Shared.Models.Order", b =>
                 {
-                    b.Property<int>("ProductId")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ProductId"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<DateTime>("OrderDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<decimal>("TotalPrice")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<int>("UserId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Orders");
+                });
+
+            modelBuilder.Entity("BlazorECommerce.Shared.Models.OrderItem", b =>
+                {
+                    b.Property<int>("OrderId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("ProductId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("ProductTypeId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Quantity")
+                        .HasColumnType("int");
+
+                    b.Property<decimal>("TotalPrice")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.HasKey("OrderId", "ProductId", "ProductTypeId");
+
+                    b.HasIndex("ProductId");
+
+                    b.HasIndex("ProductTypeId");
+
+                    b.ToTable("OrderItems");
+                });
+
+            modelBuilder.Entity("BlazorECommerce.Shared.Models.Product", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<int?>("CategoryId")
                         .HasColumnType("int");
@@ -80,6 +147,9 @@ namespace BlazorECommerce.Server.Data.Migrations.SqlServer
                     b.Property<string>("Description")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("Featured")
+                        .HasColumnType("bit");
 
                     b.Property<string>("ImageUrl")
                         .IsRequired()
@@ -89,7 +159,7 @@ namespace BlazorECommerce.Server.Data.Migrations.SqlServer
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.HasKey("ProductId");
+                    b.HasKey("Id");
 
                     b.HasIndex("CategoryId");
 
@@ -101,6 +171,7 @@ namespace BlazorECommerce.Server.Data.Migrations.SqlServer
                             Id = 1,
                             CategoryId = 1,
                             Description = "Product 1 Description",
+                            Featured = false,
                             ImageUrl = "https://img.freepik.com/free-psd/cosmetic-product-packaging-mockup_1150-40284.jpg?w=2000",
                             Title = "Product 1 Title (Book)"
                         },
@@ -109,6 +180,7 @@ namespace BlazorECommerce.Server.Data.Migrations.SqlServer
                             Id = 2,
                             CategoryId = 2,
                             Description = "Product 2 Description",
+                            Featured = true,
                             ImageUrl = "https://img.freepik.com/free-psd/cosmetic-product-packaging-mockup_1150-40282.jpg?w=2000",
                             Title = "Product 2 Title (Movie)"
                         },
@@ -117,6 +189,7 @@ namespace BlazorECommerce.Server.Data.Migrations.SqlServer
                             Id = 3,
                             CategoryId = 3,
                             Description = "Product 3 Description",
+                            Featured = false,
                             ImageUrl = "https://img.freepik.com/free-photo/pedestal-display-blank-podium-product_1048-16154.jpg?w=996",
                             Title = "Product 3 Title (Video Game)"
                         });
@@ -124,17 +197,17 @@ namespace BlazorECommerce.Server.Data.Migrations.SqlServer
 
             modelBuilder.Entity("BlazorECommerce.Shared.Models.ProductType", b =>
                 {
-                    b.Property<int>("ProductId")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ProductId"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.HasKey("ProductId");
+                    b.HasKey("Id");
 
                     b.ToTable("ProductTypes");
 
@@ -221,10 +294,24 @@ namespace BlazorECommerce.Server.Data.Migrations.SqlServer
                         },
                         new
                         {
+                            ProductId = 1,
+                            ProductTypeId = 3,
+                            OriginalPrice = 29.99m,
+                            Price = 19.99m
+                        },
+                        new
+                        {
                             ProductId = 2,
-                            ProductTypeId = 6,
+                            ProductTypeId = 5,
                             OriginalPrice = 19.99m,
                             Price = 9.99m
+                        },
+                        new
+                        {
+                            ProductId = 2,
+                            ProductTypeId = 6,
+                            OriginalPrice = 29.99m,
+                            Price = 19.99m
                         },
                         new
                         {
@@ -232,7 +319,69 @@ namespace BlazorECommerce.Server.Data.Migrations.SqlServer
                             ProductTypeId = 8,
                             OriginalPrice = 19.99m,
                             Price = 9.99m
+                        },
+                        new
+                        {
+                            ProductId = 3,
+                            ProductTypeId = 10,
+                            OriginalPrice = 29.99m,
+                            Price = 19.99m
                         });
+                });
+
+            modelBuilder.Entity("BlazorECommerce.Shared.Models.User", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<DateTime>("DateCreated")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Email")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<byte[]>("PasswordHash")
+                        .IsRequired()
+                        .HasColumnType("varbinary(max)");
+
+                    b.Property<byte[]>("PasswordSalt")
+                        .IsRequired()
+                        .HasColumnType("varbinary(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Users");
+                });
+
+            modelBuilder.Entity("BlazorECommerce.Shared.Models.OrderItem", b =>
+                {
+                    b.HasOne("BlazorECommerce.Shared.Models.Order", "Order")
+                        .WithMany("OrderItems")
+                        .HasForeignKey("OrderId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("BlazorECommerce.Shared.Models.Product", "Product")
+                        .WithMany()
+                        .HasForeignKey("ProductId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("BlazorECommerce.Shared.Models.ProductType", "ProductType")
+                        .WithMany()
+                        .HasForeignKey("ProductTypeId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Order");
+
+                    b.Navigation("Product");
+
+                    b.Navigation("ProductType");
                 });
 
             modelBuilder.Entity("BlazorECommerce.Shared.Models.Product", b =>
@@ -261,6 +410,11 @@ namespace BlazorECommerce.Server.Data.Migrations.SqlServer
                     b.Navigation("Product");
 
                     b.Navigation("ProductType");
+                });
+
+            modelBuilder.Entity("BlazorECommerce.Shared.Models.Order", b =>
+                {
+                    b.Navigation("OrderItems");
                 });
 
             modelBuilder.Entity("BlazorECommerce.Shared.Models.Product", b =>
