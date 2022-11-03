@@ -4,16 +4,16 @@ public record OrderService(HttpClient HttpClient,
     IAuthService AuthService,
     NavigationManager NavigationManager) : IOrderService
 {
-    public async Task PlaceOrderAsync()
+    public async Task<string> PlaceOrderAsync()
     {
-        if (await AuthService.IsUserAuthenticatedAsync())
+        if (!await AuthService.IsUserAuthenticatedAsync())
         {
-            await HttpClient.PostAsync("api/order", null);
+            return "login";
         }
-        else
-        {
-            NavigationManager.NavigateTo("login");
-        }
+
+        var results = await HttpClient.PostAsync("api/payment/checkout", null);
+        var url = await results.Content.ReadAsStringAsync();
+        return url.Replace("\"", string.Empty).Replace("'", string.Empty);
     }
 
     public async Task<List<OrderOverviewResponse>> GetOrdersAsync()

@@ -4,19 +4,12 @@ public static class OrderApi
 {
     public static IEndpointRouteBuilder MapOrderApi(this IEndpointRouteBuilder apiGroup)
     {
-        var orderGroup = apiGroup.MapGroup("order");
+        var orderGroup = apiGroup.MapGroup(nameof(Order));
 
-        orderGroup.MapPost(string.Empty, PlaceOrderAsync);
         orderGroup.MapGet(string.Empty, GetOrdersAsync);
         orderGroup.MapGet("/{orderId:int}", GetOrderDetailsAsync);
 
         return apiGroup;
-    }
-
-    private static async Task<Ok<ServiceResponse<bool>>> PlaceOrderAsync(IOrderService orderService)
-    {
-        var results = await orderService.PlaceOrderAsync();
-        return TypedResults.Ok(results);
     }
 
     private static async Task<Ok<ServiceResponse<List<OrderOverviewResponse>>>> GetOrdersAsync(IOrderService orderService)

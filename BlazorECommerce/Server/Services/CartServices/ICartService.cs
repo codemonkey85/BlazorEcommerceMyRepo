@@ -8,7 +8,7 @@ public interface ICartService
 
     Task<ServiceResponse<int>> GetCartItemsCountAsync();
 
-    Task<ServiceResponse<List<CartProductResponse>>> GetDbCartProductsAsync();
+    Task<ServiceResponse<List<CartProductResponse>>> GetDbCartProductsAsync(int? userId = null);
 
     Task<ServiceResponse<bool>> AddToCartAsync(CartItem cartItem);
 

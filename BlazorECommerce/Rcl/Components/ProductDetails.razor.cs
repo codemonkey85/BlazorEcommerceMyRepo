@@ -8,7 +8,7 @@ public partial class ProductDetails
 
     [Parameter] public int ProductId { get; set; }
 
-    [Parameter] public int? ProductTypeId { get; set; }
+    [Parameter] public int? ProductTypeId { get; set; } = 1;
 
     protected override async Task OnParametersSetAsync()
     {
@@ -27,9 +27,9 @@ public partial class ProductDetails
             message = results.Message;
         }
 
-        if (ProductTypeId is not null)
+        if (ProductTypeId is > 0)
         {
-            currentTypeId = ProductTypeId ?? 0;
+            currentTypeId = ProductTypeId ?? 1;
         }
     }
 
@@ -47,7 +47,7 @@ public partial class ProductDetails
         {
             ProductId = SelectedVariant.ProductId,
             ProductTypeId = SelectedVariant.ProductTypeId,
-            Quantity = quantity < 1 ? 1 : quantity,
+            Quantity = quantity < 1 ? 1 : quantity
         };
 
         await CartService.AddToCartAsync(cartItem);

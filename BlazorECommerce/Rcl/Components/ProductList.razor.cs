@@ -10,6 +10,6 @@ public partial class ProductList : IDisposable
     {
         null or { Count: 0 } => string.Empty,
         { Count: 1 } => $"{product.Variants.FirstOrDefault()?.Price:C}",
-        { Count: > 1 } => $"Starting at {product.Variants.MinBy(variant => variant.Price)?.Price:C}",
+        { Count: > 1 } => $"Starting at {product.Variants.MinBy(variant => variant.Price)?.Price:C}"
     };
 }

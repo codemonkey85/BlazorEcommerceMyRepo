@@ -14,7 +14,7 @@
                 </div>
                 <div class="name">
                     <h5>
-                        <a href="/product/@product.ProductId/@product.ProductTypeId")>
+                        <a href="/product/@product.ProductId/@product.ProductTypeId">
                             @product.Title
                         </a>
                     </h5>
@@ -38,14 +38,12 @@
             </div>
         }
         <div class="cart-product-price">
-            Total (@CartProducts.Count): @CartProducts.Sum(product => product.Price * product.Quantity).ToString("C")
+            <span>
+                Total (@CartProducts.Count): @CartProducts.Sum(product => product.Price * product.Quantity).ToString("C")
+            </span>
         </div>
     </div>
-    <button @onclick="PlaceOrderAsync" class="btn btn-success float-end mt-1">Place Order</button>
-}
-else if (orderPlaced)
-{
-    <span>Thank you for your order! You can check your orders <a href="orders">here</a>!</span>
+    <button @onclick="PlaceOrderAsync" class="btn btn-success float-end mt-1">Check out</button>
 }
 else
 {

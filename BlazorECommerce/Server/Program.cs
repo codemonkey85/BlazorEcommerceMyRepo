@@ -33,6 +33,7 @@ services
     .AddScoped<IAuthService, AuthService>()
     .AddScoped<ICartService, CartService>()
     .AddScoped<IOrderService, OrderService>()
+    .AddScoped<IPaymentService, PaymentService>()
     .AddScoped<IProductService, ProductService>()
     .AddScoped<ICategoryService, CategoryService>();
 
@@ -43,7 +44,7 @@ services
         ValidateIssuerSigningKey = true,
         IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(appSettings.AuthSettings.AuthToken)),
         ValidateIssuer = false,
-        ValidateAudience = false,
+        ValidateAudience = false
     });
 
 services.Configure<JsonOptions>(options =>
@@ -102,6 +103,7 @@ apiGroup
     .MapAuthApi()
     .MapCartApi()
     .MapOrderApi()
+    .MapPaymentApi()
     .MapProductApi()
     .MapCategoryApi();
 

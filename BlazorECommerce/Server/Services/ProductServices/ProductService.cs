@@ -15,10 +15,10 @@ public record ProductService(DatabaseContext DatabaseContext) : IProductService
                 .Include(product => product.Variants)
                 .ThenInclude(variant => variant.ProductType)
                 .FirstOrDefaultAsync(product => product.Id == productId) switch
-            {
-                null => new ServiceResponse<Product> { Success = false, Message = $"{nameof(Product)} not found." },
-                var product => new ServiceResponse<Product>(product)
-            };
+        {
+            null => new ServiceResponse<Product> { Success = false, Message = $"{nameof(Product)} not found." },
+            var product => new ServiceResponse<Product>(product)
+        };
 
     public async Task<ServiceResponse<List<Product>>> GetProductsByCategoryAsync(string categoryUrl) => new
     (
@@ -47,7 +47,7 @@ public record ProductService(DatabaseContext DatabaseContext) : IProductService
 
         return new ServiceResponse<ProductSearchResult>
         (
-            new ProductSearchResult { Products = products, CurrentPage = page, Pages = pageCount, }
+            new ProductSearchResult { Products = products, CurrentPage = page, Pages = pageCount }
         );
     }
 

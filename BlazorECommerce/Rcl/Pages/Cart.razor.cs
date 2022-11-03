@@ -6,13 +6,7 @@ public partial class Cart
 
     private string Message { get; set; } = "Loading cart...";
 
-    private bool orderPlaced = false;
-
-    protected override async Task OnInitializedAsync()
-    {
-        await LoadCart();
-        orderPlaced = false;
-    }
+    protected override async Task OnInitializedAsync() => await LoadCart();
 
     private async Task LoadCart()
     {
@@ -46,9 +40,7 @@ public partial class Cart
 
     private async Task PlaceOrderAsync()
     {
-        await OrderService.PlaceOrderAsync();
-        CartProducts = await CartService.GetCartProductsAsync();
-        await CartService.GetCartItemsCountAsync();
-        orderPlaced = true;
+        var url = await OrderService.PlaceOrderAsync();
+        NavigationManager.NavigateTo(url);
     }
 }

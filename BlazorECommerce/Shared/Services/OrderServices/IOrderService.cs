@@ -2,7 +2,7 @@
 
 public interface IOrderService
 {
-    Task PlaceOrderAsync();
+    Task<string> PlaceOrderAsync();
 
     Task<List<OrderOverviewResponse>> GetOrdersAsync();
 

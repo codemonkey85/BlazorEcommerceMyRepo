@@ -2,9 +2,9 @@
 
 public record OrderService(DatabaseContext DatabaseContext, IAuthService AuthService, ICartService CartService) : IOrderService
 {
-    public async Task<ServiceResponse<bool>> PlaceOrderAsync()
+    public async Task<ServiceResponse<bool>> PlaceOrderAsync(int userId)
     {
-        var products = (await CartService.GetDbCartProductsAsync()).Data;
+        var products = (await CartService.GetDbCartProductsAsync(userId)).Data;
         if (products is null)
         {
             return new ServiceResponse<bool>(false);
@@ -25,8 +25,6 @@ public record OrderService(DatabaseContext DatabaseContext, IAuthService AuthSer
                 TotalPrice = productTotalPrice
             });
         });
-
-        var userId = AuthService.GetUserId();
 
         var order = new Order
         {
@@ -63,7 +61,7 @@ public record OrderService(DatabaseContext DatabaseContext, IAuthService AuthSer
             ProductName = order.OrderItems.Count > 1
                     ? $"{order.OrderItems.First().Product.Title} and {order.OrderItems.Count - 1} more..."
                     : order.OrderItems.First().Product.Title,
-            ProductImageUrl = order.OrderItems.First().Product.ImageUrl,
+            ProductImageUrl = order.OrderItems.First().Product.ImageUrl
         }));
 
         return new ServiceResponse<List<OrderOverviewResponse>>(orderResponse);
@@ -90,7 +88,7 @@ public record OrderService(DatabaseContext DatabaseContext, IAuthService AuthSer
         {
             OrderDate = order.OrderDate,
             TotalPrice = order.TotalPrice,
-            Products = new List<OrderDetailsProductResponse>(),
+            Products = new List<OrderDetailsProductResponse>()
         };
 
         order.OrderItems.ForEach(orderItem => orderDetailsResponse.Products.Add(new OrderDetailsProductResponse
@@ -101,7 +99,7 @@ public record OrderService(DatabaseContext DatabaseContext, IAuthService AuthSer
             ProductType = orderItem.ProductType.Name,
             Quantity = orderItem.Quantity,
             Title = orderItem.Product.Title,
-            TotalPrice = orderItem.TotalPrice,
+            TotalPrice = orderItem.TotalPrice
         }));
 
         return new ServiceResponse<OrderDetailsResponse>(orderDetailsResponse);

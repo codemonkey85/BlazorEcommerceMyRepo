@@ -33,15 +33,15 @@ public class DatabaseContext : DbContext
             new() { Id = 7, Name = "VHS" },
             new() { Id = 8, Name = "PC" },
             new() { Id = 9, Name = "Playstation" },
-            new() { Id = 10, Name = "Xbox" },
+            new() { Id = 10, Name = "Xbox" }
         });
 
         modelBuilder.Entity<Category>()
             .HasData(new List<Category>
             {
-                new() { Id = 1, Name = "Books", Url = "books", },
-                new() { Id = 2, Name = "Movies", Url = "movies", },
-                new() { Id = 3, Name = "Video Games", Url = "video-games", },
+                new() { Id = 1, Name = "Books", Url = "books" },
+                new() { Id = 2, Name = "Movies", Url = "movies" },
+                new() { Id = 3, Name = "Video Games", Url = "video-games" }
             });
 
         modelBuilder.Entity<Product>()
@@ -54,7 +54,7 @@ public class DatabaseContext : DbContext
                     Description = "Product 1 Description",
                     ImageUrl =
                         "https://img.freepik.com/free-psd/cosmetic-product-packaging-mockup_1150-40284.jpg?w=2000",
-                    CategoryId = 1,
+                    CategoryId = 1
                 },
                 new()
                 {
@@ -64,7 +64,7 @@ public class DatabaseContext : DbContext
                     ImageUrl =
                         "https://img.freepik.com/free-psd/cosmetic-product-packaging-mockup_1150-40282.jpg?w=2000",
                     CategoryId = 2,
-                    Featured = true,
+                    Featured = true
                 },
                 new()
                 {
@@ -73,8 +73,8 @@ public class DatabaseContext : DbContext
                     Description = "Product 3 Description",
                     ImageUrl =
                         "https://img.freepik.com/free-photo/pedestal-display-blank-podium-product_1048-16154.jpg?w=996",
-                    CategoryId = 3,
-                },
+                    CategoryId = 3
+                }
             });
 
         modelBuilder.Entity<ProductVariant>().HasData(new List<ProductVariant>
@@ -84,7 +84,7 @@ public class DatabaseContext : DbContext
             new() { ProductId = 2, ProductTypeId = 5, Price = 9.99M, OriginalPrice = 19.99M },
             new() { ProductId = 2, ProductTypeId = 6, Price = 19.99M, OriginalPrice = 29.99M },
             new() { ProductId = 3, ProductTypeId = 8, Price = 9.99M, OriginalPrice = 19.99M },
-            new() { ProductId = 3, ProductTypeId = 10, Price = 19.99M, OriginalPrice = 29.99M },
+            new() { ProductId = 3, ProductTypeId = 10, Price = 19.99M, OriginalPrice = 29.99M }
         });
     }
 

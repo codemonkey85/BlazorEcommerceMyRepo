@@ -20,7 +20,7 @@ public record CartService(DatabaseContext DatabaseContext, IAuthService AuthServ
                             Price = productVariants.Price,
                             ProductType = productVariants.ProductType.Name,
                             ProductTypeId = productVariants.ProductTypeId,
-                            Quantity = cartItem.Quantity,
+                            Quantity = cartItem.Quantity
                         }
                     ).First()
                 )
@@ -36,7 +36,7 @@ public record CartService(DatabaseContext DatabaseContext, IAuthService AuthServ
         DatabaseContext.CartItems.AddRange(cartItems);
         await DatabaseContext.SaveChangesAsync();
 
-        return await GetDbCartProductsAsync();
+        return await GetDbCartProductsAsync(userId);
     }
 
     public async Task<ServiceResponse<int>> GetCartItemsCountAsync()
@@ -46,10 +46,11 @@ public record CartService(DatabaseContext DatabaseContext, IAuthService AuthServ
         return new ServiceResponse<int>(count);
     }
 
-    public async Task<ServiceResponse<List<CartProductResponse>>> GetDbCartProductsAsync()
+    public async Task<ServiceResponse<List<CartProductResponse>>> GetDbCartProductsAsync(int? userId = null)
     {
-        var userId = AuthService.GetUserId();
-        return await GetCartProductsAsync(await DatabaseContext.CartItems.Where(cartItem => cartItem.UserId == userId)
+        userId ??= AuthService.GetUserId();
+        return await GetCartProductsAsync(await DatabaseContext.CartItems
+            .Where(cartItem => cartItem.UserId == userId)
             .ToListAsync());
     }
 
