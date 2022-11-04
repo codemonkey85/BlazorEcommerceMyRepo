@@ -2,3 +2,73 @@
 @attribute [Authorize(Roles = "Admin")]
 
 <h3>Categories</h3>
+
+<div class="header">
+    <div class="col">
+        Name
+    </div>
+    <div class="col">
+        URL
+    </div>
+    <div class="col">
+        Visible
+    </div>
+    <div class="col">
+    </div>
+</div>
+
+@foreach (var category in CategoryService.AdminCategories)
+{
+    @if (category is { IsEditing: true })
+    {
+        @if (editingCategory is not null)
+        {
+            <EditForm Model="editingCategory" OnValidSubmit="UpdateCategoryAsync">
+                <div class="row">
+                    <div class="col">
+                        <InputText @bind-Value="editingCategory.Name" class="form-control" />
+                    </div>
+                    <div class="col">
+                        <InputText @bind-Value="editingCategory.Url" class="form-control" />
+                    </div>
+                    <div class="col col-visible">
+                        <InputCheckbox @bind-Value="editingCategory.IsVisible" style="transform: scale(1.5, 1.5)" />
+                    </div>
+                    <div class="col">
+                        <button type="submit" class="btn btn-primary">
+                            <i class="oi oi-cloud-upload"></i>
+                        </button>
+                        <button class="btn btn-secondary" @onclick="CancelEditingAsync">
+                            <i class="oi oi-circle-x"></i>
+                        </button>
+                    </div>
+                </div>
+            </EditForm>
+        }
+    }
+    else
+    {
+        <div class="row">
+            <div class="col">
+                @category.Name
+            </div>
+            <div class="col">
+                @category.Url
+            </div>
+            <div class="col col-visible">
+                <span>@(category.IsVisible ? "✔️" : string.Empty)</span>
+            </div>
+            <div class="col">
+                <button type="submit" class="btn btn-primary" @onclick="_ => EditCategory(category)">
+                    <i class="oi oi-pencil"></i>
+                </button>
+                <button class="btn btn-danger" @onclick="async () => await DeleteCategoryAsync(category.Id)">
+                    <i class="oi oi-trash"></i>
+                </button>
+            </div>
+        </div>
+    }
+}
+<button class="btn btn-primary" @onclick="CreateNewCategory">
+    <i class="oi oi-plus"></i> Add New Category
+</button>

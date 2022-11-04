@@ -1,6 +1,6 @@
 ﻿namespace BlazorECommerce.Rcl.Shared;
 
-public partial class ShopNavMenu
+public partial class ShopNavMenu : IDisposable
 {
     private bool collapseNavMenu = true;
 
@@ -8,5 +8,11 @@ public partial class ShopNavMenu
 
     private void ToggleNavMenu() => collapseNavMenu = !collapseNavMenu;
 
-    protected override async Task OnInitializedAsync() => await CategoryService.GetCategoriesAsync();
+    protected override async Task OnInitializedAsync()
+    {
+        await CategoryService.GetCategoriesAsync();
+        CategoryService.OnChange += StateHasChanged;
+    }
+
+    public void Dispose() => CategoryService.OnChange -= StateHasChanged;
 }
