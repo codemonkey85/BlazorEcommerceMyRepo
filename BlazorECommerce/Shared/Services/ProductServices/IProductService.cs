@@ -6,6 +6,8 @@ public interface IProductService
 
     List<Product> Products { get; }
 
+    List<Product>? AdminProducts { get; set; }
+
     string Message { get; }
 
     int CurrentPage { get; }
@@ -21,4 +23,12 @@ public interface IProductService
     Task SearchProductsAsync(string searchText, int page);
 
     Task<List<string>> GetProductSearchSuggestionsAsync(string searchText);
+
+    Task GetAdminProductsAsync();
+
+    Task<Product?> CreateProductAsync(Product product);
+
+    Task<Product?> UpdateProductAsync(Product product);
+
+    Task DeleteProductAsync(Product product);
 }

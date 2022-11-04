@@ -12,6 +12,10 @@ public static class ProductApi
         productGroup.MapGet("/search/{searchText}/{page:int}", SearchProductsAsync);
         productGroup.MapGet("/searchsuggestions/{searchText}", GetProductSearchSuggestionsAsync);
         productGroup.MapGet("/featured", GetFeaturedProductsAsync);
+        productGroup.MapGet("admin", GetAdminProductsAsync);
+        productGroup.MapPost("admin", CreateProductAsync);
+        productGroup.MapPost("admin", UpdateProductAsync);
+        productGroup.MapPost("admin/{productId:int}", DeleteProductAsync);
 
         return apiGroup;
     }
@@ -23,9 +27,9 @@ public static class ProductApi
     }
 
     private static async Task<Ok<ServiceResponse<Product>>> GetProductAsync(IProductService productService,
-        int productId)
+        IAuthService authService, int productId)
     {
-        var results = await productService.GetProductAsync(productId);
+        var results = await productService.GetProductAsync(authService, productId);
         return TypedResults.Ok(results);
     }
 
@@ -57,6 +61,37 @@ public static class ProductApi
         IProductService productService)
     {
         var response = await productService.GetFeaturedProductsAsync();
+        return TypedResults.Ok(response);
+    }
+
+    [Authorize(Roles = "Admin")]
+    private static async Task<Ok<ServiceResponse<List<Product>>>> GetAdminProductsAsync(IProductService productService)
+    {
+        var response = await productService.GetAdminProductsAsync();
+        return TypedResults.Ok(response);
+    }
+
+    [Authorize(Roles = "Admin")]
+    private static async Task<Ok<ServiceResponse<Product>>> CreateProductAsync(IProductService productService,
+        Product product)
+    {
+        var response = await productService.CreateProductAsync(product);
+        return TypedResults.Ok(response);
+    }
+
+    [Authorize(Roles = "Admin")]
+    private static async Task<Ok<ServiceResponse<Product>>> UpdateProductAsync(IProductService productService,
+        Product product)
+    {
+        var response = await productService.UpdateProductAsync(product);
+        return TypedResults.Ok(response);
+    }
+
+    [Authorize(Roles = "Admin")]
+    private static async Task<Ok<ServiceResponse<bool>>> DeleteProductAsync(IProductService productService,
+        int productId)
+    {
+        var response = await productService.DeleteProductAsync(productId);
         return TypedResults.Ok(response);
     }
 }

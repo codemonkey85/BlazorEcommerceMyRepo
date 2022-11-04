@@ -8,6 +8,8 @@ public interface IAuthService
 
     Task<ServiceResponse<bool>> ChangePasswordAsync(int userId, string newPassword);
 
+    bool IsUserInRole(string role);
+
     int GetUserId();
 
     string GetUserEmail();

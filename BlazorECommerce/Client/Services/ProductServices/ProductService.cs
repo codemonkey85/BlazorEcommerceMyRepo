@@ -6,6 +6,8 @@ public record ProductService(HttpClient HttpClient) : IProductService
 
     public List<Product> Products { get; set; } = new();
 
+    public List<Product>? AdminProducts { get; set; }
+
     public string Message { get; set; } = "Loading Products...";
 
     public int CurrentPage { get; set; } = 1;
@@ -75,4 +77,33 @@ public record ProductService(HttpClient HttpClient) : IProductService
 
         return results?.Data ?? new List<string>();
     }
+
+    public async Task GetAdminProductsAsync()
+    {
+        var results = await HttpClient.GetFromJsonAsync<ServiceResponse<List<Product>>>($"api/{nameof(Product)}/admin");
+        AdminProducts = results?.Data ?? new List<Product>();
+        CurrentPage = 1;
+        PageCount = 0;
+        if (AdminProducts is { Count: 0 })
+        {
+            Message = "No products found.";
+        }
+    }
+
+    public async Task<Product?> CreateProductAsync(Product product)
+    {
+        var results = await HttpClient.PostAsJsonAsync($"api/{nameof(Product)}/admin", product);
+        var newProduct = (await results.Content.ReadFromJsonAsync<ServiceResponse<Product?>>())?.Data;
+        return newProduct;
+    }
+
+    public async Task<Product?> UpdateProductAsync(Product product)
+    {
+        var results = await HttpClient.PutAsJsonAsync($"api/{nameof(Product)}/admin", product);
+        var updatedProduct = (await results.Content.ReadFromJsonAsync<ServiceResponse<Product?>>())?.Data;
+        return updatedProduct;
+    }
+
+    public async Task DeleteProductAsync(Product product) =>
+        await HttpClient.DeleteAsync($"api/{nameof(Product)}/admin/{product.Id}");
 }

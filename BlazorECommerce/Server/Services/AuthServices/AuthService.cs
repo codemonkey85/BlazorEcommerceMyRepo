@@ -96,6 +96,9 @@ public record AuthService(IHttpContextAccessor HttpContextAccessor,
         return jwt;
     }
 
+    public bool IsUserInRole(string role) =>
+        HttpContextAccessor.HttpContext?.User.IsInRole(role) ?? false;
+
     public int GetUserId()
     {
         if (HttpContextAccessor is not { HttpContext.User: not null })

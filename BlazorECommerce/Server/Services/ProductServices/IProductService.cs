@@ -4,7 +4,7 @@ public interface IProductService
 {
     Task<ServiceResponse<List<Product>>> GetProductsAsync();
 
-    Task<ServiceResponse<Product>> GetProductAsync(int productId);
+    Task<ServiceResponse<Product>> GetProductAsync(IAuthService authService, int productId);
 
     Task<ServiceResponse<List<Product>>> GetProductsByCategoryAsync(string categoryUrl);
 
@@ -13,4 +13,12 @@ public interface IProductService
     Task<ServiceResponse<List<string>>> GetProductSearchSuggestions(string searchText);
 
     Task<ServiceResponse<List<Product>>> GetFeaturedProductsAsync();
+
+    Task<ServiceResponse<List<Product>>> GetAdminProductsAsync();
+
+    Task<ServiceResponse<Product>> CreateProductAsync(Product product);
+
+    Task<ServiceResponse<Product>> UpdateProductAsync(Product product);
+
+    Task<ServiceResponse<bool>> DeleteProductAsync(int productId);
 }
