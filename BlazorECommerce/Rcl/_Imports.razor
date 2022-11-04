@@ -2,6 +2,7 @@
 @using BlazorECommerce.Shared.Services.AddressServices
 @using BlazorECommerce.Shared.Services.AuthServices
 @using BlazorECommerce.Shared.Services.OrderServices
+@using BlazorECommerce.Shared.Services.ProductTypeServices
 @using Microsoft.AspNetCore.Authorization
 @using Microsoft.AspNetCore.Components.Authorization
 @using Microsoft.AspNetCore.Components.Routing
@@ -16,5 +17,6 @@
 @inject IAddressService AddressService
 @inject ICategoryService CategoryService
 @inject IProductService ProductService
+@inject IProductTypeService ProductTypeService
 @inject ILocalStorageService LocalStorageService
 @inject ISyncLocalStorageService SyncLocalStorageService

@@ -36,6 +36,7 @@ services
     .AddScoped<IPaymentService, PaymentService>()
     .AddScoped<IAddressService, AddressService>()
     .AddScoped<IProductService, ProductService>()
+    .AddScoped<IProductTypeService, ProductTypeService>()
     .AddScoped<ICategoryService, CategoryService>();
 
 services
@@ -107,6 +108,7 @@ apiGroup
     .MapPaymentApi()
     .MapAddressApi()
     .MapProductApi()
-    .MapCategoryApi();
+    .MapCategoryApi()
+    .MapProductTypeApi();
 
 app.Run();

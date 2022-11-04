@@ -13,6 +13,7 @@ global using BlazorECommerce.Server.Services.CategoryServices;
 global using BlazorECommerce.Server.Services.OrderServices;
 global using BlazorECommerce.Server.Services.PaymentServices;
 global using BlazorECommerce.Server.Services.ProductServices;
+global using BlazorECommerce.Server.Services.ProductTypeServices;
 global using BlazorECommerce.Shared;
 global using BlazorECommerce.Shared.DTOs;
 global using BlazorECommerce.Shared.Models;

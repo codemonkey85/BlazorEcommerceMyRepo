@@ -13,6 +13,7 @@ services
     .AddScoped<IAddressService, AddressService>()
     .AddScoped<IProductService, ProductService>()
     .AddScoped<ICategoryService, CategoryService>()
+    .AddScoped<IProductTypeService, ProductTypeService>()
     .AddOptions()
     .AddAuthorizationCore()
     .AddScoped<AuthenticationStateProvider, CustomAuthStateProvider>();
