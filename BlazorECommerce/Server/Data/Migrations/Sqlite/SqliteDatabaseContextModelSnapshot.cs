@@ -198,6 +198,12 @@ namespace BlazorECommerce.Server.Data.Migrations.Sqlite
                         .IsRequired()
                         .HasColumnType("TEXT");
 
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<bool>("IsVisible")
+                        .HasColumnType("INTEGER");
+
                     b.Property<string>("Title")
                         .IsRequired()
                         .HasColumnType("TEXT");
@@ -216,6 +222,8 @@ namespace BlazorECommerce.Server.Data.Migrations.Sqlite
                             Description = "Product 1 Description",
                             Featured = false,
                             ImageUrl = "https://img.freepik.com/free-psd/cosmetic-product-packaging-mockup_1150-40284.jpg?w=2000",
+                            IsDeleted = false,
+                            IsVisible = true,
                             Title = "Product 1 Title (Book)"
                         },
                         new
@@ -225,6 +233,8 @@ namespace BlazorECommerce.Server.Data.Migrations.Sqlite
                             Description = "Product 2 Description",
                             Featured = true,
                             ImageUrl = "https://img.freepik.com/free-psd/cosmetic-product-packaging-mockup_1150-40282.jpg?w=2000",
+                            IsDeleted = false,
+                            IsVisible = true,
                             Title = "Product 2 Title (Movie)"
                         },
                         new
@@ -234,6 +244,8 @@ namespace BlazorECommerce.Server.Data.Migrations.Sqlite
                             Description = "Product 3 Description",
                             Featured = false,
                             ImageUrl = "https://img.freepik.com/free-photo/pedestal-display-blank-podium-product_1048-16154.jpg?w=996",
+                            IsDeleted = false,
+                            IsVisible = true,
                             Title = "Product 3 Title (Video Game)"
                         });
                 });
@@ -313,6 +325,12 @@ namespace BlazorECommerce.Server.Data.Migrations.Sqlite
                     b.Property<int>("ProductTypeId")
                         .HasColumnType("INTEGER");
 
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<bool>("IsVisible")
+                        .HasColumnType("INTEGER");
+
                     b.Property<decimal>("OriginalPrice")
                         .HasColumnType("decimal(18,2)");
 
@@ -330,6 +348,8 @@ namespace BlazorECommerce.Server.Data.Migrations.Sqlite
                         {
                             ProductId = 1,
                             ProductTypeId = 2,
+                            IsDeleted = false,
+                            IsVisible = true,
                             OriginalPrice = 19.99m,
                             Price = 9.99m
                         },
@@ -337,6 +357,8 @@ namespace BlazorECommerce.Server.Data.Migrations.Sqlite
                         {
                             ProductId = 1,
                             ProductTypeId = 3,
+                            IsDeleted = false,
+                            IsVisible = true,
                             OriginalPrice = 29.99m,
                             Price = 19.99m
                         },
@@ -344,6 +366,8 @@ namespace BlazorECommerce.Server.Data.Migrations.Sqlite
                         {
                             ProductId = 2,
                             ProductTypeId = 5,
+                            IsDeleted = false,
+                            IsVisible = true,
                             OriginalPrice = 19.99m,
                             Price = 9.99m
                         },
@@ -351,6 +375,8 @@ namespace BlazorECommerce.Server.Data.Migrations.Sqlite
                         {
                             ProductId = 2,
                             ProductTypeId = 6,
+                            IsDeleted = false,
+                            IsVisible = true,
                             OriginalPrice = 29.99m,
                             Price = 19.99m
                         },
@@ -358,6 +384,8 @@ namespace BlazorECommerce.Server.Data.Migrations.Sqlite
                         {
                             ProductId = 3,
                             ProductTypeId = 8,
+                            IsDeleted = false,
+                            IsVisible = true,
                             OriginalPrice = 19.99m,
                             Price = 9.99m
                         },
@@ -365,6 +393,8 @@ namespace BlazorECommerce.Server.Data.Migrations.Sqlite
                         {
                             ProductId = 3,
                             ProductTypeId = 10,
+                            IsDeleted = false,
+                            IsVisible = true,
                             OriginalPrice = 29.99m,
                             Price = 19.99m
                         });

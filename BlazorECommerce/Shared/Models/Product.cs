@@ -5,7 +5,7 @@ public class Product
     [Key, DatabaseGenerated(DatabaseGeneratedOption.Identity)]
     public int Id { get; set; }
 
-    public string Title { get; set; } = string.Empty;
+    [Required] public string Title { get; set; } = string.Empty;
 
     public string Description { get; set; } = string.Empty;
 
@@ -18,4 +18,12 @@ public class Product
     public bool Featured { get; set; }
 
     public List<ProductVariant> Variants { get; set; } = new();
+
+    public bool IsVisible { get; set; } = true;
+
+    public bool IsDeleted { get; set; } = false;
+
+    [NotMapped] public bool IsEditing { get; set; } = false;
+
+    [NotMapped] public bool IsNew { get; set; } = false;
 }

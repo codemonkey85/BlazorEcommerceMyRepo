@@ -13,4 +13,12 @@ public class ProductVariant
     [Column(TypeName = "decimal(18,2)")] public decimal Price { get; set; }
 
     [Column(TypeName = "decimal(18,2)")] public decimal OriginalPrice { get; set; }
+
+    public bool IsVisible { get; set; } = true;
+
+    public bool IsDeleted { get; set; } = false;
+
+    [NotMapped] public bool IsEditing { get; set; } = false;
+
+    [NotMapped] public bool IsNew { get; set; } = false;
 }
