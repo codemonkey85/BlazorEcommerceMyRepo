@@ -4,7 +4,7 @@ public static class AuthApi
 {
     public static IEndpointRouteBuilder MapAuthApi(this IEndpointRouteBuilder apiGroup)
     {
-        var authGroup = apiGroup.MapGroup("auth");
+        var authGroup = apiGroup.MapGroup(Constants.Auth);
 
         authGroup.MapPost("register", RegisterUserAsync);
         authGroup.MapPost("login", LogInAsync);

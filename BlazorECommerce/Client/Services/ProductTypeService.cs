@@ -9,13 +9,13 @@ public record ProductTypeService(HttpClient HttpClient) : IProductTypeService
     public async Task GetProductTypesAsync()
     {
         var results =
-            await HttpClient.GetFromJsonAsync<ServiceResponse<List<ProductType>>>($"api/{nameof(ProductType)}/admin");
+            await HttpClient.GetFromJsonAsync<ServiceResponse<List<ProductType>>>(Constants.AdminProductTypeApi);
         ProductTypes = results?.Data ?? new List<ProductType>();
     }
 
     public async Task AddProductTypeAsync(ProductType productType)
     {
-        var response = await HttpClient.PostAsJsonAsync($"api/{nameof(ProductType)}/admin", productType);
+        var response = await HttpClient.PostAsJsonAsync(Constants.AdminProductTypeApi, productType);
         ProductTypes = (await response.Content.ReadFromJsonAsync<ServiceResponse<List<ProductType>>>())?.Data ??
                        new List<ProductType>();
         OnChange?.Invoke();
@@ -23,7 +23,7 @@ public record ProductTypeService(HttpClient HttpClient) : IProductTypeService
 
     public async Task UpdateProductTypeAsync(ProductType productType)
     {
-        var response = await HttpClient.PutAsJsonAsync($"api/{nameof(ProductType)}/admin", productType);
+        var response = await HttpClient.PutAsJsonAsync(Constants.AdminProductTypeApi, productType);
         ProductTypes = (await response.Content.ReadFromJsonAsync<ServiceResponse<List<ProductType>>>())?.Data ??
                        new List<ProductType>();
         OnChange?.Invoke();

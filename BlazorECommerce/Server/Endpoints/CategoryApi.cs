@@ -4,11 +4,11 @@ public static class CategoryApi
 {
     public static IEndpointRouteBuilder MapCategoryApi(this IEndpointRouteBuilder apiGroup)
     {
-        var categoryGroup = apiGroup.MapGroup(nameof(Category));
+        var categoryGroup = apiGroup.MapGroup(Constants.Category);
 
         categoryGroup.MapGet("/", GetCategoriesAsync);
 
-        var adminCategoryGroup = categoryGroup.MapGroup("admin");
+        var adminCategoryGroup = categoryGroup.MapGroup(Constants.Admin);
 
         adminCategoryGroup.MapGet(string.Empty, GetAdminCategoriesAsync);
         adminCategoryGroup.MapPost(string.Empty, AddCategoryAsync);

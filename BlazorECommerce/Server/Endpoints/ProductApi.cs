@@ -4,7 +4,7 @@ public static class ProductApi
 {
     public static IEndpointRouteBuilder MapProductApi(this IEndpointRouteBuilder apiGroup)
     {
-        var productGroup = apiGroup.MapGroup(nameof(Product));
+        var productGroup = apiGroup.MapGroup(Constants.Product);
 
         productGroup.MapGet(string.Empty, GetProductsAsync);
         productGroup.MapGet("/{productId:int}", GetProductAsync);
@@ -13,7 +13,7 @@ public static class ProductApi
         productGroup.MapGet("/searchsuggestions/{searchText}", GetProductSearchSuggestionsAsync);
         productGroup.MapGet("/featured", GetFeaturedProductsAsync);
 
-        var adminProductGroup = productGroup.MapGroup("admin");
+        var adminProductGroup = productGroup.MapGroup(Constants.Admin);
 
         adminProductGroup.MapGet(string.Empty, GetAdminProductsAsync);
         adminProductGroup.MapPost(string.Empty, CreateProductAsync);

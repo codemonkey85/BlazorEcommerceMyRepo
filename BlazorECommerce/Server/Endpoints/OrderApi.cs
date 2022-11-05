@@ -4,7 +4,7 @@ public static class OrderApi
 {
     public static IEndpointRouteBuilder MapOrderApi(this IEndpointRouteBuilder apiGroup)
     {
-        var orderGroup = apiGroup.MapGroup(nameof(Order));
+        var orderGroup = apiGroup.MapGroup(Constants.Order);
 
         orderGroup.MapGet(string.Empty, GetOrdersAsync);
         orderGroup.MapGet("/{orderId:int}", GetOrderDetailsAsync);

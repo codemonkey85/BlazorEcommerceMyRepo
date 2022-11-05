@@ -4,19 +4,19 @@ public record AuthService(HttpClient HttpClient, AuthenticationStateProvider Aut
 {
     public async Task<ServiceResponse<int>> RegisterAsync(UserRegister request)
     {
-        var results = await HttpClient.PostAsJsonAsync("api/auth/register", request);
+        var results = await HttpClient.PostAsJsonAsync($"{Constants.AuthApi}/register", request);
         return await results.Content.ReadFromJsonAsync<ServiceResponse<int>>() ?? new ServiceResponse<int>();
     }
 
     public async Task<ServiceResponse<string>> LoginAsync(UserLogin request)
     {
-        var results = await HttpClient.PostAsJsonAsync("api/auth/login", request);
+        var results = await HttpClient.PostAsJsonAsync($"{Constants.AuthApi}/login", request);
         return await results.Content.ReadFromJsonAsync<ServiceResponse<string>>() ?? new ServiceResponse<string>();
     }
 
     public async Task<ServiceResponse<bool>> ChangePasswordAsync(UserChangePassword request)
     {
-        var results = await HttpClient.PostAsJsonAsync("api/auth/changepassword", request.Password);
+        var results = await HttpClient.PostAsJsonAsync($"{Constants.AuthApi}/changepassword", request.Password);
         return await results.Content.ReadFromJsonAsync<ServiceResponse<bool>>() ?? new ServiceResponse<bool>();
     }
 

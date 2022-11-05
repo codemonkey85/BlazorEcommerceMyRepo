@@ -19,8 +19,8 @@ public record ProductService(HttpClient HttpClient) : IProductService
     public async Task GetProductsAsync(string? categoryUrl = null)
     {
         var requestUrl = categoryUrl is { Length: > 0 }
-            ? $"api/{nameof(Product)}/{nameof(Category)}/{categoryUrl}"
-            : $"api/{nameof(Product)}/featured";
+            ? $"{Constants.ProductApi}/{Constants.Category}/{categoryUrl}"
+            : $"{Constants.ProductApi}/featured";
 
         var results = await HttpClient.GetFromJsonAsync<ServiceResponse<List<Product>>>(requestUrl);
 
@@ -42,7 +42,7 @@ public record ProductService(HttpClient HttpClient) : IProductService
 
     public async Task<ServiceResponse<Product>> GetProductAsync(int productId)
     {
-        var results = await HttpClient.GetFromJsonAsync<ServiceResponse<Product>>($"api/{nameof(Product)}/{productId}");
+        var results = await HttpClient.GetFromJsonAsync<ServiceResponse<Product>>($"{Constants.ProductApi}/{productId}");
         return results!;
     }
 
@@ -52,7 +52,7 @@ public record ProductService(HttpClient HttpClient) : IProductService
 
         var results =
             await HttpClient.GetFromJsonAsync<ServiceResponse<ProductSearchResult>>(
-                $"api/{nameof(Product)}/search/{searchText}/{page}");
+                $"{Constants.ProductApi}/search/{searchText}/{page}");
 
         if (results is { Data: not null })
         {
@@ -73,14 +73,14 @@ public record ProductService(HttpClient HttpClient) : IProductService
     {
         var results =
             await HttpClient.GetFromJsonAsync<ServiceResponse<List<string>>>(
-                $"api/{nameof(Product)}/searchsuggestions/{searchText}");
+                $"{Constants.ProductApi}/searchsuggestions/{searchText}");
 
         return results?.Data ?? new List<string>();
     }
 
     public async Task GetAdminProductsAsync()
     {
-        var results = await HttpClient.GetFromJsonAsync<ServiceResponse<List<Product>>>($"api/{nameof(Product)}/admin");
+        var results = await HttpClient.GetFromJsonAsync<ServiceResponse<List<Product>>>(Constants.AdminProductApi);
         AdminProducts = results?.Data ?? new List<Product>();
         CurrentPage = 1;
         PageCount = 0;
@@ -92,18 +92,18 @@ public record ProductService(HttpClient HttpClient) : IProductService
 
     public async Task<Product?> CreateProductAsync(Product product)
     {
-        var results = await HttpClient.PostAsJsonAsync($"api/{nameof(Product)}/admin", product);
+        var results = await HttpClient.PostAsJsonAsync(Constants.AdminProductApi, product);
         var newProduct = (await results.Content.ReadFromJsonAsync<ServiceResponse<Product?>>())?.Data;
         return newProduct;
     }
 
     public async Task<Product?> UpdateProductAsync(Product product)
     {
-        var results = await HttpClient.PutAsJsonAsync($"api/{nameof(Product)}/admin", product);
+        var results = await HttpClient.PutAsJsonAsync(Constants.AdminProductApi, product);
         var updatedProduct = (await results.Content.ReadFromJsonAsync<ServiceResponse<Product?>>())?.Data;
         return updatedProduct;
     }
 
     public async Task DeleteProductAsync(Product product) =>
-        await HttpClient.DeleteAsync($"api/{nameof(Product)}/admin/{product.Id}");
+        await HttpClient.DeleteAsync($"{Constants.AdminProductApi}/{product.Id}");
 }

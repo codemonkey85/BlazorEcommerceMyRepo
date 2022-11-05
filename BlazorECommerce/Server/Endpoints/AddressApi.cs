@@ -4,7 +4,7 @@ public static class AddressApi
 {
     public static IEndpointRouteBuilder MapAddressApi(this IEndpointRouteBuilder apiGroup)
     {
-        var addressGroup = apiGroup.MapGroup(nameof(Address))
+        var addressGroup = apiGroup.MapGroup(Constants.Address)
             .RequireAuthorization();
 
         addressGroup.MapGet(string.Empty, GetAddressAsync);

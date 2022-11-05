@@ -10,7 +10,7 @@ public record OrderService(HttpClient HttpClient,
             return "login";
         }
 
-        var results = await HttpClient.PostAsync("api/payment/checkout", null);
+        var results = await HttpClient.PostAsync($"{Constants.PaymentApi}/checkout", null);
         var url = await results.Content.ReadAsStringAsync();
         return url.Replace("\"", string.Empty).Replace("'", string.Empty);
     }
@@ -18,14 +18,14 @@ public record OrderService(HttpClient HttpClient,
     public async Task<List<OrderOverviewResponse>> GetOrdersAsync()
     {
         var results =
-            await HttpClient.GetFromJsonAsync<ServiceResponse<List<OrderOverviewResponse>>>($"api/{nameof(Order)}");
+            await HttpClient.GetFromJsonAsync<ServiceResponse<List<OrderOverviewResponse>>>(Constants.OrderApi);
         return results?.Data ?? new List<OrderOverviewResponse>();
     }
 
     public async Task<OrderDetailsResponse> GetOrderDetailsAsync(int orderId)
     {
         var results =
-            await HttpClient.GetFromJsonAsync<ServiceResponse<OrderDetailsResponse>>($"api/{nameof(Order)}/{orderId}");
+            await HttpClient.GetFromJsonAsync<ServiceResponse<OrderDetailsResponse>>($"{Constants.OrderApi}/{orderId}");
         return results?.Data ?? new OrderDetailsResponse();
     }
 }

@@ -4,7 +4,7 @@ public static class PaymentApi
 {
     public static IEndpointRouteBuilder MapPaymentApi(this IEndpointRouteBuilder apiGroup)
     {
-        var paymentGroup = apiGroup.MapGroup("payment");
+        var paymentGroup = apiGroup.MapGroup(Constants.Payment);
 
         paymentGroup.MapPost("checkout", CreateCheckoutSessionAsync);
         paymentGroup.MapPost(string.Empty, FullfillOrderAsync);

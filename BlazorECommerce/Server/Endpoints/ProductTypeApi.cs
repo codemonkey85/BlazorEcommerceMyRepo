@@ -4,7 +4,7 @@ public static class ProductTypeApi
 {
     public static IEndpointRouteBuilder MapProductTypeApi(this IEndpointRouteBuilder apiGroup)
     {
-        var adminProductTypeGroup = apiGroup.MapGroup($"{nameof(ProductType)}/admin");
+        var adminProductTypeGroup = apiGroup.MapGroup($"{Constants.ProductType}/{Constants.Admin}");
 
         adminProductTypeGroup.MapGet(string.Empty, GetProductTypesAsync);
         adminProductTypeGroup.MapPost(string.Empty, AddProductTypeAsync);

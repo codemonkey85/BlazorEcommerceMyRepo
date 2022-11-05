@@ -3,7 +3,6 @@
 public record CartService(ILocalStorageService LocalStorageService, HttpClient HttpClient,
     IAuthService AuthService) : ICartService
 {
-    private const string CartName = "cart";
     public event Action? OnChange;
 
     private List<CartItem> Cart { get; set; } = new();
@@ -12,7 +11,7 @@ public record CartService(ILocalStorageService LocalStorageService, HttpClient H
     {
         if (await AuthService.IsUserAuthenticatedAsync())
         {
-            await HttpClient.PostAsJsonAsync("api/cart/add", cartItem);
+            await HttpClient.PostAsJsonAsync($"{Constants.CartApi}/add", cartItem);
         }
         else
         {
@@ -43,19 +42,19 @@ public record CartService(ILocalStorageService LocalStorageService, HttpClient H
 
     private async Task SaveCart(List<CartItem> cart)
     {
-        await LocalStorageService.SetItemAsync(CartName, cart);
+        await LocalStorageService.SetItemAsync(Constants.Cart, cart);
         await GetCartItemsCountAsync();
         OnChange?.Invoke();
     }
 
     private async Task GetCartItemsFromLocalStorageAsync() =>
-        Cart = await LocalStorageService.GetItemAsync<List<CartItem>>(CartName) ?? new List<CartItem>();
+        Cart = await LocalStorageService.GetItemAsync<List<CartItem>>(Constants.Cart) ?? new List<CartItem>();
 
     public async Task<List<CartProductResponse>> GetCartProductsAsync()
     {
         if (await AuthService.IsUserAuthenticatedAsync())
         {
-            var response = await HttpClient.GetFromJsonAsync<ServiceResponse<List<CartProductResponse>>>("api/cart");
+            var response = await HttpClient.GetFromJsonAsync<ServiceResponse<List<CartProductResponse>>>(Constants.CartApi);
             return response?.Data ?? new List<CartProductResponse>();
         }
         else
@@ -66,7 +65,7 @@ public record CartService(ILocalStorageService LocalStorageService, HttpClient H
                 return new List<CartProductResponse>();
             }
 
-            var response = await HttpClient.PostAsJsonAsync("api/cart/products", Cart);
+            var response = await HttpClient.PostAsJsonAsync($"{Constants.CartApi}/products", Cart);
             var cartProducts = await response.Content.ReadFromJsonAsync<ServiceResponse<List<CartProductResponse>>>();
             return cartProducts?.Data ?? new List<CartProductResponse>();
         }
@@ -76,7 +75,7 @@ public record CartService(ILocalStorageService LocalStorageService, HttpClient H
     {
         if (await AuthService.IsUserAuthenticatedAsync())
         {
-            await HttpClient.DeleteAsync($"api/cart/{productId}/{productTypeId}");
+            await HttpClient.DeleteAsync($"{Constants.CartApi}/{productId}/{productTypeId}");
         }
         else
         {
@@ -107,7 +106,7 @@ public record CartService(ILocalStorageService LocalStorageService, HttpClient H
                 Quantity = product.Quantity,
                 ProductTypeId = product.ProductTypeId
             };
-            await HttpClient.PutAsJsonAsync("api/cart/updatequantity", request);
+            await HttpClient.PutAsJsonAsync($"{Constants.CartApi}/updatequantity", request);
         }
         else
         {
@@ -137,11 +136,11 @@ public record CartService(ILocalStorageService LocalStorageService, HttpClient H
             return;
         }
 
-        await HttpClient.PostAsJsonAsync("api/cart", Cart);
+        await HttpClient.PostAsJsonAsync(Constants.CartApi, Cart);
 
         if (emptyLocalCart)
         {
-            await LocalStorageService.RemoveItemAsync(CartName);
+            await LocalStorageService.RemoveItemAsync(Constants.Cart);
         }
     }
 
@@ -150,7 +149,7 @@ public record CartService(ILocalStorageService LocalStorageService, HttpClient H
         int count;
         if (await AuthService.IsUserAuthenticatedAsync())
         {
-            var results = await HttpClient.GetFromJsonAsync<ServiceResponse<int>>("api/cart/count");
+            var results = await HttpClient.GetFromJsonAsync<ServiceResponse<int>>($"{Constants.CartApi}/count");
             count = results?.Data ?? 0;
         }
         else

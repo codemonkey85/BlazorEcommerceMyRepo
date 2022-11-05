@@ -2,6 +2,7 @@
 global using BlazorECommerce.Client.Services;
 global using BlazorECommerce.Rcl;
 global using BlazorECommerce.Rcl.Auth;
+global using BlazorECommerce.Shared;
 global using BlazorECommerce.Shared.DTOs;
 global using BlazorECommerce.Shared.Models;
 global using BlazorECommerce.Shared.Services;

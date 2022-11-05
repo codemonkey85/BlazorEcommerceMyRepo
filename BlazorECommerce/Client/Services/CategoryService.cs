@@ -10,7 +10,7 @@ public record CategoryService(HttpClient HttpClient) : ICategoryService
 
     public async Task GetCategoriesAsync()
     {
-        var results = await HttpClient.GetFromJsonAsync<ServiceResponse<List<Category>>>($"api/{nameof(Category)}");
+        var results = await HttpClient.GetFromJsonAsync<ServiceResponse<List<Category>>>(Constants.CategoryApi);
         if (results is { Data: not null })
         {
             Categories = results.Data;
@@ -20,7 +20,7 @@ public record CategoryService(HttpClient HttpClient) : ICategoryService
     public async Task GetAdminCategoriesAsync()
     {
         var results =
-            await HttpClient.GetFromJsonAsync<ServiceResponse<List<Category>>>($"api/{nameof(Category)}/admin");
+            await HttpClient.GetFromJsonAsync<ServiceResponse<List<Category>>>(Constants.AdminCategoryApi);
         if (results is { Data: not null })
         {
             AdminCategories = results.Data;
@@ -29,7 +29,7 @@ public record CategoryService(HttpClient HttpClient) : ICategoryService
 
     public async Task AddCategoryAsync(Category category)
     {
-        var response = await HttpClient.PostAsJsonAsync($"api/{nameof(Category)}/admin", category);
+        var response = await HttpClient.PostAsJsonAsync(Constants.AdminCategoryApi, category);
         AdminCategories = (await response.Content.ReadFromJsonAsync<ServiceResponse<List<Category>>>())?.Data ??
                           new List<Category>();
         await GetCategoriesAsync();
@@ -38,7 +38,7 @@ public record CategoryService(HttpClient HttpClient) : ICategoryService
 
     public async Task UpdateCategoryAsync(Category category)
     {
-        var response = await HttpClient.PutAsJsonAsync($"api/{nameof(Category)}/admin", category);
+        var response = await HttpClient.PutAsJsonAsync(Constants.AdminCategoryApi, category);
         AdminCategories = (await response.Content.ReadFromJsonAsync<ServiceResponse<List<Category>>>())?.Data ??
                           new List<Category>();
         await GetCategoriesAsync();
@@ -47,7 +47,7 @@ public record CategoryService(HttpClient HttpClient) : ICategoryService
 
     public async Task DeleteCategoryAsync(int categoryId)
     {
-        var response = await HttpClient.DeleteAsync($"api/{nameof(Category)}/admin/{categoryId}");
+        var response = await HttpClient.DeleteAsync($"{Constants.AdminCategoryApi}/{categoryId}");
         AdminCategories = (await response.Content.ReadFromJsonAsync<ServiceResponse<List<Category>>>())?.Data ??
                           new List<Category>();
         await GetCategoriesAsync();

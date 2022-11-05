@@ -4,7 +4,7 @@ public static class CartApi
 {
     public static IEndpointRouteBuilder MapCartApi(this IEndpointRouteBuilder apiGroup)
     {
-        var cartGroup = apiGroup.MapGroup("cart");
+        var cartGroup = apiGroup.MapGroup(Constants.Cart);
 
         cartGroup.MapPost("products", GetCartProductsAsync);
         cartGroup.MapPost(string.Empty, StoreCartItemsAsync);
