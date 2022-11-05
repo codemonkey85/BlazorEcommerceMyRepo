@@ -1,4 +1,4 @@
-﻿namespace BlazorECommerce.Shared.Services.AuthServices;
+﻿namespace BlazorECommerce.Shared.Services;
 
 public interface IAuthService
 {

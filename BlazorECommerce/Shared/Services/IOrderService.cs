@@ -1,4 +1,4 @@
-﻿namespace BlazorECommerce.Shared.Services.OrderServices;
+﻿namespace BlazorECommerce.Shared.Services;
 
 public interface IOrderService
 {

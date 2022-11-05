@@ -1,4 +1,4 @@
-﻿namespace BlazorECommerce.Client.Services.OrderServices;
+﻿namespace BlazorECommerce.Client.Services;
 
 public record OrderService(HttpClient HttpClient,
     IAuthService AuthService) : IOrderService

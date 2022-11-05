@@ -1,4 +1,4 @@
-﻿namespace BlazorECommerce.Shared.Services.AddressServices;
+﻿namespace BlazorECommerce.Shared.Services;
 
 public interface IAddressService
 {

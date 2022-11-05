@@ -29,7 +29,10 @@ public record OrderService
 
         var order = new Order
         {
-            UserId = userId, OrderDate = DateTime.Now, TotalPrice = totalPrice, OrderItems = orderItems
+            UserId = userId,
+            OrderDate = DateTime.Now,
+            TotalPrice = totalPrice,
+            OrderItems = orderItems
         };
 
         DatabaseContext.Orders.Add(order);

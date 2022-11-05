@@ -1,4 +1,4 @@
-﻿namespace BlazorECommerce.Client.Services.CartService;
+﻿namespace BlazorECommerce.Client.Services;
 
 public record CartService(ILocalStorageService LocalStorageService, HttpClient HttpClient,
     IAuthService AuthService) : ICartService
@@ -103,7 +103,9 @@ public record CartService(ILocalStorageService LocalStorageService, HttpClient H
         {
             var request = new CartItem
             {
-                ProductId = product.ProductId, Quantity = product.Quantity, ProductTypeId = product.ProductTypeId
+                ProductId = product.ProductId,
+                Quantity = product.Quantity,
+                ProductTypeId = product.ProductTypeId
             };
             await HttpClient.PutAsJsonAsync("api/cart/updatequantity", request);
         }

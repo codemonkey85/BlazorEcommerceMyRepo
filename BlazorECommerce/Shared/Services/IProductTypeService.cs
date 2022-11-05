@@ -1,4 +1,4 @@
-﻿namespace BlazorECommerce.Shared.Services.ProductTypeServices;
+﻿namespace BlazorECommerce.Shared.Services;
 
 public interface IProductTypeService
 {

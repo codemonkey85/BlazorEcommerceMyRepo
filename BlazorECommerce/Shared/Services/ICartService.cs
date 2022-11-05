@@ -1,4 +1,4 @@
-﻿namespace BlazorECommerce.Shared.Services.CartService;
+﻿namespace BlazorECommerce.Shared.Services;
 
 public interface ICartService
 {

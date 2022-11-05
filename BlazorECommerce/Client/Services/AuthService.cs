@@ -1,4 +1,4 @@
-﻿namespace BlazorECommerce.Client.Services.AuthServices;
+﻿namespace BlazorECommerce.Client.Services;
 
 public record AuthService(HttpClient HttpClient, AuthenticationStateProvider AuthStateProvider) : IAuthService
 {
@@ -21,5 +21,5 @@ public record AuthService(HttpClient HttpClient, AuthenticationStateProvider Aut
     }
 
     public async Task<bool> IsUserAuthenticatedAsync() => await AuthStateProvider.GetAuthenticationStateAsync() is
-        { User.Identity.IsAuthenticated: true };
+    { User.Identity.IsAuthenticated: true };
 }

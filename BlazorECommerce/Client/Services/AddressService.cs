@@ -1,4 +1,4 @@
-﻿namespace BlazorECommerce.Client.Services.AddressServices;
+﻿namespace BlazorECommerce.Client.Services;
 
 public record AddressService(HttpClient HttpClient) : IAddressService
 {
