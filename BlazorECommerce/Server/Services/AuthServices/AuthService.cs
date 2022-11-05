@@ -64,7 +64,6 @@ public record AuthService(IHttpContextAccessor HttpContextAccessor,
     private async Task<bool> UserExistsAsync(string email) =>
         await DatabaseContext.Users.AnyAsync(user => user.Email.ToLower() == email.ToLower());
 
-
     private static void CreatePasswordHash(string password, out byte[] passwordHash, out byte[] passwordSalt)
     {
         using var hmac = new HMACSHA512();

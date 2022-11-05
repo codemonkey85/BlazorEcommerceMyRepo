@@ -26,10 +26,8 @@ _ = appSettings.DbProvider switch
         options.UseInMemoryDatabase(nameof(InMemoryDatabaseContext))),
 
     DbProvider.AzureCosmos => services.AddDbContext<DatabaseContext, AzureCosmosDatabaseContext>(options =>
-        options.UseCosmos(
-            appSettings.AzureCosmosSettings.AccountEndpoint,
-            appSettings.AzureCosmosSettings.AccountKey,
-            appSettings.AzureCosmosSettings.DatabaseName)),
+        options.UseCosmos(config.GetConnectionString(nameof(DbProvider.AzureCosmos)) ?? string.Empty,
+        databaseName: nameof(DbProvider.AzureCosmos))),
 
     _ => throw new Exception($"Unsupported provider: {appSettings.DbProvider}")
 };
@@ -93,11 +91,12 @@ if (appSettings.DbProvider is not null)
     var databaseContext = app.Services.CreateScope().ServiceProvider.GetRequiredService<DatabaseContext>();
     switch (appSettings.DbProvider)
     {
+        case DbProvider.AzureCosmos:
         case DbProvider.InMemory:
             databaseContext.Database.EnsureCreated();
             break;
-        case DbProvider.SqlServer:
         case DbProvider.Sqlite:
+        case DbProvider.SqlServer:
             databaseContext.Database.Migrate();
             break;
         default:
