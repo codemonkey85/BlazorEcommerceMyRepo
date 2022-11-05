@@ -9,6 +9,7 @@
 @using Microsoft.AspNetCore.Components.Forms
 @using Microsoft.AspNetCore.Components.Web
 @using Microsoft.AspNetCore.Components.Web.Virtualization
+@using Microsoft.JSInterop
 
 @inject AuthenticationStateProvider AuthenticationStateProvider
 @inject NavigationManager NavigationManager
@@ -21,3 +22,4 @@
 @inject IProductTypeService ProductTypeService
 @inject ILocalStorageService LocalStorageService
 @inject ISyncLocalStorageService SyncLocalStorageService
+@inject IJSRuntime JsRuntime

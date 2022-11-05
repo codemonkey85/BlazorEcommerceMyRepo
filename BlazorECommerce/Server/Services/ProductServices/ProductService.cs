@@ -124,6 +124,7 @@ public record ProductService(DatabaseContext DatabaseContext) : IProductService
         dbProduct.ImageUrl = product.ImageUrl;
         dbProduct.CategoryId = product.CategoryId;
         dbProduct.IsVisible = product.IsVisible;
+        dbProduct.Featured = product.Featured;
 
         foreach (var variant in product.Variants)
         {

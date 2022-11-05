@@ -14,8 +14,8 @@ public static class ProductApi
         productGroup.MapGet("/featured", GetFeaturedProductsAsync);
         productGroup.MapGet("admin", GetAdminProductsAsync);
         productGroup.MapPost("admin", CreateProductAsync);
-        productGroup.MapPost("admin", UpdateProductAsync);
-        productGroup.MapPost("admin/{productId:int}", DeleteProductAsync);
+        productGroup.MapPut("admin", UpdateProductAsync);
+        productGroup.MapDelete("admin/{productId:int}", DeleteProductAsync);
 
         return apiGroup;
     }

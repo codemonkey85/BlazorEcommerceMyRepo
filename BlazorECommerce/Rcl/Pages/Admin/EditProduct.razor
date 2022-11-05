@@ -1,0 +1,131 @@
+﻿@page "/admin/product"
+@page "/admin/product/{ProductId:int}"
+@attribute [Authorize(Roles = "Admin")]
+
+@if (loading)
+{
+    <span>@message</span>
+}
+else
+{
+    <PageTitle>
+        @(product switch
+        {
+            { IsEditing: true } => "Edit Product",
+            { IsNew: true } => "Create a new Product",
+            _ => string.Empty
+        })
+    </PageTitle>
+    <h3>
+        @(product switch
+        {
+            { IsEditing: true } => "Edit Product",
+            { IsNew: true } => "Create a new Product",
+            _ => string.Empty
+        })
+    </h3>
+
+    <EditForm Model="product" OnValidSubmit="AddOrUpdateProductAsync">
+        <DataAnnotationsValidator />
+        <div class="mb-0">
+            <label for="title">
+                Title
+            </label>
+            <InputText id="title" @bind-Value="product.Title" class="form-control" />
+        </div>
+        <div class="mb-0">
+            <label for="imageUrl">
+                Image URL
+            </label>
+            <InputText id="imageUrl" @bind-Value="product.ImageUrl" class="form-control" />
+        </div>
+        <div class="mb-0">
+            <img src="@product.ImageUrl" alt="@product.Title" />
+        </div>
+        <div class="mb-0">
+            <label for="description">
+                Description
+            </label>
+            <InputTextArea id="description" @bind-Value="product.Description" class="form-control" />
+        </div>
+        <hr />
+        <div class="header">
+            <div class="col">
+                Product Type
+            </div>
+            <div class="col">
+                Price
+            </div>
+            <div class="col">
+                Original Price
+            </div>
+            <div class="col">
+                Visible
+            </div>
+            <div class="col"></div>
+        </div>
+        @foreach (var variant in product.Variants)
+        {
+            <div class="row">
+                <div class="col">
+                    <InputSelect @bind-Value="variant.ProductTypeId" disabled="@variant.IsDeleted" class="form-control">
+                        @foreach (var productType in ProductTypeService.ProductTypes)
+                        {
+                            <option value="@productType.Id.ToString()">
+                                @productType.Name
+                            </option>
+                        }
+                    </InputSelect>
+                </div>
+                <div class="col">
+                    <InputNumber @bind-Value="variant.Price" disabled="@variant.IsDeleted" class="form-control" />
+                </div>
+                <div class="col">
+                    <InputNumber @bind-Value="variant.OriginalPrice" disabled="@variant.IsDeleted" class="form-control" />
+                </div>
+                <div class="col col-visible">
+                    <InputCheckbox @bind-Value="variant.IsVisible" disabled="@variant.IsDeleted" style="transform: scale(1.5, 1.5)" />
+                </div>
+                <div class="col">
+                    <button type="button" @onclick="_ => RemoveVariant(variant.ProductTypeId)" class="btn btn-danger" disabled="@variant.IsDeleted">
+                        <i class="oi oi-trash"></i>
+                    </button>
+                </div>
+            </div>
+        }
+        <button type="button" @onclick="AddVariant" class="btn btn-success">
+            <i class="oi oi-plus"></i> Add Variant
+        </button>
+        <hr />
+        <div class="mb-0">
+            <label for="category">Category</label>
+            <InputSelect id="category" @bind-Value="product.CategoryId" class="form-control">
+                @foreach (var category in CategoryService.AdminCategories)
+                {
+                    <option value="@category.Id">
+                        @category.Name
+                    </option>
+                }
+            </InputSelect>
+        </div>
+        <hr />
+        <div class="form-check">
+            <InputCheckbox id="isFeatured" @bind-Value="product.Featured" class="form-check-input" />
+            <label for="isFeatured">Is Featured</label>
+        </div>
+        <div class="form-check">
+            <InputCheckbox id="isVisible" @bind-Value="product.IsVisible" class="form-check-input" />
+            <label for="isVisible">Is Visible</label>
+        </div>
+        <hr />
+        <button type="submit" class="btn btn-primary float-end bottom-button">@btnText</button>
+        <ValidationSummary />
+    </EditForm>
+
+    @if (!product.IsNew)
+    {
+        <button type="button" @onclick="DeleteProductAsync" class="btn btn-danger float-start bottom-button">
+            Delete Product
+        </button>
+    }
+}
