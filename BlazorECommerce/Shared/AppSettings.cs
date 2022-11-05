@@ -6,5 +6,7 @@ public class AppSettings
 
     public StripeSettings StripeSettings { get; set; } = default!;
 
+    public AzureCosmosSettings AzureCosmosSettings { get; set; } = default!;
+
     public DbProvider? DbProvider { get; set; }
 }

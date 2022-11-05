@@ -25,6 +25,12 @@ _ = appSettings.DbProvider switch
     DbProvider.InMemory => services.AddDbContext<DatabaseContext, InMemoryDatabaseContext>(options =>
         options.UseInMemoryDatabase(nameof(InMemoryDatabaseContext))),
 
+    DbProvider.AzureCosmos => services.AddDbContext<DatabaseContext, AzureCosmosDatabaseContext>(options =>
+        options.UseCosmos(
+            appSettings.AzureCosmosSettings.AccountEndpoint,
+            appSettings.AzureCosmosSettings.AccountKey,
+            appSettings.AzureCosmosSettings.DatabaseName)),
+
     _ => throw new Exception($"Unsupported provider: {appSettings.DbProvider}")
 };
 

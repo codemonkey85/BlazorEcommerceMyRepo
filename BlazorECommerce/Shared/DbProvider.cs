@@ -6,5 +6,7 @@ public enum DbProvider
 
     [EnumMember(Value = "SQLite")] Sqlite,
 
-    [EnumMember(Value = "In Memory")] InMemory
+    [EnumMember(Value = "In Memory")] InMemory,
+
+    [EnumMember(Value = "Azure Cosmos")] AzureCosmos
 }
