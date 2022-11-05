@@ -7,10 +7,13 @@ public static class CategoryApi
         var categoryGroup = apiGroup.MapGroup(nameof(Category));
 
         categoryGroup.MapGet("/", GetCategoriesAsync);
-        categoryGroup.MapGet("admin", GetAdminCategoriesAsync);
-        categoryGroup.MapPost("admin", AddCategoryAsync);
-        categoryGroup.MapPut("admin", UpdateCategoryAsync);
-        categoryGroup.MapDelete("admin/{categoryId:int}", DeleteCategoryAsync);
+
+        var adminCategoryGroup = categoryGroup.MapGroup("admin");
+
+        adminCategoryGroup.MapGet(string.Empty, GetAdminCategoriesAsync);
+        adminCategoryGroup.MapPost(string.Empty, AddCategoryAsync);
+        adminCategoryGroup.MapPut(string.Empty, UpdateCategoryAsync);
+        adminCategoryGroup.MapDelete("/{categoryId:int}", DeleteCategoryAsync);
 
         return apiGroup;
     }

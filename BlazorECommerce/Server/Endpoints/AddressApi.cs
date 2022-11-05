@@ -13,7 +13,7 @@ public static class AddressApi
         return apiGroup;
     }
 
-    private static async Task<ServiceResponse<Address>> GetAddressAsync(IAddressService addressService) =>
+    private static async Task<ServiceResponse<Address?>> GetAddressAsync(IAddressService addressService) =>
         await addressService.GetAddressAsync();
 
     private static async Task<ServiceResponse<Address>> AddOrUpdateAddressAsync(IAddressService addressService,

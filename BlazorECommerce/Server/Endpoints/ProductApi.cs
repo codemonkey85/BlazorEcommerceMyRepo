@@ -12,10 +12,13 @@ public static class ProductApi
         productGroup.MapGet("/search/{searchText}/{page:int}", SearchProductsAsync);
         productGroup.MapGet("/searchsuggestions/{searchText}", GetProductSearchSuggestionsAsync);
         productGroup.MapGet("/featured", GetFeaturedProductsAsync);
-        productGroup.MapGet("admin", GetAdminProductsAsync);
-        productGroup.MapPost("admin", CreateProductAsync);
-        productGroup.MapPut("admin", UpdateProductAsync);
-        productGroup.MapDelete("admin/{productId:int}", DeleteProductAsync);
+
+        var adminProductGroup = productGroup.MapGroup("admin");
+
+        adminProductGroup.MapGet(string.Empty, GetAdminProductsAsync);
+        adminProductGroup.MapPost(string.Empty, CreateProductAsync);
+        adminProductGroup.MapPut(string.Empty, UpdateProductAsync);
+        adminProductGroup.MapDelete("/{productId:int}", DeleteProductAsync);
 
         return apiGroup;
     }
