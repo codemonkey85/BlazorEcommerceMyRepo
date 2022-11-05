@@ -6,6 +6,8 @@ public record PaymentService(
     IOrderService OrderService,
     AppSettings AppSettings) : IPaymentService
 {
+    private const string ClientBaseUrl = @"https://localhost:7177";
+
     public async Task<Session> CreateCheckoutSession()
     {
         var products = (await CartService.GetDbCartProductsAsync()).Data;
@@ -38,8 +40,8 @@ public record PaymentService(
                 new SessionShippingAddressCollectionOptions { AllowedCountries = new List<string> { "US" } },
             LineItems = lineItems,
             Mode = "payment",
-            SuccessUrl = $"{Constants.ClientBaseUrl}/ordersuccess",
-            CancelUrl = $"{Constants.ClientBaseUrl}/cart"
+            SuccessUrl = $"{ClientBaseUrl}/ordersuccess",
+            CancelUrl = $"{ClientBaseUrl}/cart"
         };
 
         var service = new SessionService();
