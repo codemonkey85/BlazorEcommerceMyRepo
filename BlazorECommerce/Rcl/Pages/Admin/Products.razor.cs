@@ -10,7 +10,7 @@ public partial class Products : IDisposable
 
     public void Dispose() => ProductService.ProductsChanged -= StateHasChanged;
 
-    private void EditProduct(int productId) => NavigationManager.NavigateTo($"admin/product/{productId}");
+    private void EditProduct(int productId) => NavigationManager.NavigateTo($"admin/{nameof(Product)}/{productId}");
 
-    private void CreateProduct() => NavigationManager.NavigateTo($"admin/product");
+    private void CreateProduct() => NavigationManager.NavigateTo($"admin/{nameof(Product)}");
 }
