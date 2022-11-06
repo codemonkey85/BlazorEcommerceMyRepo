@@ -1,11 +1,14 @@
 ﻿.card {
     margin: 2px 2px 2px 0;
     padding: 5px;
-    max-width: 300px;
-    max-height: 300px;
+    max-width: 210px;
 }
 
 .card-img-top {
     max-width: 200px;
     height: auto;
+}
+
+.card-body {
+    text-align: center;
 }
