@@ -105,4 +105,6 @@ public class DatabaseContext : DbContext
     public DbSet<Order> Orders { get; set; } = default!;
 
     public DbSet<OrderItem> OrderItems { get; set; } = default!;
+
+    public DbSet<Image> Images { get; set; }
 }

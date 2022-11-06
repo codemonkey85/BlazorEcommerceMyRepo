@@ -132,6 +132,26 @@ namespace BlazorECommerce.Server.Data.Migrations.Sqlite
                         });
                 });
 
+            modelBuilder.Entity("BlazorECommerce.Shared.Models.Image", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER");
+
+                    b.Property<string>("Data")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.Property<int?>("ProductId")
+                        .HasColumnType("INTEGER");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ProductId");
+
+                    b.ToTable("Images");
+                });
+
             modelBuilder.Entity("BlazorECommerce.Shared.Models.Order", b =>
                 {
                     b.Property<int>("Id")
@@ -439,6 +459,13 @@ namespace BlazorECommerce.Server.Data.Migrations.Sqlite
                         .IsRequired();
                 });
 
+            modelBuilder.Entity("BlazorECommerce.Shared.Models.Image", b =>
+                {
+                    b.HasOne("BlazorECommerce.Shared.Models.Product", null)
+                        .WithMany("Images")
+                        .HasForeignKey("ProductId");
+                });
+
             modelBuilder.Entity("BlazorECommerce.Shared.Models.OrderItem", b =>
                 {
                     b.HasOne("BlazorECommerce.Shared.Models.Order", "Order")
@@ -501,6 +528,8 @@ namespace BlazorECommerce.Server.Data.Migrations.Sqlite
 
             modelBuilder.Entity("BlazorECommerce.Shared.Models.Product", b =>
                 {
+                    b.Navigation("Images");
+
                     b.Navigation("Variants");
                 });
 

@@ -97,4 +97,29 @@ public partial class EditProduct
         await ProductService.DeleteProductAsync(product);
         NavigationManager.NavigateTo($"admin/{nameof(Product)}");
     }
+
+    private async Task OnFilesChangeAsync(InputFileChangeEventArgs e)
+    {
+        const string format = "image/png";
+        foreach (var image in e.GetMultipleFiles())
+        {
+            var resizedImage = await image.RequestImageFileAsync(format, 200, 200);
+            var buffer = new byte[resizedImage.Size];
+            // ReSharper disable once MustUseReturnValue
+            await resizedImage.OpenReadStream().ReadAsync(buffer);
+            var imageData = $"data:{format};base64,{Convert.ToBase64String(buffer)}";
+            product.Images.Add(new Image { Data = imageData });
+        }
+    }
+
+    private void RemoveImage(int imageId)
+    {
+        var image = product.Images.FirstOrDefault(i => i.Id == imageId);
+        if (image is null)
+        {
+            return;
+        }
+
+        product.Images.Remove(image);
+    }
 }

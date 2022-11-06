@@ -9,6 +9,7 @@ public record ProductService(DatabaseContext DatabaseContext) : IProductService
             Data = await DatabaseContext.Products
                 .Where(product => product.IsVisible && !product.IsDeleted)
                 .Include(product => product.Variants.Where(variant => variant.IsVisible && !variant.IsDeleted))
+                .Include(product => product.Images)
                 .ToListAsync()
         };
         return response;
@@ -21,11 +22,13 @@ public record ProductService(DatabaseContext DatabaseContext) : IProductService
             true => DatabaseContext.Products
                 .Include(product => product.Variants.Where(variant => !variant.IsDeleted))
                 .ThenInclude(variant => variant.ProductType)
+                .Include(product => product.Images)
                 .FirstOrDefaultAsync(product => product.Id == productId && !product.IsDeleted),
 
             false => DatabaseContext.Products
                 .Include(product => product.Variants.Where(variant => variant.IsVisible && !variant.IsDeleted))
                 .ThenInclude(variant => variant.ProductType)
+                .Include(product => product.Images)
                 .FirstOrDefaultAsync(product => product.Id == productId && product.IsVisible && !product.IsDeleted),
         };
 
@@ -42,12 +45,14 @@ public record ProductService(DatabaseContext DatabaseContext) : IProductService
             .Where(product => product.Category != null && product.Category.Url == categoryUrl && product.IsVisible &&
                               !product.IsDeleted)
             .Include(product => product.Variants.Where(variant => variant.IsVisible && !variant.IsDeleted))
+            .Include(product => product.Images)
             .ToListAsync()
     );
 
     private IQueryable<Product> FindProductsBySearchStringAsync(string searchText) =>
         DatabaseContext.Products
             .Include(product => product.Variants)
+            .Include(product => product.Images)
             .Where(product => product.IsVisible && !product.IsDeleted &&
                               (product.Title.ToLower().Contains(searchText.ToLower()) ||
                                product.Description.ToLower().Contains(searchText.ToLower())));
@@ -82,6 +87,7 @@ public record ProductService(DatabaseContext DatabaseContext) : IProductService
         await DatabaseContext.Products
             .Where(product => product.Featured && product.IsVisible && !product.IsDeleted)
             .Include(product => product.Variants.Where(variant => variant.IsVisible && !variant.IsDeleted))
+            .Include(product => product.Images)
             .ToListAsync()
     );
 
@@ -93,6 +99,7 @@ public record ProductService(DatabaseContext DatabaseContext) : IProductService
                 .Where(product => !product.IsDeleted)
                 .Include(product => product.Variants.Where(variant => !variant.IsDeleted))
                 .ThenInclude(variant => variant.ProductType)
+                .Include(product => product.Images)
                 .ToListAsync()
         };
         return response;
@@ -113,7 +120,9 @@ public record ProductService(DatabaseContext DatabaseContext) : IProductService
 
     public async Task<ServiceResponse<Product>> UpdateProductAsync(Product product)
     {
-        var dbProduct = await DatabaseContext.Products.FindAsync(product.Id);
+        var dbProduct = await DatabaseContext.Products
+            .Include(p => p.Images)
+            .FirstOrDefaultAsync(p => p.Id == product.Id);
         if (dbProduct is null)
         {
             return new ServiceResponse<Product> { Success = false, Message = "Product not found." };
@@ -125,6 +134,11 @@ public record ProductService(DatabaseContext DatabaseContext) : IProductService
         dbProduct.CategoryId = product.CategoryId;
         dbProduct.IsVisible = product.IsVisible;
         dbProduct.Featured = product.Featured;
+
+        var productImages = dbProduct.Images;
+        DatabaseContext.Images.RemoveRange(productImages);
+
+        dbProduct.Images = product.Images;
 
         foreach (var variant in product.Variants)
         {
