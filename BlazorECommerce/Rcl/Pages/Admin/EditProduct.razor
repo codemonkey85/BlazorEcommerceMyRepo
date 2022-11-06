@@ -40,20 +40,7 @@ else
             <InputText id="imageUrl" @bind-Value="product.ImageUrl" class="form-control" />
         </div>
         <div class="mb-0">
-            @if (product.ImageUrl is { Length: > 0 })
-            {
-                <img src="@product.ImageUrl" alt="@product.Title" />
-            }
-            else
-            {
-                @foreach (var image in product.Images)
-                {
-                    <img src="@image.Data" alt="@product.Title" />
-                    <button type="button" @onclick="_ => RemoveImage(image.Id)" class="btn btn-danger">
-                        <i class="oi oi-trash"></i>
-                    </button>
-                }
-            }
+            <ProductImages Product="product" />
         </div>
         <div class="mb-0">
             <label for="images">

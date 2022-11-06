@@ -2,6 +2,7 @@
 
 public record CartService(DatabaseContext DatabaseContext, IAuthService AuthService) : ICartService
 {
+#pragma warning disable CS8602 // Dereference of a possibly null reference.
     public Task<ServiceResponse<List<CartProductResponse>>> GetCartProductsAsync(List<CartItem> cartItems) =>
         Task.FromResult(new ServiceResponse<List<CartProductResponse>>
         (
@@ -28,6 +29,7 @@ public record CartService(DatabaseContext DatabaseContext, IAuthService AuthServ
                 .ThenBy(c => c.ProductTypeId)
             )
         ));
+#pragma warning restore CS8602 // Dereference of a possibly null reference.
 
     public async Task<ServiceResponse<List<CartProductResponse>>> StoreCartItemsAsync(List<CartItem> cartItems)
     {

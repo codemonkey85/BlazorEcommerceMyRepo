@@ -1,0 +1,21 @@
+﻿@if (Product is not null)
+{
+    @if (Product.ImageUrl is { Length: > 0 })
+    {
+        <img src="@Product.ImageUrl" alt="@Product.Title" />
+    }
+    else
+    {
+        @foreach (var image in Product.Images)
+        {
+            <div class="card">
+                <img src="@image.Data" class="card-img-top" alt="@Product.Title">
+                <div class="card-body">
+                    <button type="button" @onclick="_ => RemoveImage(image.Id)" class="btn btn-danger">
+                        <i class="oi oi-trash"></i>
+                    </button>
+                </div>
+            </div>
+        }
+    }
+}

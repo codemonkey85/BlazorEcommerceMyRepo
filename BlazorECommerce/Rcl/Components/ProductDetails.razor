@@ -2,7 +2,14 @@
 {
     <div class="media">
         <div class="media-img-wrapper m-3">
-            <img class="media-img" src="@product.ImageUrl" alt="@product.Title" />
+            @if (product.ImageUrl is { Length: > 0 })
+            {
+                <img class="media-img" src="@product.ImageUrl" alt="@product.Title" />
+            }
+            else
+            {
+                <ProductImagesCarousel Product="product" />
+            }
         </div>
         <div class="media-body">
             <h2 class="mb-0">@product.Title</h2>
@@ -14,7 +21,7 @@
                         @foreach (var variant in product.Variants)
                         {
                             <option value="@variant.ProductTypeId">
-                                @variant.ProductType.Name
+                                @variant.ProductType?.Name
                             </option>
                         }
                     </select>
