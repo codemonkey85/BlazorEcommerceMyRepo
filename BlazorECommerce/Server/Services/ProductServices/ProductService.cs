@@ -17,7 +17,7 @@ public record ProductService(DatabaseContext DatabaseContext) : IProductService
 
     public async Task<ServiceResponse<Product>> GetProductAsync(IAuthService authService, int productId)
     {
-        var query = authService.IsUserInRole("Admin") switch
+        var query = authService.IsUserInRole(Constants.Admin) switch
         {
             true => DatabaseContext.Products
                 .Include(product => product.Variants.Where(variant => !variant.IsDeleted))

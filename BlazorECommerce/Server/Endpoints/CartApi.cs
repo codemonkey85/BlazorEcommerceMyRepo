@@ -6,12 +6,12 @@ public static class CartApi
     {
         var cartGroup = apiGroup.MapGroup(Constants.Cart);
 
-        cartGroup.MapPost("products", GetCartProductsAsync);
+        cartGroup.MapPost(Constants.Products, GetCartProductsAsync);
         cartGroup.MapPost(string.Empty, StoreCartItemsAsync);
-        cartGroup.MapGet("count", GetCartItemsCountAsync);
+        cartGroup.MapGet(Constants.Count, GetCartItemsCountAsync);
         cartGroup.MapGet(string.Empty, GetCartItemsAsync);
-        cartGroup.MapPost("add", AddToCartAsync);
-        cartGroup.MapPut("updatequantity", UpdateQuantityAsync);
+        cartGroup.MapPost(Constants.Add, AddToCartAsync);
+        cartGroup.MapPut(Constants.UpdateQuantity, UpdateQuantityAsync);
         cartGroup.MapDelete("{productId:int}/{productTypeId:int}", RemoveItemFromCartAsync);
 
         return apiGroup;

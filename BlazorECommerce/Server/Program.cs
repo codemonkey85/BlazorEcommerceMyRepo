@@ -101,7 +101,7 @@ if (appSettings.DbProvider is not null)
     }
 }
 
-var apiGroup = app.MapGroup("api");
+var apiGroup = app.MapGroup(Constants.Api);
 
 apiGroup
     .MapAuthApi()

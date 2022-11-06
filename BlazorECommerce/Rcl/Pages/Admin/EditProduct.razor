@@ -1,6 +1,6 @@
 ﻿@page "/admin/product"
 @page "/admin/product/{ProductId:int}"
-@attribute [Authorize(Roles = "Admin")]
+@attribute [Authorize(Roles = Constants.Admin)]
 
 @if (loading)
 {

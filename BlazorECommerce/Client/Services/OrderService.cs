@@ -7,10 +7,10 @@ public record OrderService(HttpClient HttpClient,
     {
         if (!await AuthService.IsUserAuthenticatedAsync())
         {
-            return "login";
+            return "Login";
         }
 
-        var results = await HttpClient.PostAsync($"{Constants.PaymentApi}/checkout", null);
+        var results = await HttpClient.PostAsync($"{Constants.PaymentCheckoutApi}", null);
         var url = await results.Content.ReadAsStringAsync();
         return url.Replace("\"", string.Empty).Replace("'", string.Empty);
     }

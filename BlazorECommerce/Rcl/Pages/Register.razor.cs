@@ -15,7 +15,7 @@ public partial class Register
         messageCssClass = results.Success ? "text-success" : "text-danger";
         if (results.Success)
         {
-            NavigationManager.NavigateTo("login");
+            NavigationManager.NavigateTo("Login");
         }
     }
 }

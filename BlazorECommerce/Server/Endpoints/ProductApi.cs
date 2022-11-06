@@ -8,10 +8,10 @@ public static class ProductApi
 
         productGroup.MapGet(string.Empty, GetProductsAsync);
         productGroup.MapGet("/{productId:int}", GetProductAsync);
-        productGroup.MapGet($"/{nameof(Category)}/{{categoryUrl}}", GetProductsByCategoryAsync);
-        productGroup.MapGet("/search/{searchText}/{page:int}", SearchProductsAsync);
-        productGroup.MapGet("/searchsuggestions/{searchText}", GetProductSearchSuggestionsAsync);
-        productGroup.MapGet("/featured", GetFeaturedProductsAsync);
+        productGroup.MapGet($"/{Constants.Category}/{{categoryUrl}}", GetProductsByCategoryAsync);
+        productGroup.MapGet($"/{Constants.Search}/{{searchText}}/{{page:int}}", SearchProductsAsync);
+        productGroup.MapGet($"/{Constants.SearchSuggestions}/{{searchText}}", GetProductSearchSuggestionsAsync);
+        productGroup.MapGet($"/{Constants.Featured}", GetFeaturedProductsAsync);
 
         var adminProductGroup = productGroup.MapGroup(Constants.Admin);
 
@@ -67,14 +67,14 @@ public static class ProductApi
         return TypedResults.Ok(response);
     }
 
-    [Authorize(Roles = "Admin")]
+    [Authorize(Roles = Constants.Admin)]
     private static async Task<Ok<ServiceResponse<List<Product>>>> GetAdminProductsAsync(IProductService productService)
     {
         var response = await productService.GetAdminProductsAsync();
         return TypedResults.Ok(response);
     }
 
-    [Authorize(Roles = "Admin")]
+    [Authorize(Roles = Constants.Admin)]
     private static async Task<Ok<ServiceResponse<Product>>> CreateProductAsync(IProductService productService,
         Product product)
     {
@@ -82,7 +82,7 @@ public static class ProductApi
         return TypedResults.Ok(response);
     }
 
-    [Authorize(Roles = "Admin")]
+    [Authorize(Roles = Constants.Admin)]
     private static async Task<Ok<ServiceResponse<Product>>> UpdateProductAsync(IProductService productService,
         Product product)
     {
@@ -90,7 +90,7 @@ public static class ProductApi
         return TypedResults.Ok(response);
     }
 
-    [Authorize(Roles = "Admin")]
+    [Authorize(Roles = Constants.Admin)]
     private static async Task<Ok<ServiceResponse<bool>>> DeleteProductAsync(IProductService productService,
         int productId)
     {

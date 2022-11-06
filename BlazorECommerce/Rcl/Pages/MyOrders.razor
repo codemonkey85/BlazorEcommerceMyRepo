@@ -1,36 +1,38 @@
 ﻿@page "/orders"
 
-@if (orders is null)
+@switch (orders)
 {
-    <span>
-        Loading your orders...
-    </span>
-}
-else if (orders is { Count: <= 0 })
-{
-    <span>
-        You have no orders yet.
-    </span>
-}
-else
-{
-    @foreach (var order in orders)
-    {
-        <div class="container">
-            <div class="image-wrapper">
-                <img src="@order.ProductImageUrl" class="image" alt="@order.ProductName" />
-            </div>
-            <div class="details">
-                <h4>
-                    @order.ProductName
-                </h4>
-                <span>
-                    @order.OrderDate
-                </span>
-                <br />
-                <a href="orders/@order.OrderId">Show more...</a>
-            </div>
-            <div class="order-price">@order.TotalPrice.ToString("C")</div>
-        </div>
-    }
+    case null:
+        <span>
+            Loading your orders...
+        </span>
+        break;
+    case { Count: <= 0 }:
+        <span>
+            You have no orders yet.
+        </span>
+        break;
+    default:
+        {
+            foreach (var order in orders)
+            {
+                <div class="container">
+                    <div class="image-wrapper">
+                        <img src="@order.ProductImageUrl" class="image" alt="@order.ProductName" />
+                    </div>
+                    <div class="details">
+                        <h4>
+                            @order.ProductName
+                        </h4>
+                        <span>
+                            @order.OrderDate
+                        </span>
+                        <br />
+                        <a href="orders/@order.OrderId">Show more...</a>
+                    </div>
+                    <div class="order-price">@order.TotalPrice.ToString("C")</div>
+                </div>
+            }
+            break;
+        }
 }

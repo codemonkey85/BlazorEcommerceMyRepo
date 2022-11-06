@@ -11,7 +11,7 @@ public record CartService(ILocalStorageService LocalStorageService, HttpClient H
     {
         if (await AuthService.IsUserAuthenticatedAsync())
         {
-            await HttpClient.PostAsJsonAsync($"{Constants.CartApi}/add", cartItem);
+            await HttpClient.PostAsJsonAsync($"{Constants.CartAddApi}", cartItem);
         }
         else
         {
@@ -65,7 +65,7 @@ public record CartService(ILocalStorageService LocalStorageService, HttpClient H
                 return new List<CartProductResponse>();
             }
 
-            var response = await HttpClient.PostAsJsonAsync($"{Constants.CartApi}/products", Cart);
+            var response = await HttpClient.PostAsJsonAsync($"{Constants.CartProductsApi}", Cart);
             var cartProducts = await response.Content.ReadFromJsonAsync<ServiceResponse<List<CartProductResponse>>>();
             return cartProducts?.Data ?? new List<CartProductResponse>();
         }
@@ -106,7 +106,7 @@ public record CartService(ILocalStorageService LocalStorageService, HttpClient H
                 Quantity = product.Quantity,
                 ProductTypeId = product.ProductTypeId
             };
-            await HttpClient.PutAsJsonAsync($"{Constants.CartApi}/updatequantity", request);
+            await HttpClient.PutAsJsonAsync($"{Constants.CartUpdateQuantityApi}", request);
         }
         else
         {
@@ -149,7 +149,7 @@ public record CartService(ILocalStorageService LocalStorageService, HttpClient H
         int count;
         if (await AuthService.IsUserAuthenticatedAsync())
         {
-            var results = await HttpClient.GetFromJsonAsync<ServiceResponse<int>>($"{Constants.CartApi}/count");
+            var results = await HttpClient.GetFromJsonAsync<ServiceResponse<int>>($"{Constants.CartCountApi}");
             count = results?.Data ?? 0;
         }
         else

@@ -24,7 +24,7 @@ public static class CategoryApi
         return TypedResults.Ok(response);
     }
 
-    [Authorize(Roles = "Admin")]
+    [Authorize(Roles = Constants.Admin)]
     private static async Task<Ok<ServiceResponse<List<Category>>>> GetAdminCategoriesAsync(
         ICategoryService categoryService)
     {
@@ -32,7 +32,7 @@ public static class CategoryApi
         return TypedResults.Ok(response);
     }
 
-    [Authorize(Roles = "Admin")]
+    [Authorize(Roles = Constants.Admin)]
     private static async Task<Ok<ServiceResponse<List<Category>>>> AddCategoryAsync(ICategoryService categoryService,
         Category category)
     {
@@ -40,7 +40,7 @@ public static class CategoryApi
         return TypedResults.Ok(response);
     }
 
-    [Authorize(Roles = "Admin")]
+    [Authorize(Roles = Constants.Admin)]
     private static async Task<Ok<ServiceResponse<List<Category>>>> UpdateCategoryAsync(ICategoryService categoryService,
         Category category)
     {
@@ -48,7 +48,7 @@ public static class CategoryApi
         return TypedResults.Ok(response);
     }
 
-    [Authorize(Roles = "Admin")]
+    [Authorize(Roles = Constants.Admin)]
     private static async Task<Ok<ServiceResponse<List<Category>>>> DeleteCategoryAsync(ICategoryService categoryService,
         int categoryId)
     {

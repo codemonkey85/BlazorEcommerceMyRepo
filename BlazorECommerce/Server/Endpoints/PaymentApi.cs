@@ -6,7 +6,7 @@ public static class PaymentApi
     {
         var paymentGroup = apiGroup.MapGroup(Constants.Payment);
 
-        paymentGroup.MapPost("checkout", CreateCheckoutSessionAsync);
+        paymentGroup.MapPost(Constants.Checkout, CreateCheckoutSessionAsync);
         paymentGroup.MapPost(string.Empty, FullfillOrderAsync);
 
         return apiGroup;

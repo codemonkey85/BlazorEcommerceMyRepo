@@ -19,8 +19,8 @@ public record ProductService(HttpClient HttpClient) : IProductService
     public async Task GetProductsAsync(string? categoryUrl = null)
     {
         var requestUrl = categoryUrl is { Length: > 0 }
-            ? $"{Constants.ProductApi}/{Constants.Category}/{categoryUrl}"
-            : $"{Constants.ProductApi}/featured";
+            ? $"{Constants.ProductCategoryApi}/{categoryUrl}"
+            : $"{Constants.ProductFeaturedApi}";
 
         var results = await HttpClient.GetFromJsonAsync<ServiceResponse<List<Product>>>(requestUrl);
 
@@ -52,7 +52,7 @@ public record ProductService(HttpClient HttpClient) : IProductService
 
         var results =
             await HttpClient.GetFromJsonAsync<ServiceResponse<ProductSearchResult>>(
-                $"{Constants.ProductApi}/search/{searchText}/{page}");
+                $"{Constants.ProductSearchApi}/{searchText}/{page}");
 
         if (results is { Data: not null })
         {
@@ -73,7 +73,7 @@ public record ProductService(HttpClient HttpClient) : IProductService
     {
         var results =
             await HttpClient.GetFromJsonAsync<ServiceResponse<List<string>>>(
-                $"{Constants.ProductApi}/searchsuggestions/{searchText}");
+                $"{Constants.ProductSearchSuggestionsApi}/{searchText}");
 
         return results?.Data ?? new List<string>();
     }

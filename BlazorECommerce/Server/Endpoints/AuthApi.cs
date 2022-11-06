@@ -6,9 +6,9 @@ public static class AuthApi
     {
         var authGroup = apiGroup.MapGroup(Constants.Auth);
 
-        authGroup.MapPost("register", RegisterUserAsync);
-        authGroup.MapPost("login", LogInAsync);
-        authGroup.MapPost("changepassword", ChangePasswordAsync);
+        authGroup.MapPost(Constants.Register, RegisterUserAsync);
+        authGroup.MapPost(Constants.Login, LogInAsync);
+        authGroup.MapPost(Constants.ChangePassword, ChangePasswordAsync);
 
         return apiGroup;
     }

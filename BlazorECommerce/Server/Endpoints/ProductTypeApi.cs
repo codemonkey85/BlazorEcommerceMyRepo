@@ -13,14 +13,14 @@ public static class ProductTypeApi
         return apiGroup;
     }
 
-    [Authorize(Roles = "Admin")]
+    [Authorize(Roles = Constants.Admin)]
     private static async Task<Ok<ServiceResponse<List<ProductType>>>> GetProductTypesAsync(IProductTypeService productTypeService)
     {
         var response = await productTypeService.GetProductTypesAsync();
         return TypedResults.Ok(response);
     }
 
-    [Authorize(Roles = "Admin")]
+    [Authorize(Roles = Constants.Admin)]
     private static async Task<Ok<ServiceResponse<List<ProductType>>>> AddProductTypeAsync(
         IProductTypeService productTypeService, ProductType productType)
     {
@@ -28,7 +28,7 @@ public static class ProductTypeApi
         return TypedResults.Ok(response);
     }
 
-    [Authorize(Roles = "Admin")]
+    [Authorize(Roles = Constants.Admin)]
     private static async Task<Ok<ServiceResponse<List<ProductType>>>> UpdateProductTypeAsync(
         IProductTypeService productTypeService, ProductType productType)
     {
