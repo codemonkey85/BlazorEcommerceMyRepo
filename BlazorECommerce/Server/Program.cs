@@ -7,10 +7,7 @@ var services = builder.Services;
 
 services.AddControllersWithViews();
 services.AddRazorPages();
-
-services
-    .AddEndpointsApiExplorer()
-    .AddSwaggerGen();
+services.ConfigureSwaggerServices();
 
 _ = appSettings.DbProvider switch
 {
@@ -27,7 +24,7 @@ _ = appSettings.DbProvider switch
 
     DbProvider.AzureCosmos => services.AddDbContext<DatabaseContext, AzureCosmosDatabaseContext>(options =>
         options.UseCosmos(config.GetConnectionString(nameof(DbProvider.AzureCosmos)) ?? string.Empty,
-        databaseName: nameof(DbProvider.AzureCosmos))),
+            databaseName: nameof(DbProvider.AzureCosmos))),
 
     _ => throw new Exception($"Unsupported provider: {appSettings.DbProvider}")
 };
