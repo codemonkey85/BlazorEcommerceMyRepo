@@ -28,7 +28,14 @@ else
             <Virtualize Items="ProductService.AdminProducts" Context="product">
                 <tr>
                     <td>
-                        <img src="@product.ImageUrl" alt="@product.Title" />
+                        @if (product.ImageUrl is { Length: > 0 })
+                        {
+                            <img src="@product.ImageUrl" alt="@product.Title" />
+                        }
+                        else if (product is { Images.Count: > 0 })
+                        {
+                            <img src="@product.Images[0].Data" alt="@product.Title" />
+                        }
                     </td>
                     <td>
                         @product.Title
@@ -37,7 +44,7 @@ else
                         @foreach (var variant in product.Variants)
                         {
                             <span>
-                                @variant.ProductType.Name
+                                @variant.ProductType?.Name
                             </span>
                             <br />
                         }
