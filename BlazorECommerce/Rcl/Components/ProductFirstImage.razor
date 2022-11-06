@@ -1,0 +1,11 @@
+﻿@if (Product is not null)
+{
+    @if (Product.ImageUrl is { Length: > 0 })
+    {
+        <img src="@Product.ImageUrl" class="@CssClass" alt="@Product.Title" />
+    }
+    else if (Product is { Images.Count: > 0 })
+    {
+        <img src="@Product.Images[0].Data" class="@CssClass" alt="@Product.Title" />
+    }
+}

@@ -6,14 +6,7 @@
             <li class="media my-3">
                 <div class="media-img-wrapper m-2">
                     <a href="/product/@product.Id">
-                        @if (product.ImageUrl is { Length: > 0 })
-                        {
-                            <img src="@product.ImageUrl" class="media-img" alt="@product.Title" />
-                        }
-                        else if (product is { Images.Count: > 0 })
-                        {
-                            <img src="@product.Images[0].Data" class="media-img" alt="@product.Title" />
-                        }
+                        <ProductFirstImage CssClass="media-img" Product="product" />
                     </a>
                 </div>
                 <div class="media-body">

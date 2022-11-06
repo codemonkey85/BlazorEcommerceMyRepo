@@ -28,14 +28,7 @@ else
             <Virtualize Items="ProductService.AdminProducts" Context="product">
                 <tr>
                     <td>
-                        @if (product.ImageUrl is { Length: > 0 })
-                        {
-                            <img src="@product.ImageUrl" alt="@product.Title" />
-                        }
-                        else if (product is { Images.Count: > 0 })
-                        {
-                            <img src="@product.Images[0].Data" alt="@product.Title" />
-                        }
+                        <ProductFirstImage Product="product" />
                     </td>
                     <td>
                         @product.Title
