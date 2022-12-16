@@ -125,7 +125,7 @@ public record ProductService(DatabaseContext DatabaseContext) : IProductService
             .FirstOrDefaultAsync(p => p.Id == product.Id);
         if (dbProduct is null)
         {
-            return new ServiceResponse<Product> { Success = false, Message = "Product not found." };
+            return new ServiceResponse<Product> { Success = false, Message = $"{nameof(Product)} not found." };
         }
 
         dbProduct.Title = product.Title;
@@ -170,7 +170,10 @@ public record ProductService(DatabaseContext DatabaseContext) : IProductService
         var dbProduct = await DatabaseContext.Products.FindAsync(productId);
         if (dbProduct is null)
         {
-            return new ServiceResponse<bool> { Success = false, Data = false, Message = "Product not found." };
+            return new ServiceResponse<bool>
+            {
+                Success = false, Data = false, Message = $"{nameof(Product)} not found."
+            };
         }
 
         dbProduct.IsDeleted = true;

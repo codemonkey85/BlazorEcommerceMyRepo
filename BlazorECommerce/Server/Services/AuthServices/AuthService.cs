@@ -1,4 +1,6 @@
-﻿namespace BlazorECommerce.Server.Services.AuthServices;
+﻿// ReSharper disable SpecifyStringComparison
+
+namespace BlazorECommerce.Server.Services.AuthServices;
 
 public record AuthService(IHttpContextAccessor HttpContextAccessor,
     DatabaseContext DatabaseContext,

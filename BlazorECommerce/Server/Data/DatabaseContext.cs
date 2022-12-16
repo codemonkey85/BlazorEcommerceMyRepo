@@ -1,4 +1,6 @@
-﻿namespace BlazorECommerce.Server.Data;
+﻿// ReSharper disable AutoPropertyCanBeMadeGetOnly.Global
+
+namespace BlazorECommerce.Server.Data;
 
 public class DatabaseContext : DbContext
 {
@@ -104,7 +106,8 @@ public class DatabaseContext : DbContext
 
     public DbSet<Order> Orders { get; set; } = default!;
 
+    // ReSharper disable once UnusedMember.Global
     public DbSet<OrderItem> OrderItems { get; set; } = default!;
 
-    public DbSet<Image> Images { get; set; }
+    public DbSet<Image> Images { get; set; } = default!;
 }

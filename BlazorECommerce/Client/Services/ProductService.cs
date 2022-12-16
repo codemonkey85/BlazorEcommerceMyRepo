@@ -4,17 +4,17 @@ public record ProductService(HttpClient HttpClient) : IProductService
 {
     public event Action? ProductsChanged;
 
-    public List<Product> Products { get; set; } = new();
+    public List<Product> Products { get; private set; } = new();
 
     public List<Product>? AdminProducts { get; set; }
 
-    public string Message { get; set; } = "Loading Products...";
+    public string Message { get; private set; } = "Loading Products...";
 
-    public int CurrentPage { get; set; } = 1;
+    public int CurrentPage { get; private set; } = 1;
 
-    public int PageCount { get; set; }
+    public int PageCount { get; private set; }
 
-    public string LastSearchText { get; set; } = string.Empty;
+    public string LastSearchText { get; private set; } = string.Empty;
 
     public async Task GetProductsAsync(string? categoryUrl = null)
     {

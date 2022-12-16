@@ -31,7 +31,7 @@ public record CategoryService(DatabaseContext DatabaseContext) : ICategoryServic
         var dbCategory = await GetCategoryByIdAsync(category.Id);
         if (dbCategory is null)
         {
-            return new ServiceResponse<List<Category>> { Success = false, Message = "Category not found." };
+            return new ServiceResponse<List<Category>> { Success = false, Message = $"{nameof(Category)} not found." };
         }
 
         dbCategory.Name = category.Name;
@@ -47,7 +47,7 @@ public record CategoryService(DatabaseContext DatabaseContext) : ICategoryServic
         var category = await GetCategoryByIdAsync(categoryId);
         if (category is null)
         {
-            return new ServiceResponse<List<Category>> { Success = false, Message = "Category not found." };
+            return new ServiceResponse<List<Category>> { Success = false, Message = $"{nameof(Category)} not found." };
         }
 
         category.IsDeleted = true;

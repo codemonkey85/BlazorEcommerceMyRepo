@@ -1,4 +1,6 @@
-﻿namespace BlazorECommerce.Shared.Models;
+﻿// ReSharper disable RedundantDefaultMemberInitializer
+
+namespace BlazorECommerce.Shared.Models;
 
 public class Category
 {

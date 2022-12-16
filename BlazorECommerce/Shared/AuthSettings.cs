@@ -1,5 +1,6 @@
 ﻿namespace BlazorECommerce.Shared;
 
+// ReSharper disable once ClassNeverInstantiated.Global
 public class AuthSettings
 {
     // ReSharper disable once AutoPropertyCanBeMadeGetOnly.Global

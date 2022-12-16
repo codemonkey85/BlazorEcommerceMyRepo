@@ -1,5 +1,6 @@
 namespace BlazorECommerce.Rcl.Pages.Admin;
 
+// ReSharper disable once ClassNeverInstantiated.Global
 public partial class ProductTypes : IDisposable
 {
     private ProductType? editingProductType;

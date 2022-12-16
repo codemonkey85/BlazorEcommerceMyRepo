@@ -1,5 +1,6 @@
 namespace BlazorECommerce.Rcl.Pages.Admin;
 
+// ReSharper disable once ClassNeverInstantiated.Global
 public partial class Products : IDisposable
 {
     protected override async Task OnInitializedAsync()
