@@ -9,3 +9,16 @@
         <img src="@Product.Images[0].Data" class="@CssClass" alt="@Product.Title" />
     }
 }
+@*
+else if (CartProductResponse is not null)
+{
+    @if (CartProductResponse.ImageUrl is { Length: > 0 })
+    {
+        <img src="@CartProductResponse.ImageUrl" class="@CssClass" alt="@CartProductResponse.Title" />
+    }
+    else if (product is not null)
+    {
+        <img src="@product.Images[0].Data" class="@CssClass" alt="@product.Title" />
+    }
+}
+*@
