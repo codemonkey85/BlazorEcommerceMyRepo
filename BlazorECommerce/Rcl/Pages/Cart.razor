@@ -25,9 +25,9 @@
                     <input type="number"
                            class="form-control input-quantity"
                            min="1"
-                           @bind-value="product.Quantity"
-                           @bind-value:after="@(async () => await UpdateQuantityAsync(product))"
-                           @bind-value:event="onchange" />
+                           @bind="product.Quantity"
+                           @bind:after="@(async () => await UpdateQuantityAsync(product))"
+                           @bind:event="onchange" />
                     <button class="btn btn-delete"
                     @onclick="@(async () => await RemoveProductFromCartAsync(product.ProductId, product.ProductTypeId))">
                         Delete
