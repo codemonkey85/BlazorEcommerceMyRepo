@@ -11,11 +11,12 @@ public partial class Login
 
     protected override void OnInitialized()
     {
-        var uri = NavigationManager.ToAbsoluteUri(NavigationManager.Uri);
-        if (QueryHelpers.ParseQuery(uri.Query).TryGetValue("returnUrl", out var url) && url is { Count: > 0 })
-        {
-            returnUrl = url!;
-        }
+        // TODO: QueryHelpers is part of Microsoft.AspNetCore.WebUtilities which has been deprecated.
+        //var uri = NavigationManager.ToAbsoluteUri(NavigationManager.Uri);
+        //if (QueryHelpers.ParseQuery(uri.Query).TryGetValue("returnUrl", out var url) && url is { Count: > 0 })
+        //{
+        //    returnUrl = url!;
+        //}
     }
 
     private async Task HandleLoginAsync()
