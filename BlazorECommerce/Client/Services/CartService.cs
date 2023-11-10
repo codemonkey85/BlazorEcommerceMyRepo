@@ -5,7 +5,7 @@ public record CartService(ILocalStorageService LocalStorageService, HttpClient H
 {
     public event Action? OnChange;
 
-    private List<CartItem> Cart { get; set; } = new();
+    private List<CartItem> Cart { get; set; } = [];
 
     public async Task AddToCartAsync(CartItem cartItem)
     {
@@ -48,26 +48,26 @@ public record CartService(ILocalStorageService LocalStorageService, HttpClient H
     }
 
     private async Task GetCartItemsFromLocalStorageAsync() =>
-        Cart = await LocalStorageService.GetItemAsync<List<CartItem>>(Constants.Cart) ?? new List<CartItem>();
+        Cart = await LocalStorageService.GetItemAsync<List<CartItem>>(Constants.Cart) ?? [];
 
     public async Task<List<CartProductResponse>> GetCartProductsAsync()
     {
         if (await AuthService.IsUserAuthenticatedAsync())
         {
             var response = await HttpClient.GetFromJsonAsync<ServiceResponse<List<CartProductResponse>>>(Constants.CartApi);
-            return response?.Data ?? new List<CartProductResponse>();
+            return response?.Data ?? [];
         }
         else
         {
             await GetCartItemsFromLocalStorageAsync();
             if (Cart is not { Count: > 0 })
             {
-                return new List<CartProductResponse>();
+                return [];
             }
 
             var response = await HttpClient.PostAsJsonAsync($"{Constants.CartProductsApi}", Cart);
             var cartProducts = await response.Content.ReadFromJsonAsync<ServiceResponse<List<CartProductResponse>>>();
-            return cartProducts?.Data ?? new List<CartProductResponse>();
+            return cartProducts?.Data ?? [];
         }
     }
 

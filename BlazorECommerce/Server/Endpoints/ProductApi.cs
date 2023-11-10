@@ -7,9 +7,9 @@ public static class ProductApi
         var productGroup = apiGroup.MapGroup(Constants.Product);
 
         productGroup.MapGet(string.Empty, GetProductsAsync);
-        productGroup.MapGet("/{productId:int}", GetProductAsync);
+        productGroup.MapGet("/{productId}", GetProductAsync);
         productGroup.MapGet($"/{Constants.Category}/{{categoryUrl}}", GetProductsByCategoryAsync);
-        productGroup.MapGet($"/{Constants.Search}/{{searchText}}/{{page:int}}", SearchProductsAsync);
+        productGroup.MapGet($"/{Constants.Search}/{{searchText}}/{{page}}", SearchProductsAsync);
         productGroup.MapGet($"/{Constants.SearchSuggestions}/{{searchText}}", GetProductSearchSuggestionsAsync);
         productGroup.MapGet($"/{Constants.Featured}", GetFeaturedProductsAsync);
 
@@ -18,7 +18,7 @@ public static class ProductApi
         adminProductGroup.MapGet(string.Empty, GetAdminProductsAsync);
         adminProductGroup.MapPost(string.Empty, CreateProductAsync);
         adminProductGroup.MapPut(string.Empty, UpdateProductAsync);
-        adminProductGroup.MapDelete("/{productId:int}", DeleteProductAsync);
+        adminProductGroup.MapDelete("/{productId}", DeleteProductAsync);
 
         return apiGroup;
     }

@@ -1,9 +1,3 @@
 ﻿namespace BlazorECommerce.Server.Data;
 
-public class SqliteDatabaseContext : DatabaseContext
-{
-    public SqliteDatabaseContext(DbContextOptions dbContextOptions)
-        : base(dbContextOptions)
-    {
-    }
-}
+public class SqliteDatabaseContext(DbContextOptions dbContextOptions) : DatabaseContext(dbContextOptions);

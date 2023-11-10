@@ -89,7 +89,7 @@ public record OrderService
         {
             OrderDate = order.OrderDate,
             TotalPrice = order.TotalPrice,
-            Products = new List<OrderDetailsProductResponse>()
+            Products = []
         };
 
         order.OrderItems.ForEach(orderItem => orderDetailsResponse.Products.Add(new OrderDetailsProductResponse

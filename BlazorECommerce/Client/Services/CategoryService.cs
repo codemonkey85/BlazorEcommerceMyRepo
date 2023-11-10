@@ -4,9 +4,9 @@ public record CategoryService(HttpClient HttpClient) : ICategoryService
 {
     public event Action? OnChange;
 
-    public List<Category> Categories { get; set; } = new();
+    public List<Category> Categories { get; set; } = [];
 
-    public List<Category> AdminCategories { get; set; } = new();
+    public List<Category> AdminCategories { get; set; } = [];
 
     public async Task GetCategoriesAsync()
     {
@@ -30,8 +30,7 @@ public record CategoryService(HttpClient HttpClient) : ICategoryService
     public async Task AddCategoryAsync(Category category)
     {
         var response = await HttpClient.PostAsJsonAsync(Constants.AdminCategoryApi, category);
-        AdminCategories = (await response.Content.ReadFromJsonAsync<ServiceResponse<List<Category>>>())?.Data ??
-                          new List<Category>();
+        AdminCategories = (await response.Content.ReadFromJsonAsync<ServiceResponse<List<Category>>>())?.Data ?? [];
         await GetCategoriesAsync();
         OnChange?.Invoke();
     }
@@ -39,8 +38,7 @@ public record CategoryService(HttpClient HttpClient) : ICategoryService
     public async Task UpdateCategoryAsync(Category category)
     {
         var response = await HttpClient.PutAsJsonAsync(Constants.AdminCategoryApi, category);
-        AdminCategories = (await response.Content.ReadFromJsonAsync<ServiceResponse<List<Category>>>())?.Data ??
-                          new List<Category>();
+        AdminCategories = (await response.Content.ReadFromJsonAsync<ServiceResponse<List<Category>>>())?.Data ?? [];
         await GetCategoriesAsync();
         OnChange?.Invoke();
     }
@@ -48,8 +46,7 @@ public record CategoryService(HttpClient HttpClient) : ICategoryService
     public async Task DeleteCategoryAsync(int categoryId)
     {
         var response = await HttpClient.DeleteAsync($"{Constants.AdminCategoryApi}/{categoryId}");
-        AdminCategories = (await response.Content.ReadFromJsonAsync<ServiceResponse<List<Category>>>())?.Data ??
-                          new List<Category>();
+        AdminCategories = (await response.Content.ReadFromJsonAsync<ServiceResponse<List<Category>>>())?.Data ?? [];
         await GetCategoriesAsync();
         OnChange?.Invoke();
     }

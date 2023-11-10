@@ -27,7 +27,7 @@ public record PaymentService(
                 ProductData = new SessionLineItemPriceDataProductDataOptions
                 {
                     Name = product.Title,
-                    Images = new List<string> { product.ImageUrl }
+                    Images = [product.ImageUrl]
                 }
             },
             Quantity = product.Quantity
@@ -37,7 +37,7 @@ public record PaymentService(
         {
             CustomerEmail = AuthService.GetUserEmail(),
             ShippingAddressCollection =
-                new SessionShippingAddressCollectionOptions { AllowedCountries = new List<string> { "US" } },
+                new SessionShippingAddressCollectionOptions { AllowedCountries = ["US"] },
             LineItems = lineItems,
             Mode = "payment",
             SuccessUrl = $"{ClientBaseUrl}/ordersuccess",

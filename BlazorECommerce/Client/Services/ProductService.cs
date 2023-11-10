@@ -4,7 +4,7 @@ public record ProductService(HttpClient HttpClient) : IProductService
 {
     public event Action? ProductsChanged;
 
-    public List<Product> Products { get; private set; } = new();
+    public List<Product> Products { get; private set; } = [];
 
     public List<Product>? AdminProducts { get; set; }
 
@@ -75,13 +75,13 @@ public record ProductService(HttpClient HttpClient) : IProductService
             await HttpClient.GetFromJsonAsync<ServiceResponse<List<string>>>(
                 $"{Constants.ProductSearchSuggestionsApi}/{searchText}");
 
-        return results?.Data ?? new List<string>();
+        return results?.Data ?? [];
     }
 
     public async Task GetAdminProductsAsync()
     {
         var results = await HttpClient.GetFromJsonAsync<ServiceResponse<List<Product>>>(Constants.AdminProductApi);
-        AdminProducts = results?.Data ?? new List<Product>();
+        AdminProducts = results?.Data ?? [];
         CurrentPage = 1;
         PageCount = 0;
         if (AdminProducts is { Count: 0 })

@@ -7,7 +7,7 @@ public partial class Login
 
     private string errorMessage = string.Empty;
 
-    private string returnUrl = string.Empty;
+    private readonly string returnUrl = string.Empty;
 
     protected override void OnInitialized()
     {

@@ -2,7 +2,7 @@
 
 public class ProductSearchResult
 {
-    public List<Product> Products { get; init; } = new();
+    public List<Product> Products { get; init; } = [];
 
     public int Pages { get; init; }
 

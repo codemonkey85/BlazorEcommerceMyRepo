@@ -19,7 +19,7 @@ public record OrderService(HttpClient HttpClient,
     {
         var results =
             await HttpClient.GetFromJsonAsync<ServiceResponse<List<OrderOverviewResponse>>>(Constants.OrderApi);
-        return results?.Data ?? new List<OrderOverviewResponse>();
+        return results?.Data ?? [];
     }
 
     public async Task<OrderDetailsResponse> GetOrderDetailsAsync(int orderId)

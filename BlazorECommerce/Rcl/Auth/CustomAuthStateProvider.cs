@@ -1,16 +1,11 @@
 ﻿namespace BlazorECommerce.Rcl.Auth;
 
-public class CustomAuthStateProvider : AuthenticationStateProvider
+public class CustomAuthStateProvider(HttpClient httpClient, ILocalStorageService localStorageService)
+    : AuthenticationStateProvider
 {
-    public CustomAuthStateProvider(HttpClient httpClient, ILocalStorageService localStorageService)
-    {
-        HttpClient = httpClient;
-        LocalStorageService = localStorageService;
-    }
+    private HttpClient HttpClient { get; } = httpClient;
 
-    private HttpClient HttpClient { get; }
-
-    private ILocalStorageService LocalStorageService { get; }
+    private ILocalStorageService LocalStorageService { get; } = localStorageService;
 
     public override async Task<AuthenticationState> GetAuthenticationStateAsync()
     {

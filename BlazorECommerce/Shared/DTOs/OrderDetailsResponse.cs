@@ -6,5 +6,5 @@ public class OrderDetailsResponse
 
     public decimal TotalPrice { get; init; }
 
-    public List<OrderDetailsProductResponse> Products { get; init; } = new();
+    public List<OrderDetailsProductResponse> Products { get; init; } = [];
 }

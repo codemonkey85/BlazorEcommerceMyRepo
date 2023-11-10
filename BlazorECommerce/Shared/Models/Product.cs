@@ -13,7 +13,7 @@ public class Product
 
     public string ImageUrl { get; set; } = string.Empty;
 
-    public List<Image> Images { get; set; } = new();
+    public List<Image> Images { get; set; } = [];
 
     public Category? Category { get; set; }
 
@@ -21,7 +21,7 @@ public class Product
 
     public bool Featured { get; set; }
 
-    public List<ProductVariant> Variants { get; set; } = new();
+    public List<ProductVariant> Variants { get; set; } = [];
 
     public bool IsVisible { get; set; } = true;
 

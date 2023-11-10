@@ -13,7 +13,7 @@ public static class CategoryApi
         adminCategoryGroup.MapGet(string.Empty, GetAdminCategoriesAsync);
         adminCategoryGroup.MapPost(string.Empty, AddCategoryAsync);
         adminCategoryGroup.MapPut(string.Empty, UpdateCategoryAsync);
-        adminCategoryGroup.MapDelete("/{categoryId:int}", DeleteCategoryAsync);
+        adminCategoryGroup.MapDelete("/{categoryId}", DeleteCategoryAsync);
 
         return apiGroup;
     }

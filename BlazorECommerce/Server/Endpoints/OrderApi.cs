@@ -7,7 +7,7 @@ public static class OrderApi
         var orderGroup = apiGroup.MapGroup(Constants.Order);
 
         orderGroup.MapGet(string.Empty, GetOrdersAsync);
-        orderGroup.MapGet("/{orderId:int}", GetOrderDetailsAsync);
+        orderGroup.MapGet("/{orderId}", GetOrderDetailsAsync);
 
         return apiGroup;
     }

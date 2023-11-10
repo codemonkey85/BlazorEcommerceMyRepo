@@ -1,9 +1,3 @@
 ﻿namespace BlazorECommerce.Server.Data;
 
-public class InMemoryDatabaseContext : DatabaseContext
-{
-    public InMemoryDatabaseContext(DbContextOptions dbContextOptions)
-        : base(dbContextOptions)
-    {
-    }
-}
+public class InMemoryDatabaseContext(DbContextOptions dbContextOptions) : DatabaseContext(dbContextOptions);
